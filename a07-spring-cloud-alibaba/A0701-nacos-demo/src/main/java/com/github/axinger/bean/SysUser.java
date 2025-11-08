@@ -23,9 +23,11 @@ public class SysUser {
     private String name;
     private Integer age;
 
+    private String fullName;
 
     @PostConstruct
     public void init() {
         log.info("User初始化 name={},age={}", name, age);
+        this.fullName = name + " " + age;
     }
 }

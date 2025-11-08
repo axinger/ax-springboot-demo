@@ -44,6 +44,7 @@ public class ConfigController {
         map.put("doc", docInfoProperties);
         // class 不要单独使用 @Configuration  ,不然无整体返回给webmvc,但是可以正常取值,但可以属性一个个获取, 统一使用 EnableConfigurationProperties
 //        map.put("user", user);
+        map.put("user", sysUser.getFullName());
 
         System.out.println("user = " + sysUser);
         return map;
