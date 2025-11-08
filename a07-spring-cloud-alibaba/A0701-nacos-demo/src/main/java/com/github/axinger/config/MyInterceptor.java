@@ -3,8 +3,8 @@ package com.github.axinger.config;
 import com.axing.common.response.dto.Result;
 import com.axing.common.util.utils.ResponseUtil;
 import com.github.axinger.bean.FilterProperties;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
@@ -19,17 +19,19 @@ import java.util.List;
 
 @Slf4j
 @Component
-public class OrderInterceptor implements HandlerInterceptor {
+@RequiredArgsConstructor
+public class MyInterceptor implements HandlerInterceptor {
 
     private final AntPathMatcher pathMatcher = new AntPathMatcher();
-    @Autowired
-    private FilterProperties filterProperties;
+    private final FilterProperties filterProperties;
 
     @Override
     public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) throws ServletException, IOException {
+        String contextPath = request.getContextPath();
         String requestURI = request.getRequestURI();
+        String method = request.getMethod();
 
-        log.info("请求URI: {}", requestURI);
+        log.info("请求: contextPath={},requestURI={},method={}", contextPath, requestURI, method);
 
         // 检查是否应该排除该路径
         List<String> excludePatterns = filterProperties.getWhitelist();

@@ -8,13 +8,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @RefreshScope
-public class WebConfigurer implements WebMvcConfigurer {
+public class MyWebConfigurer implements WebMvcConfigurer {
     @Autowired
-    private OrderInterceptor orderInterceptor;
+    private MyInterceptor myInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(orderInterceptor)
+        registry.addInterceptor(myInterceptor)
                 .addPathPatterns("/**");  // 匹配所有路径，具体是否拦截在拦截器中判断
     }
 

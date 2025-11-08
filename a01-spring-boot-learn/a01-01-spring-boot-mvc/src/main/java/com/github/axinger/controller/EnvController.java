@@ -35,11 +35,11 @@ public class EnvController {
 //        map.put("axingerUserProperties", axingerUserProperties.all());
         // record 可以直接返回
         map.put("axingerUserProperties", axingerUserProperties);
-        // class 不要单独使用 @Configuration  ,不然无整体获取,但可以属性一个个获取, 统一使用 EnableConfigurationProperties
+        // class 不要单独使用 @Configuration  ,不然无整体返回给webmvc,但是可以正常取值,但可以属性一个个获取, 统一使用 EnableConfigurationProperties
 //        map.put("person", axingerPersonProperties); // 不可用
         map.put("person", axingerPersonProperties.getName()); // 可以
-        map.put("userProperties", userProperties);
-        map.put("myYmlBean", myYmlBean);
+        map.put("userProperties", userProperties.getUsername());
+        map.put("myYmlBean", myYmlBean.getList());
         return map;
     }
 }

@@ -1,8 +1,12 @@
 package com.github.axinger.bean;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.stereotype.Component;
 
 /*
 
@@ -14,11 +18,14 @@ axinger:
     websiteName: 11111
     websiteUrl: 11111
  */
+@Slf4j
 @Data
 //@Component
+@RefreshScope
+@NoArgsConstructor
+@AllArgsConstructor
 @ConfigurationProperties(prefix = "axinger.doc")
 //@NacosConfigurationProperties(prefix = "axinger.doc", dataId = "docInfo.yaml")
-@RefreshScope // 支持nacos的动态刷新功能
 public class DocInfoProperties {
 
     /**

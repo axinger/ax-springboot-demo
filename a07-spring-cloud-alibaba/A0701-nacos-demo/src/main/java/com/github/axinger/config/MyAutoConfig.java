@@ -11,8 +11,9 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties({
         DocInfoProperties.class,
         FilterProperties.class
+//        User.class
 })
-public class SpringDocAutoConfig {
+public class MyAutoConfig {
 
 
 }

@@ -1,8 +1,10 @@
 server:
-  port: 8080
+  port: 10701
+  servlet:
+    context-path: /A0701NacosDemo
 spring:
   application:
-    name: demoNacos
+    name: A0701NacosDemo
   cloud:
     nacos:
       config: #配置中心
@@ -18,16 +20,14 @@ spring:
         namespace: dev
         enabled: true
         shared-configs:
-          - data-id: 'demo_dev.yaml' # 配置文件名-Data Id
+          - data-id: 'A0701NacosDemo.yaml' # 配置文件名-Data Id
             group: DEFAULT_GROUP   # 默认为DEFAULT_GROUP
             refresh: true   # 是否动态刷新，默认为false
         # 默认加载,通用格式的,再加载其他配置,用以下语法
         extension-configs:
-          - data-id: 'demo_dev.yaml' # 配置文件名-Data Id
+          - data-id: 'mall_order_config.yaml' # 配置文件名-Data Id
             group: DEFAULT_GROUP   # 默认为DEFAULT_GROUP
             refresh: true   # 是否动态刷新，默认为false
-
-
 
       discovery:
         #        server-addr: 127.0.0.1:8848
@@ -39,3 +39,16 @@ spring:
 #        enabled: false
 
 
+axinger:
+  doc:
+    title: nacos案例
+    description: 123
+    version: v1234
+    websiteName: 11111
+    websiteUrl: 11111
+  filter:
+    blacklist: /order/**
+    whitelist: /order/1,/order/2,/test/**
+  user:
+    name: axinger
+    age: 18

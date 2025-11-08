@@ -60,3 +60,8 @@ app:
 #  ${random.long} - 随机长整数
 #
 #  ${random.value} - 随机字母数字字符串
+
+axinger:
+  user1:
+    name: axinger
+    age: 18
