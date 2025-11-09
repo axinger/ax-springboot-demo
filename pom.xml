@@ -79,7 +79,7 @@
         <module>axinger-common</module>
         <module>a01-spring-boot-learn</module>
         <module>a02-spring-boot-db</module>
-        <module>a03-spring-boot-websocket</module>
+        <module>a03-websocket</module>
         <module>a04-spring-boot-cacheable</module>
         <module>a05-spring-boot-excel</module>
         <module>a06-spring-cloud</module>
