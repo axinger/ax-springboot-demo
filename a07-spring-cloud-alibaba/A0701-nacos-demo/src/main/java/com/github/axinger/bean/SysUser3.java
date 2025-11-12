@@ -11,15 +11,15 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 // class 不要单独使用 @Configuration  ,不然无整体返回给webmvc,但是可以正常取值,但可以属性一个个获取, 统一使用 EnableConfigurationProperties
-// 懒加载更新
+
+//实时更新, 版本不一样,效果不一样
 @Slf4j
 @Data
-@Component
 @RefreshScope
 @NoArgsConstructor
 @AllArgsConstructor
-@ConfigurationProperties(prefix = "axinger.user")
-public class SysUser {
+@ConfigurationProperties(prefix = "axinger.user3")
+public class SysUser3 {
     private String name;
     private Integer age;
 
@@ -27,7 +27,7 @@ public class SysUser {
 
     @PostConstruct
     public void init() {
-        log.info("User初始化 name={},age={}", name, age);
+        log.info("User3初始化 name={},age={}", name, age);
         this.fullName = name + " " + age;
     }
 }

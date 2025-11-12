@@ -3,9 +3,11 @@ package com.github.axinger.controller;
 import com.github.axinger.bean.DocInfoProperties;
 import com.github.axinger.bean.FilterProperties;
 import com.github.axinger.bean.SysUser;
+import com.github.axinger.bean.SysUser2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,6 +38,12 @@ public class ConfigController {
     @Autowired
     private SysUser sysUser;
 
+    @Autowired
+    private SysUser2 sysUser2;
+
+    @Autowired
+    private Environment environment;
+
     @GetMapping("/")
     public Object getInfo() {
         Map<String, Object> map = new HashMap<>(16);
@@ -47,6 +55,9 @@ public class ConfigController {
         map.put("user", sysUser.getFullName());
 
         System.out.println("user = " + sysUser);
+        System.out.println("sysUser2 = " + sysUser2);
+        String username = environment.getProperty("axinger.user.name", String.class);
+        System.out.println("username = " + username);
         return map;
     }
 }

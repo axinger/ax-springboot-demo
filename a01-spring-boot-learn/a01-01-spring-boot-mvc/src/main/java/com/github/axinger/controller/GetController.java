@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,7 @@ public class GetController {
         return dto;
     }
 
-    @RequestMapping("/login3")
+    @GetMapping("/login3")
     public Object login3(@Validated @ModelAttribute LoginDTO dto) {
         return dto;
     }
@@ -56,10 +57,17 @@ public class GetController {
     /**
      * 示例：带校验的路径变量
      */
-    @GetMapping("/user/{id}")
-    public Object getUserById(@PathVariable @NotBlank(message = "用户ID不能为空") String id) {
+    @GetMapping("/test9/{id}")
+    public Object test9(@PathVariable @NotBlank(message = "用户ID不能为空") String id) {
         Map<String, Object> result = new HashMap<>();
         result.put("id", id);
+        return result;
+    }
+
+    @GetMapping("/test10")
+    public Object test10(LocalDateTime dateTime) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("id", dateTime);
         return result;
     }
 

@@ -4,30 +4,36 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
-// class 不要单独使用 @Configuration  ,不然无整体返回给webmvc,但是可以正常取值,但可以属性一个个获取, 统一使用 EnableConfigurationProperties
-// 懒加载更新
 @Slf4j
 @Data
 @Component
+@Configuration
 @RefreshScope
 @NoArgsConstructor
 @AllArgsConstructor
-@ConfigurationProperties(prefix = "axinger.user")
-public class SysUser {
+public class SysUser2 {
+
+    @Value("${axinger.user.name}")
     private String name;
+
+
+    @Value("${axinger.user.age}")
     private Integer age;
+
 
     private String fullName;
 
     @PostConstruct
     public void init() {
-        log.info("User初始化 name={},age={}", name, age);
+        log.info("User2初始化 name={},age={}", name, age);
         this.fullName = name + " " + age;
     }
 }

@@ -1,5 +1,5 @@
 server:
-  port: 10701
+  port: 10801
   servlet:
     context-path: /A0701NacosDemo
 spring:
