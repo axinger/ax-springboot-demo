@@ -1,11 +1,13 @@
 package com.github.axinger.bean;
 
+import com.axing.common.util.json.JsonUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -19,15 +21,23 @@ import javax.annotation.PostConstruct;
 @NoArgsConstructor
 @AllArgsConstructor
 @ConfigurationProperties(prefix = "axinger.user")
+@Order(11)
 public class SysUser {
     private String name;
     private Integer age;
 
     private String fullName;
 
+    /// 懒加载更新,推荐使用SysUser3
     @PostConstruct
     public void init() {
-        log.info("User初始化 name={},age={}", name, age);
+        try {
+            log.info("\n\n👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇");
+            log.info("User1初始化={}", JsonUtil.toJsonStr(this));
+            log.info("\n👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆\n");
+        } catch (Exception e) {
+            log.error("User1初始化 error: {}", e.getMessage());
+        }
         this.fullName = name + " " + age;
     }
 }

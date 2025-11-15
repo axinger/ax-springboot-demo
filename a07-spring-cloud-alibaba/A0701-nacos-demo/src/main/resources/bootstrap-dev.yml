@@ -25,10 +25,15 @@ spring:
             refresh: true   # 是否动态刷新，默认为false
         # 默认加载,通用格式的,再加载其他配置,用以下语法
         extension-configs:
-          - data-id: 'mall_order_config.yaml' # 配置文件名-Data Id
-            group: DEFAULT_GROUP   # 默认为DEFAULT_GROUP
-            refresh: true   # 是否动态刷新，默认为false
-
+          - data-id: axinger-doc.yml
+            group: DEFAULT_GROUP
+            refresh: true
+          - data-id: axinger-filter.yml
+            group: DEFAULT_GROUP
+            refresh: true
+          - data-id: axinger-user.yml
+            group: DEFAULT_GROUP
+            refresh: true
       discovery:
         #        server-addr: 127.0.0.1:8848
         server-addr: http://localhost:8848

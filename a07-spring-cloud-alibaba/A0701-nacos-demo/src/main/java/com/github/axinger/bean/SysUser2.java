@@ -1,5 +1,6 @@
 package com.github.axinger.bean;
 
+import com.axing.common.util.json.JsonUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -19,6 +21,7 @@ import javax.annotation.PostConstruct;
 @RefreshScope
 @NoArgsConstructor
 @AllArgsConstructor
+@Order(12)
 public class SysUser2 {
 
     @Value("${axinger.user.name}")
@@ -31,9 +34,18 @@ public class SysUser2 {
 
     private String fullName;
 
+    /// 这个方式,不能转json,也是懒加载,更新
     @PostConstruct
     public void init() {
-        log.info("User2初始化 name={},age={}", name, age);
+        try {
+            log.info("\n\n👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇");
+//            log.info("User2初始化={}", JsonUtil.toJsonStr(this));
+            log.info("User2初始化age={},name={}", this.age,this.name);
+            log.info("\n👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆\n");
+        } catch (Exception e) {
+            log.error("User2初始化 error: {}", e.getMessage());
+        }
+
         this.fullName = name + " " + age;
     }
 }

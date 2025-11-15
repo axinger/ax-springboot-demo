@@ -7,6 +7,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "axinger.doc")
 public class DocInfoProperties {
 
+    private boolean enable = false;
+
     /**
      * 标题
      */

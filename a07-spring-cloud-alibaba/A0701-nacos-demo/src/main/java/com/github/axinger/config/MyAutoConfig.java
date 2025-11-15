@@ -4,7 +4,6 @@ import com.github.axinger.bean.DocInfoProperties;
 import com.github.axinger.bean.FilterProperties;
 import com.github.axinger.bean.SysUser3;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration

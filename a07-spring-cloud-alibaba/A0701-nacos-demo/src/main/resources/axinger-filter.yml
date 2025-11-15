@@ -1,0 +1,4 @@
+axinger:
+  filter:
+    blacklist: /order/**
+    whitelist: /order/1,/order/2,/test/**

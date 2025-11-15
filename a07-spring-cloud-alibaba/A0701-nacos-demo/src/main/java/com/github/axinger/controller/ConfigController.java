@@ -1,9 +1,8 @@
 package com.github.axinger.controller;
 
-import com.github.axinger.bean.DocInfoProperties;
-import com.github.axinger.bean.FilterProperties;
-import com.github.axinger.bean.SysUser;
-import com.github.axinger.bean.SysUser2;
+import com.axing.common.util.json.JsonUtil;
+import com.github.axinger.bean.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -22,6 +21,7 @@ import java.util.Map;
  * @createTime 2021年12月16日 20:21:00
  */
 
+@Slf4j
 @RestController
 @RefreshScope // 支持nacos的动态刷新功能
 public class ConfigController {
@@ -42,6 +42,9 @@ public class ConfigController {
     private SysUser2 sysUser2;
 
     @Autowired
+    private SysUser3 sysUser3;
+
+    @Autowired
     private Environment environment;
 
     @GetMapping("/")
@@ -52,12 +55,39 @@ public class ConfigController {
         map.put("doc", docInfoProperties);
         // class 不要单独使用 @Configuration  ,不然无整体返回给webmvc,但是可以正常取值,但可以属性一个个获取, 统一使用 EnableConfigurationProperties
 //        map.put("user", user);
-        map.put("user", sysUser.getFullName());
+
+        try {
+            map.put("user", JsonUtil.toJsonStr(sysUser));
+        } catch (Exception e) {
+            log.error("sysUser error: {}", e.getMessage());
+        }
+
+        try {
+
+            System.out.println("user = " + sysUser.getName());
+            System.out.println("sysUser.toString = " + sysUser);
+            map.put("sysUser2", JsonUtil.toJsonStr(sysUser2));
+        } catch (Exception e) {
+            log.error("sysUser2 error: {}", e.getMessage());
+        }
+
+        try {
+            map.put("sysUser3", JsonUtil.toJsonStr(sysUser3));
+
+        } catch (Exception e) {
+            log.error("sysUser3 error: {}", e.getMessage());
+        }
+
+        try {
+            String username = environment.getProperty("axinger.user.name", String.class);
+            map.put("Environment方式:axinger.user.name", username);
+        } catch (Exception e) {
+            log.error("Environment方式 error: {}", e.getMessage());
+        }
 
         System.out.println("user = " + sysUser);
         System.out.println("sysUser2 = " + sysUser2);
-        String username = environment.getProperty("axinger.user.name", String.class);
-        System.out.println("username = " + username);
+        System.out.println("sysUser3 = " + sysUser3);
         return map;
     }
 }

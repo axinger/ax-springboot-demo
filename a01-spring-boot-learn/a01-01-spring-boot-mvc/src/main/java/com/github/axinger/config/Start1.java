@@ -39,25 +39,19 @@ public class Start1 {
         ConfigurableApplicationContext context = event.getApplicationContext();
         // 获取Environment实例
         Environment env = context.getEnvironment();
-
         // 获取端口号和上下文路径
-        String serverPort = env.getProperty("server.port");
-        String contextPath = env.getProperty("server.servlet.context-path", "");
-
-        // 打印启动信息
-        System.out.println("\n\n===========> 系统启动成功！后台地址：http://localhost:" + serverPort + contextPath);
-
-
-        Environment environment = context.getBean(Environment.class);
-        String path = environment.getProperty("server.servlet.context-path") == null ?
-                "" : environment.getProperty("server.servlet.context-path");
-        String port = environment.getProperty("server.port");
-        String ip = InetAddress.getLocalHost().getHostAddress();
-        log.info("Access URLs:\n----------------------------------------------------------\n\t"
-                        + "Local: \t\thttp://127.0.0.1:{}{}\n\t"
-                        + "External: \thttp://{}:{}{}\n----------------------------------------------------------",
-                port, path, ip, port, path
-        );
+        {
+//            Environment env = context.getBean(Environment.class);
+            String ip = InetAddress.getLocalHost().getHostAddress();
+            String port = env.getProperty("server.port");
+            String path = env.getProperty("server.servlet.context-path");
+            log.info("\n----------------------------------------------------------\n\t" +
+                    "系统启动成功\n\t" +
+                    "Local: \t\thttp://localhost:" + port + path + "/\n\t" +
+                    "External: \thttp://" + ip + ":" + port + path + "/\n\t" +
+                    "Swagger文档: \thttp://" + ip + ":" + port + path + "/doc.html\n" +
+                    "----------------------------------------------------------");
+        }
 
     }
 
