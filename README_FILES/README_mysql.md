@@ -190,6 +190,92 @@ REPLACE INTO order_details (order_id, product_id, product_name, quantity)
 VALUES (100, 200, 'Apple', 30);
 ```
 
+## 3.JSON
+
+### (1) 建表
+
+```sql
+CREATE TABLE users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100),
+    info JSON
+);
+
+INSERT INTO users (name, info) VALUES
+('Alice', '{"age": 30, "city": "Beijing", "hobbies": ["reading", "swimming"]}'),
+('Bob', '{"age": 25, "city": "Shanghai", "hobbies": ["gaming"]}');
+
+```
+
+### (2) 查询
+
+使用 -> 和 ->> 提取 JSON 值
+col->'$.key'：返回 JSON 类型（带引号）
+col->>'$.key'：返回字符串/数值（不带引号)
+
+```sql
+SELECT name, info->>'$.city' AS city FROM users;
+-- 结果：
+-- Alice | Beijing
+-- Bob   | Shanghai
+```
+
+```sql
+SELECT name, info->'$.city' AS city FROM users;
+-- 结果：
+-- Alice | "Beijing"
+-- Bob   | "Shanghai"
+```
+
+###  (3).条件查询（WHERE 中使用 JSON）
+
+```sql
+-- 查找 age > 28 的用户
+SELECT * FROM users WHERE (info->>'$.age') > 28;
+
+-- 查找 city 是 Beijing 的用户
+SELECT * FROM users WHERE info->>'$.city' = 'Beijing';
+```
+
+更安全的方式（显式转为 UNSIGNED）：
+```sql
+SELECT * FROM users WHERE CAST(info->>'$.age' AS UNSIGNED) > 28;
+-- 或者直接用 -> 并配合 JSON_UNQUOTE
+SELECT * FROM users WHERE JSON_UNQUOTE(info->'$.age') > 28;
+```
+
+```sql
+SELECT * FROM users WHERE info->'$.age' > 28;
+-- 因为 -> 返回的是 JSON 标量（如 30），可直接比较
+```
+### (4).检查 JSON 是否包含某个键或值
+
+```sql
+   -- 检查是否存在 city 字段
+SELECT * FROM users WHERE JSON_CONTAINS_PATH(info, 'one', '$.city');
+
+-- 检查 hobbies 是否包含 "reading"
+SELECT * FROM users WHERE JSON_CONTAINS(info->'$.hobbies', '"reading"');
+-- 注意：第二个参数必须是 JSON 字符串，所以要加双引号
+
+```
+
+### (5).搜索 JSON 数组中是否包含某值
+
+（适用于 MySQL 8.0+）
+
+```sql
+-- 使用 JSON_OVERLAPS（MySQL 8.0.17+）
+SELECT * FROM users WHERE JSON_OVERLAPS(info->'$.hobbies', '["reading"]');
+
+-- 或使用 JSON_SEARCH（适合模糊匹配字符串）
+SELECT * FROM users WHERE JSON_SEARCH(info->'$.hobbies', 'one', 'reading') IS NOT NULL;
+```
+
+
+
+
+
 # 三.7种jon
 
 ## 1. inner join
@@ -651,78 +737,4 @@ PARTITION BY RANGE (YEAR(sale_date)) (
     PARTITION p3 VALUES LESS THAN (2023),
     PARTITION p4 VALUES LESS THAN MAXVALUE
 );
-```
-## json数据
-```sql
-CREATE TABLE users (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100),
-    info JSON
-);
-```
-
-```sql
-INSERT INTO users (name, info) VALUES
-('Alice', '{"age": 30, "city": "Beijing", "hobbies": ["reading", "swimming"]}'),
-('Bob', '{"age": 25, "city": "Shanghai", "hobbies": ["gaming"]}');
-```
-2. 查询 JSON 中的数组元素
-
-1. 使用 -> 和 ->> 提取 JSON 值
-   col->'$.key'：返回 JSON 类型（带引号）
-   col->>'$.key'：返回字符串/数值（不带引号)
-```sql
-SELECT name, info->>'$.city' AS city FROM users;
--- 结果：
--- Alice | Beijing
--- Bob   | Shanghai
-```
-
-```sql
-SELECT name, info->'$.city' AS city FROM users;
--- 结果：
--- Alice | "Beijing"
--- Bob   | "Shanghai"
-```
-
-3. 条件查询（WHERE 中使用 JSON）
-
-```sql
--- 查找 age > 28 的用户
-SELECT * FROM users WHERE (info->>'$.age') > 28;
-
--- 查找 city 是 Beijing 的用户
-SELECT * FROM users WHERE info->>'$.city' = 'Beijing';
-```
-
-更安全的方式（显式转为 UNSIGNED）：
-```sql
-SELECT * FROM users WHERE CAST(info->>'$.age' AS UNSIGNED) > 28;
--- 或者直接用 -> 并配合 JSON_UNQUOTE
-SELECT * FROM users WHERE JSON_UNQUOTE(info->'$.age') > 28;
-```
-
-```sql
-SELECT * FROM users WHERE info->'$.age' > 28;
--- 因为 -> 返回的是 JSON 标量（如 30），可直接比较
-```
-4. 检查 JSON 是否包含某个键或值
-```sql
-   -- 检查是否存在 city 字段
-SELECT * FROM users WHERE JSON_CONTAINS_PATH(info, 'one', '$.city');
-
--- 检查 hobbies 是否包含 "reading"
-SELECT * FROM users WHERE JSON_CONTAINS(info->'$.hobbies', '"reading"');
--- 注意：第二个参数必须是 JSON 字符串，所以要加双引号
-
-```
-
-
-5. 搜索 JSON 数组中是否包含某值（适用于 MySQL 8.0+）
-```sql
--- 使用 JSON_OVERLAPS（MySQL 8.0.17+）
-SELECT * FROM users WHERE JSON_OVERLAPS(info->'$.hobbies', '["reading"]');
-
--- 或使用 JSON_SEARCH（适合模糊匹配字符串）
-SELECT * FROM users WHERE JSON_SEARCH(info->'$.hobbies', 'one', 'reading') IS NOT NULL;
 ```

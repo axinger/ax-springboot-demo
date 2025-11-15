@@ -16,15 +16,13 @@ springboot及spring cloud的demo
 
 [jvm调优](./README_FILES/README_jvm调优.md)
 
-[k8s](./README_FILES/README_k8s.md)
-
 [Linux](./README_FILES/README_Linux.md)
 
 [lock](./README_FILES/README_lock.md)
 
 [maven](./README_FILES/README_maven.md)
 
-[mysql](./README_FILES/README_msyql.md)
+[mysql](README_FILES/README_mysql.md)
 
 [mybatis](./README_FILES/README_mybatis.md)
 
