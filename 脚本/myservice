@@ -1,8 +1,8 @@
-#!/bin/bash
+ #!/bin/bash
 
 # ========== 配置 ==========
 services=(
-    "kds-ikitchen-1.0-SNAPSHOT"
+    "mydemo1"
     # 可在此添加更多服务，如 "order-service", "user-api" 等
 )
 
