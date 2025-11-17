@@ -31,5 +31,5 @@ public class ExecutorProperties {
     /**
      * 线程池前缀
      */
-    private String threadNamePrefix = "自定义默认线程池-";
+    private String threadNamePrefix = "👉️默认线程池名称-👈";
 }

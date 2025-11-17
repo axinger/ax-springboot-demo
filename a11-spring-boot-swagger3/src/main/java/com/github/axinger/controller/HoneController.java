@@ -1,15 +1,15 @@
 package com.github.axinger.controller;
 
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Tag(name =  "tags值", value = "value不显示")
+@Tag(name = "tags值", description = "value不显示")
 @RestController("")
 public class HoneController {
 

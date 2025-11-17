@@ -12,10 +12,10 @@
     <artifactId>a04-spring-boot-cacheable</artifactId>
 
     <modules>
-        <module>a04-spring-boot-redisson</module>
         <module>a04-spring-boot-caffeine</module>
         <module>a04-spring-boot-redis-mysql</module>
         <module>a04-spring-boot-redis</module>
+        <module>a0404-spring-boot-redisson</module>
         <module>a0405-spring-boot-jetcache</module>
     </modules>
 </project>

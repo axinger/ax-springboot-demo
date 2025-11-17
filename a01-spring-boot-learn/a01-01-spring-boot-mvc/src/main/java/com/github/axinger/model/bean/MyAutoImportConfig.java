@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
         MyYmlBean.class,
         ApplicationInfo.class,
 
-        UserProperties.class
+        MyUserProperties.class
 })
 public class MyAutoImportConfig {
 

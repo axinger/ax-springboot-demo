@@ -9,7 +9,7 @@
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="age" column="age" jdbcType="INTEGER"/>
         <result property="sex" column="sex" jdbcType="INTEGER"/>
-        <result property="address" column="address" jdbcType="VARCHAR"/>
+            <result property="address" column="address" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">

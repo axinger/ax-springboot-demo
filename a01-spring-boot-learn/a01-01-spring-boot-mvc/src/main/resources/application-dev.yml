@@ -9,14 +9,14 @@ spring:
     import:
       #Spring Boot 2.4 及以上版本
       - classpath:axinger.yml      # 从 classpath 加载
-      - classpath:user.yml      # 从 classpath 加载
+      - classpath:my-user.yml      # 从 classpath 加载
       - classpath:axinger-doc.yml
-  #      - file:./config/user.yml  # 从文件系统加载（项目根目录的 config 目录下）
-  #      - optional:file:./user.yml # 可选导入（文件不存在时不报错）
+  #      - file:./config/my-user.yml  # 从文件系统加载（项目根目录的 config 目录下）
+  #      - optional:file:./my-user.yml # 可选导入（文件不存在时不报错）
 
   #适用于 Spring Boot 2.4 以下版本：
 #  profiles:
-#    include: user  # 加载名为 user.yml 或 application-user.yml 的文件
+#    include: user  # 加载名为 my-user.yml 或 application-my-user.yml 的文件
 
 Java-time-module:
   date-time-format: yyyy-MM-dd HH:mm:ss

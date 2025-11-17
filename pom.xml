@@ -91,6 +91,7 @@
         <module>a12-spring-boot-minio</module>
         <module>a13-springboot-oss</module>
         <module>a14-spring-boot-netty</module>
+        <module>a15-auth</module>
         <module>a15-spring-boot-shiro</module>
         <module>a16-spring-security</module>
         <module>a16-spring-security1</module>

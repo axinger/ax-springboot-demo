@@ -68,41 +68,8 @@ public class SpringUtilTests {
         String trimmed = StringUtils.trimWhitespace("  hello  ");  // "hello"
     }
 
-    @Test
-    public void test2() throws Exception {
 
-        AntPathMatcher matcher = new AntPathMatcher();
-        boolean match1 = matcher.match("/users/*", "/users/123");  // true
-        boolean match2 = matcher.match("/users/**", "/users/123/orders");  // true
-        boolean match3 = matcher.match("/user?", "/user1");  // true
 
-// 提取路径变量
-        Map<String, String> vars = matcher.extractUriTemplateVariables("/users/{id}", "/users/42");  // {id=42}
-        System.out.println("vars = " + vars);
-
-    }
-
-    @Test
-    public void test3() throws Exception {
-        boolean matches1 = PatternMatchUtils.simpleMatch("user*", "username");  // true
-        boolean matches2 = PatternMatchUtils.simpleMatch("user?", "user1");  // true
-        boolean matches3 = PatternMatchUtils.simpleMatch(new String[]{"user*", "admin*"}, "username");  // true
-
-    }
-
-    @Test
-    public void test4() throws Exception {
-
-        PropertyPlaceholderHelper helper = new PropertyPlaceholderHelper("${", "}");
-
-        Properties props = new Properties();
-        props.setProperty("name", "World");
-        props.setProperty("greeting", "Hello ${name}!");
-
-        String result = helper.replacePlaceholders("${greeting}", props::getProperty);
-        System.out.println("result = " + result);
-        // "Hello World!"
-    }
 
 
     @Test

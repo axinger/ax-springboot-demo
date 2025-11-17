@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author xing
@@ -45,37 +46,65 @@ public class ConfigController {
     private SysUser3 sysUser3;
 
     @Autowired
+    private SysUser4 sysUser4;
+
+    @Autowired
     private Environment environment;
 
     @GetMapping("/")
     public Object getInfo() {
-        Map<String, Object> map = new HashMap<>(16);
+        Map<String, Object> map = new TreeMap<>();
         map.put("title", title);
         map.put("person", filterProperties);
         map.put("doc", docInfoProperties);
         // class 不要单独使用 @Configuration  ,不然无整体返回给webmvc,但是可以正常取值,但可以属性一个个获取, 统一使用 EnableConfigurationProperties
 //        map.put("user", user);
 
+        /*
+        @Slf4j
+            @Data
+            @Component
+            @RefreshScope
+            @NoArgsConstructor
+            @AllArgsConstructor
+            @ConfigurationProperties(prefix = "axinger.user")
+            @Order(11)
+            public class SysUser
+            这样方式,不行
+         */
         try {
-            map.put("user", JsonUtil.toJsonStr(sysUser));
+            map.put("sysUser1", JsonUtil.toJsonStr(sysUser)); ///不行
         } catch (Exception e) {
-            log.error("sysUser error: {}", e.getMessage());
+            log.error("sysUser error: 这样方式,不行");
+            map.put("sysUser1", "sysUser error: JsonUtil.toJsonStr(sysUser) 不行"); //不可以
+
         }
 
         try {
-
-            System.out.println("user = " + sysUser.getName());
-            System.out.println("sysUser.toString = " + sysUser);
-            map.put("sysUser2", JsonUtil.toJsonStr(sysUser2));
+            System.out.println("user = " + sysUser.getName()); /// 可以
+            System.out.println("sysUser.toString = " + sysUser); /// 可以
         } catch (Exception e) {
-            log.error("sysUser2 error: {}", e.getMessage());
+            log.error("sysUser.toString 不可以");
         }
 
         try {
-            map.put("sysUser3", JsonUtil.toJsonStr(sysUser3));
-
+            map.put("sysUser2", JsonUtil.toJsonStr(sysUser2)); //不可以
         } catch (Exception e) {
-            log.error("sysUser3 error: {}", e.getMessage());
+            log.error("sysUser2 error: JsonUtil.toJsonStr(sysUser2) 不行");
+            map.put("sysUser2", "sysUser2 error: JsonUtil.toJsonStr(sysUser2) 不行"); //不可以
+        }
+
+        try {
+            map.put("sysUser3", sysUser3); /// 可以
+        } catch (Exception e) {
+            log.error("sysUser3 error: 不可以");
+        }
+
+
+        try {
+            map.put("sysUser4", sysUser4); /// 可以
+        } catch (Exception e) {
+            log.error("sysUser4 error: {}", e.getMessage());
         }
 
         try {

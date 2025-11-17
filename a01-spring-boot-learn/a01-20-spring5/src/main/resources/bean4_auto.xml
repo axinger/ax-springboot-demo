@@ -9,7 +9,7 @@
     autowire="byType" 类别 只能有一个
     -->
 
-    <bean id="person" class="com.ax.xml.model.com.ax.demo.Person" autowire="byType">
+    <bean id="person" class="com.github.axinger.xml.model.Person" autowire="byType">
 
         <!--这个是手动装配-->
         <!--        <property name="idCard" ref="idCard"></property>-->

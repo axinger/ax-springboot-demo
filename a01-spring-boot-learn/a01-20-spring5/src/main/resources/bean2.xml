@@ -17,7 +17,7 @@
     </util:list>
 
     <!--默认单例 scope:prototype 多实例 -->
-    <bean id="person" class="com.ax.xml.model.com.ax.demo.Person" scope="prototype">
+    <bean id="person" class="com.github.axinger.xml.model.Person" scope="prototype">
         <property name="dogs" ref="dogList"></property>
     </bean>
 

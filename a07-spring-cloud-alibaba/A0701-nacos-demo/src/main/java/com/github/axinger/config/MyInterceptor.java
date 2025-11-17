@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.util.UrlPathHelper;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -23,12 +24,15 @@ import java.util.List;
 public class MyInterceptor implements HandlerInterceptor {
 
     private final AntPathMatcher pathMatcher = new AntPathMatcher();
+    private final UrlPathHelper urlPathHelper = new UrlPathHelper();
     private final FilterProperties filterProperties;
 
     @Override
     public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) throws ServletException, IOException {
         String contextPath = request.getContextPath();
-        String requestURI = request.getRequestURI();
+//        String requestURI = request.getRequestURI();
+        /// 去除 context-path
+        String requestURI = urlPathHelper.getPathWithinApplication(request);
         String method = request.getMethod();
 
         log.info("请求: contextPath={},requestURI={},method={}", contextPath, requestURI, method);

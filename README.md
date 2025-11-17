@@ -77,3 +77,13 @@ springboot及spring cloud的demo
 
 常见的限流算法有：漏桶(Leaky Bucket)算法、令牌桶算法(Token Bucket)，计数器也可以进行粗暴限流实现
 ```
+
+```text
+# 设置全局用户名和邮箱
+git config --global user.name "你的新名字"
+git config --global user.email "你的新邮箱"
+
+# 只修改当前仓库
+git config user.name "你的新名字"
+git config user.email "你的新邮箱"
+```

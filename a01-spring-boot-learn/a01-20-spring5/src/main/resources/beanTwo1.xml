@@ -11,7 +11,7 @@
     1.逗号 , ;
     2.父包
     -->
-    <context:component-scan base-package="com.ax.annotations"/>
+    <context:component-scan base-package="com.github.axinger.annotations"/>
 
 
     <!--    &lt;!&ndash;-->

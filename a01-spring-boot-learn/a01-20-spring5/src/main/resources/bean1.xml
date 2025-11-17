@@ -20,7 +20,7 @@
 
 
     <!--手动装配-->
-    <bean id="person" class="com.ax.xml.model.com.ax.demo.Person" init-method="initMethod"
+    <bean id="person" class="com.github.axinger.xml.model.Person" init-method="initMethod"
           destroy-method="destroyMethod">
 
         <!--类,必须写set对应的方法-->
@@ -50,7 +50,7 @@
 
     </bean>
 
-    <bean id="personAuto" class="com.ax.xml.model.com.ax.demo.Person">
+    <bean id="personAuto" class="com.github.axinger.xml.model.Person">
 
         <property name="idCard" ref="idCard"></property>
 
