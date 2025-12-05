@@ -44,6 +44,7 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 
         return new String[]{
                 "/test/**",
+                "/orders/**",
         };
     }
 

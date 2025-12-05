@@ -9,7 +9,6 @@ import com.github.axinger.auth.db.entity.SysUsersEntity;
 import com.github.axinger.model.AuthModel;
 import com.github.axinger.service.impl.UserInfoService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -42,6 +41,7 @@ public class AuthController {
         // 第2步，获取 Token  相关参数
         SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
         // 第3步，返回给前端
+//        return Result.success(tokenInfo);
         return Result.success(tokenInfo);
     }
 
@@ -49,7 +49,7 @@ public class AuthController {
     @GetMapping("/logout")
     public Result<?> logout() {
         StpUtil.logout();
-        return Result.success();
+        return Result.success("成功查看数据");
     }
 
     // 查询登录状态
@@ -69,26 +69,26 @@ public class AuthController {
      * 刷新token - 不需要权限
      */
     @PostMapping("/refresh-token")
-    public ResponseEntity<?> refreshToken() {
+    public Result<?> refreshToken() {
         // 刷新token逻辑
-        return ResponseEntity.ok().build();
+        return Result.success("成功查看数据");
     }
 
     /**
      * 获取当前登录用户信息 - 不需要特殊权限，只需登录
      */
     @GetMapping("/info")
-    public ResponseEntity<?> getUserInfo() {
+    public Result<?> getUserInfo() {
         // 业务逻辑实现
-        return ResponseEntity.ok().build();
+        return Result.success("成功查看数据");
     }
 
     /**
      * 修改密码 - 不需要特殊权限，只需登录
      */
     @PutMapping("/password")
-    public ResponseEntity<?> changePassword() {
+    public Result<?> changePassword() {
         // 业务逻辑实现
-        return ResponseEntity.ok().build();
+        return Result.success("成功查看数据");
     }
 }

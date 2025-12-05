@@ -47,7 +47,7 @@
         <lombok.version>1.18.34</lombok.version>
         <netty-all.version>4.2.0.Final</netty-all.version>
         <redisson.version>3.36.0</redisson.version>
-        <minio.version>8.5.9</minio.version>
+        <minio.version>8.6.0</minio.version>
         <!--        <snakeyaml.version>2.0</snakeyaml.version>-->
         <poi-version>5.4.0</poi-version>
         <itextpdf.version>5.5.13.3</itextpdf.version>
@@ -275,7 +275,8 @@
                 <groupId>com.mysql</groupId>
                 <artifactId>mysql-connector-j</artifactId>
                 <scope>runtime</scope>
-                <version>8.0.33</version>
+<!--                <version>8.0.33</version>-->
+                <version>9.3.0</version>
             </dependency>
 
             <dependency>

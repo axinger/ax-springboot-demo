@@ -8,8 +8,8 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-@ConfigurationProperties(prefix = "user-config")
-public class UserConfig {
+@ConfigurationProperties(prefix = "auth-config")
+public class AuthProperties {
 
     private List<String> matchPathList;
     private List<String> notMatchPathList;

@@ -11,7 +11,7 @@
 
     <artifactId>a15-auth</artifactId>
     <packaging>pom</packaging>
-    
+
     <modules>
         <module>a1501-auth-db</module>
         <module>a1503-sa-token-demo</module>
@@ -54,10 +54,10 @@
                 <artifactId>sa-token-jwt</artifactId>
                 <version>${sa-token.version}</version>
             </dependency>
-  
+
             <dependency>
                 <groupId>com.github.axinger</groupId>
-                <artifactId>a15-auth-db</artifactId>
+                <artifactId>a1501-auth-db</artifactId>
                 <version>${axinger.version}</version>
             </dependency>
         </dependencies>

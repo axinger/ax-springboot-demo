@@ -1,6 +1,6 @@
 package com.github.axinger.controller;
 
-import org.springframework.http.ResponseEntity;
+import com.axing.common.response.dto.Result;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,44 +15,44 @@ public class SalesController {
      * 获取销售数据 - 需要sales:data:read权限
      */
     @GetMapping("/data")
-    public ResponseEntity<?> getSalesData() {
+    public Result<?> getSalesData() {
         // 业务逻辑实现
-        return ResponseEntity.ok().build();
+        return Result.success("成功查看数据");
     }
 
     /**
      * 获取销售报表 - 需要sales:report:read权限
      */
     @GetMapping("/reports")
-    public ResponseEntity<?> getSalesReports() {
+    public Result<?> getSalesReports() {
         // 业务逻辑实现
-        return ResponseEntity.ok().build();
+        return Result.success("成功查看数据");
     }
 
     /**
      * 设置销售目标 - 需要sales:target:set权限
      */
     @PostMapping("/targets")
-    public ResponseEntity<?> setSalesTargets() {
+    public Result<?> setSalesTargets() {
         // 业务逻辑实现
-        return ResponseEntity.ok().build();
+        return Result.success("成功查看数据");
     }
 
     /**
      * 查看团队业绩 - 需要team:performance:read权限
      */
     @GetMapping("/team-performance")
-    public ResponseEntity<?> getTeamPerformance() {
+    public Result<?> getTeamPerformance() {
         // 业务逻辑实现
-        return ResponseEntity.ok().build();
+        return Result.success("成功查看数据");
     }
 
     /**
      * 管理销售订单 - 需要sales:order:manage权限
      */
     @GetMapping("/orders")
-    public ResponseEntity<?> getSalesOrders() {
+    public Result<?> getSalesOrders() {
         // 业务逻辑实现
-        return ResponseEntity.ok().build();
+        return Result.success("成功查看数据");
     }
 }

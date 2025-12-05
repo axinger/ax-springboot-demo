@@ -8,15 +8,16 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface GetPermissionsMapper {
+public interface UserPermissionsAndRoleMapper {
 
     List<PermissionRulesVO> getAllPermissionRules();
 
     List<PermissionRulesVO> getAllRoleRules();
 
-    List<UsersRoleDTO> getUserRoles(@Param("userId") Long userId);
 
-    List<UserPermissionsDTO> getUserPermissions(@Param("userId") Long userId);
+    List<UserPermissionsDTO> getUserPermissions(@Param("userId") Object userId);
 
-    List<ApiPermissionDTO> getUserApiPermissions(@Param("userId") Long userId);
+    List<UsersRoleDTO> getUserRoles(@Param("userId") Object userId);
+
+    List<ApiPermissionDTO> getUserApiPermissionsAndRole(@Param("userId") Object userId);
 }

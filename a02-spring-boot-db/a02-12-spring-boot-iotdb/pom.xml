@@ -11,6 +11,12 @@
 
     <artifactId>a02-12-spring-boot-iotdb</artifactId>
 
+    <properties>
+<!--        <iotdb-version>0.13.4</iotdb-version>-->
+        <iotdb-version>2.0.5</iotdb-version>
+    </properties>
+
+
     <dependencies>
 
         <dependency>
@@ -26,13 +32,13 @@
         <dependency>
             <groupId>org.apache.iotdb</groupId>
             <artifactId>iotdb-session</artifactId>
-            <version>0.11.2</version>
+            <version>${iotdb-version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.iotdb</groupId>
             <artifactId>iotdb-jdbc</artifactId>
-            <version>0.13.4</version>
+            <version>${iotdb-version}</version>
         </dependency>
 
     </dependencies>

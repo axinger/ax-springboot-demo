@@ -1,5 +1,7 @@
 package com.github.axinger.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaCheckRole;
 import com.axing.common.response.dto.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,8 +16,9 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class OrdersController {
 
-    String name = ")";
+    String name = "orders";
 
+    @SaCheckPermission("orders:get")
     @RequestMapping("/get")
     public Result<?> get() {
         Map<String, String> map = new HashMap<>();
@@ -24,6 +27,7 @@ public class OrdersController {
         return Result.success(map);
     }
 
+    @SaCheckPermission("orders:add")
     @RequestMapping("/add")
     public Result<?> add() {
         Map<String, String> map = new HashMap<>();
@@ -40,6 +44,7 @@ public class OrdersController {
         return Result.success(map);
     }
 
+    @SaCheckRole("LEADER")
     @RequestMapping("/update")
     public Result<?> update() {
         Map<String, String> map = new HashMap<>();

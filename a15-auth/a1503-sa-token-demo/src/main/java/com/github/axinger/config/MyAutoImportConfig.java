@@ -1,12 +1,12 @@
 package com.github.axinger.config;
 
-import com.github.axinger.model.UserConfig;
+import com.github.axinger.model.AuthProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableConfigurationProperties(value = {
-        UserConfig.class
+        AuthProperties.class
 })
 public class MyAutoImportConfig {
 

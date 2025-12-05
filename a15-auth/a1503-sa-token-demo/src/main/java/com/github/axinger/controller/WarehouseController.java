@@ -1,6 +1,6 @@
 package com.github.axinger.controller;
 
-import org.springframework.http.ResponseEntity;
+import com.axing.common.response.dto.Result;
 import org.springframework.web.bind.annotation.*;
 
 ///  WarehouseController (仓库管理)
@@ -12,62 +12,62 @@ public class WarehouseController {
      * 获取仓库列表 - 需要warehouse:read权限
      */
     @GetMapping
-    public ResponseEntity<?> getWarehouses() {
+    public Result<?> getWarehouses() {
         // 业务逻辑实现
-        return ResponseEntity.ok().build();
+        return Result.success("成功查看数据");
     }
 
     /**
      * 获取仓库详情 - 需要warehouse:read权限
      */
     @GetMapping("/{id}")
-    public ResponseEntity<?> getWarehouseById(@PathVariable Long id) {
+    public Result<?> getWarehouseById(@PathVariable Long id) {
         // 业务逻辑实现
-        return ResponseEntity.ok().build();
+        return Result.success("成功查看数据");
     }
 
     /**
      * 创建新仓库 - 需要warehouse:manage权限
      */
     @PostMapping
-    public ResponseEntity<?> createWarehouse() {
+    public Result<?> createWarehouse() {
         // 业务逻辑实现
-        return ResponseEntity.ok().build();
+        return Result.success("成功查看数据");
     }
 
     /**
      * 更新仓库信息 - 需要warehouse:manage权限
      */
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateWarehouse(@PathVariable Long id) {
+    public Result<?> updateWarehouse(@PathVariable Long id) {
         // 业务逻辑实现
-        return ResponseEntity.ok().build();
+        return Result.success("成功查看数据");
     }
 
     /**
      * 删除仓库 - 需要warehouse:manage权限
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteWarehouse(@PathVariable Long id) {
+    public Result<?> deleteWarehouse(@PathVariable Long id) {
         // 业务逻辑实现
-        return ResponseEntity.ok().build();
+        return Result.success("成功查看数据");
     }
 
     /**
      * 查询库存 - 需要stock:read权限
      */
     @GetMapping("/stocks")
-    public ResponseEntity<?> getStocks(@RequestParam(required = false) Long warehouseId) {
+    public Result<?> getStocks(@RequestParam(required = false) Long warehouseId) {
         // 业务逻辑实现
-        return ResponseEntity.ok().build();
+        return Result.success("成功查看数据");
     }
 
     /**
      * 调整库存 - 需要stock:manage权限
      */
     @PostMapping("/stocks/adjust")
-    public ResponseEntity<?> adjustStock() {
+    public Result<?> adjustStock() {
         // 业务逻辑实现
-        return ResponseEntity.ok().build();
+        return Result.success("成功查看数据");
     }
 }

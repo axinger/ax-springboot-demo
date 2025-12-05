@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MySaTokenDaoForRedisTemplate extends SaTokenDaoForRedisTemplate {
 
-    private static final String REDIS_CACHE_PREFIX = "axinger:demo30:";
+    private static final String REDIS_CACHE_PREFIX = "axinger:demo3001:";
 
     /**
      * 增加sa-token相关redis cache前缀
