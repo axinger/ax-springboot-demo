@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
 
 import java.util.List;
-
+import com.github.axinger.api.*;
 
 @GrpcService
 @Slf4j
@@ -24,7 +24,7 @@ public class UserServiceGrpcUserService extends UserServiceGrpc.UserServiceImplB
         System.out.println("请求参数usersList = " + usersList);
 
         List<UserOuterClass.User> list = usersList.stream()
-                .map(val -> UserOuterClass.User.newBuilder().setId(lombok.val.getId()).setName(lombok.val.getName() + "A").build())
+                .map(el -> UserOuterClass.User.newBuilder().setId(el.getId()).setName(el.getName() + "A").build())
                 .toList();
 
         UserOuterClass.UserList userList = UserOuterClass.UserList.newBuilder().addAllData(list).build();

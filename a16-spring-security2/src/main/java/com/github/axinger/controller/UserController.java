@@ -45,7 +45,7 @@ public class UserController {
 //
     @PutMapping("/update")
 //    @PreAuthorize("hasAuthority('user:update')")
-    public Result<Void> updateUser() {
+    public Result<?> updateUser() {
 //        userService.updateUser(userDTO);
         return Result.success("更新成功");
     }
@@ -53,7 +53,7 @@ public class UserController {
     //
     @DeleteMapping("/delete/{id}")
 //    @PreAuthorize("hasAuthority('user:delete')")
-    public Result<Void> deleteUser(@PathVariable Integer id) {
+    public Result<?> deleteUser(@PathVariable Integer id) {
         return Result.success("删除成功");
     }
 }
