@@ -1,9 +1,8 @@
 package com.github.axinger;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.iotdb.session.pool.SessionDataSetWrapper;
+import org.apache.iotdb.isession.pool.SessionDataSetWrapper;
 import org.apache.iotdb.session.pool.SessionPool;
-import org.apache.iotdb.tsfile.read.common.Field;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -68,7 +67,7 @@ public class IotDBSessionConfig {
                 Map<String, Object> map = new HashMap<>();
                 list.add(map);
 
-                final List<Field> fields = wrapper.next().getFields();
+                final List<org.apache.tsfile.read.common.Field> fields = wrapper.next().getFields();
                 if (columnNames.size() > fields.size()) {
                     for (int i = 0; i < columnNames.size() - 1; i++) {
                         map.put(columnNames.get(i + 1), fields.get((i)));

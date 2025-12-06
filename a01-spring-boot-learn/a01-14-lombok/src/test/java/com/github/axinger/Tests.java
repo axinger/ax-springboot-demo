@@ -16,7 +16,7 @@ public class Tests {
         person.aFirst("aFirst");
 
 
-        String string = JsonUtil.writeValueAsString(person);
+        String string = JsonUtil.toJsonStr(person);
         System.out.println("string = " + string);
     }
 

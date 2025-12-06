@@ -11,12 +11,6 @@
 
     <artifactId>a33-docker-jar</artifactId>
 
-    <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -86,32 +80,32 @@
                 </configuration>
             </plugin>
 
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <id>quick-package</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>mvn</executable>
-                            <arguments>
-                                <argument>clean</argument>
-                                <argument>package</argument>
-                                <argument>-pl</argument>
-                                <argument>a33-docker-jar</argument>
-                                <argument>-DskipTests</argument>
-                                <argument>-am</argument>
-                                <argument>-amd</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.codehaus.mojo</groupId>-->
+<!--                <artifactId>exec-maven-plugin</artifactId>-->
+<!--                <version>3.1.0</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>quick-package</id>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>exec</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <executable>mvn</executable>-->
+<!--                            <arguments>-->
+<!--                                <argument>clean</argument>-->
+<!--                                <argument>package</argument>-->
+<!--                                <argument>-pl</argument>-->
+<!--                                <argument>a33-docker-jar</argument>-->
+<!--                                <argument>-DskipTests</argument>-->
+<!--                                <argument>-am</argument>-->
+<!--                                <argument>-amd</argument>-->
+<!--                            </arguments>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 </project>

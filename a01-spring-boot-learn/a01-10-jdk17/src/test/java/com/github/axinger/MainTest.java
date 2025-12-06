@@ -141,7 +141,7 @@ class MainTest {
 
 //        将字符串转换为对象：
 
-        Person sutdent = JsonUtil.readValue(jsonStr, Person.class);
+        Person sutdent = JsonUtil.toBean(jsonStr, Person.class);
         System.out.println("sutdent = " + sutdent);
 
 
