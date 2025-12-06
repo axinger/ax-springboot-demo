@@ -13,7 +13,7 @@ public class ResourceUtilTests {
     @Test
     public void test01() {
 
-        String name ="123.json";
+        String name = "123.json";
 
 
         ClassPathResource resource = new ClassPathResource(name);

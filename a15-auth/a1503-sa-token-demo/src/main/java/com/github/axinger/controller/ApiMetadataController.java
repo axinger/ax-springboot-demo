@@ -7,8 +7,6 @@ import cn.hutool.core.lang.func.LambdaUtil;
 import com.axing.common.response.dto.Result;
 import com.github.axinger.auth.db.dto.ApiPermissionDTO;
 import com.github.axinger.auth.db.dto.PermissionRulesVO;
-import com.github.axinger.auth.db.dto.UserPermissionsDTO;
-import com.github.axinger.auth.db.dto.UsersRoleDTO;
 import com.github.axinger.auth.db.entity.SysUsersEntity;
 import com.github.axinger.auth.db.mapper.UserPermissionsAndRoleMapper;
 import com.github.axinger.dto.ApiMetadataDTO;

@@ -17,6 +17,13 @@ import java.util.TimeZone;
 public class JsonUtil extends ObjectMapper {
 
 
+    // 创建ObjectMapper对象
+    public static final JsonUtil mapper;
+
+    static {
+        mapper = new JsonUtil(JsonInclude.Include.ALWAYS);
+    }
+
     public JsonUtil(JsonInclude.Include incl) {
         ObjectMapper mapper = this;
         // configure方法，配置一些需要的参数
@@ -52,14 +59,6 @@ public class JsonUtil extends ObjectMapper {
 
 //        mapper.registerModule(new JavaTimeModule());
         mapper.registerModule(new Java8TimeModule());
-    }
-
-
-    // 创建ObjectMapper对象
-    public static final JsonUtil mapper;
-
-    static {
-        mapper = new JsonUtil(JsonInclude.Include.ALWAYS);
     }
 
     /**

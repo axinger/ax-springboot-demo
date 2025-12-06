@@ -1,7 +1,7 @@
 /**username和email均有唯一索引，任意一个重复均会触发更新*/
 CREATE TABLE `sys_user`
 (
-    `id`          bigint NOT NULL AUTO_INCREMENT COMMENT '创建时间',
+    `id`          VARCHAR(255) NOT NULL COMMENT '创建时间',
     `username`    varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '用户名',
     `password`    varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '密码',
     `email`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '邮箱',

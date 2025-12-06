@@ -5,15 +5,15 @@
 <mapper namespace="com.github.axinger.sys.mapper.SysPersonMapper">
 
     <resultMap id="BaseResultMap" type="com.github.axinger.sys.domain.SysPersonEntity">
-        <id property="id" column="id" jdbcType="BIGINT"/>
-        <result property="age" column="age" jdbcType="INTEGER"/>
-        <result property="birthday" column="birthday" jdbcType="TIMESTAMP"/>
-        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
-        <result property="gender" column="gender" jdbcType="INTEGER"/>
-        <result property="name" column="name" jdbcType="VARCHAR"/>
-        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-        <result property="version" column="version" jdbcType="BIGINT"/>
+        <id property="id" column="id"/>
+        <result property="age" column="age"/>
+        <result property="birthday" column="birthday"/>
+        <result property="createTime" column="create_time"/>
+        <result property="deleted" column="deleted"/>
+        <result property="gender" column="gender"/>
+        <result property="name" column="name"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="version" column="version"/>
     </resultMap>
 
     <sql id="Base_Column_List">

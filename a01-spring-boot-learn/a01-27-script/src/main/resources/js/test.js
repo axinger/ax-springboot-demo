@@ -8,7 +8,7 @@ const result = sum(5, 3);
 console.log(result); // 输出 8
 
 const result21 = 21;
-console.log('result21===='+result21); // 输出 8
+console.log('result21====' + result21); // 输出 8
 const result22 = 22;
 
 

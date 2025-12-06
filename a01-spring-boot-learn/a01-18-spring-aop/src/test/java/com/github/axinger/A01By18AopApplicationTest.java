@@ -1,14 +1,11 @@
 package com.github.axinger;
 
-import com.github.axinger.annotation.LogListener;
 import com.github.axinger.controller.TestController;
 import com.github.axinger.service.LogService1;
 import com.github.axinger.service.UserService;
 import com.github.axinger.service2.LogService2;
 import com.github.axinger.service2.PersonService;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.junit.jupiter.api.Test;
-import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

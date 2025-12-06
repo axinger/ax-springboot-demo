@@ -16,7 +16,7 @@ singleServerConfig:
   subscriptionsPerConnection: 5
   #  客户端名称
   clientName: null
-    #  节点地址
+  #  节点地址
   address: redis://127.0.0.1:6379
   #  address: redis://hadoop10011:6379
   #  发布和订阅连接的最小空闲连接数

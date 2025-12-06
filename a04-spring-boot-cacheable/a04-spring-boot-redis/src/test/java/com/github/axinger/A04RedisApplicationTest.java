@@ -1,8 +1,5 @@
 package com.github.axinger;
 
-import cn.hutool.core.date.LocalDateTimeUtil;
-import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson2.JSONObject;
 import com.github.axinger.model.Order;
 import com.github.axinger.model.User;
 import lombok.extern.slf4j.Slf4j;
@@ -16,14 +13,12 @@ import org.springframework.data.redis.core.RedisTemplate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 
 @Slf4j
 @SpringBootTest
 public class A04RedisApplicationTest {
-
 
 
     @Autowired
@@ -77,7 +72,6 @@ public class A04RedisApplicationTest {
         User user = redisTemplateUser.opsForValue().get(key);
         System.out.println("user = " + user);
     }
-
 
 
     @Test

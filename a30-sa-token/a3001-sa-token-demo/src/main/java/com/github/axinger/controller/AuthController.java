@@ -49,7 +49,7 @@ public class AuthController {
         StpUtil.logout();
         return Result.success();
     }
-    
+
     // 查询登录状态  ---- http://localhost:8081/acc/isLogin
     @GetMapping("isLogin")
     public Result<?> isLogin(String token) {

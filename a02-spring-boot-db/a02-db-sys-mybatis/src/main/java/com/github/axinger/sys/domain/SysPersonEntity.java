@@ -25,8 +25,8 @@ public class SysPersonEntity implements Serializable {
     /**
      *
      */
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+    @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    private String id;
 
     @TableField(value = "name")
     private String name;
@@ -69,9 +69,9 @@ public class SysPersonEntity implements Serializable {
     @Builder.Default()
     private Long version = 1L;
 
-//    @TableLogic
+    //    @TableLogic
     @TableField(value = "deleted")
     @Builder.Default()
-    private boolean deleted = false;
+    private int deleted = 0;
 
 }

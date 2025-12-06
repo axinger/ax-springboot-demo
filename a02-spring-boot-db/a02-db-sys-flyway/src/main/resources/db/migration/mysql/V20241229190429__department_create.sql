@@ -1,6 +1,6 @@
 CREATE TABLE `sys_department`
 (
-    `id`   bigint NOT NULL AUTO_INCREMENT,
+    `id`   VARCHAR(255) NOT NULL,
     `name` varchar(255) DEFAULT NULL,
     PRIMARY KEY (`id`)
 );

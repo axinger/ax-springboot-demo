@@ -10,9 +10,9 @@
     </parent>
 
     <artifactId>a0404-spring-boot-redisson</artifactId>
-    
+
     <properties>
-                <snakeyaml.version>2.0</snakeyaml.version>
+        <snakeyaml.version>2.0</snakeyaml.version>
     </properties>
 
 

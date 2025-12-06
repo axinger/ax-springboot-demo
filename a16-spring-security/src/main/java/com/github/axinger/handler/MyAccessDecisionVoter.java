@@ -46,9 +46,9 @@
 //        // 你可以根据请求 URL 做进一步的权限判断
 //        System.out.println("Requested URL: " + requestUrl);
 //
-////        if (requestUrl.equals("/login") || requestUrl.equals("/favicon.ico")) {
-////            return ACCESS_GRANTED;
-////        }
+/// /        if (requestUrl.equals("/login") || requestUrl.equals("/favicon.ico")) {
+/// /            return ACCESS_GRANTED;
+/// /        }
 //
 //        boolean whitelisted = isWhitelisted(request.getRequestURI());
 //        if (whitelisted) {

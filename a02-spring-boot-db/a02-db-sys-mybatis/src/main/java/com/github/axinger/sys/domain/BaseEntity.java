@@ -19,10 +19,9 @@ import java.util.Map;
 @SuperBuilder(toBuilder = true)
 public class BaseEntity implements Serializable {
 
-    @TableId(type = IdType.AUTO)
-
-    // jpa注释
-    private Long id;
+    //    @TableId(type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    private String id;
 
     /**
      * INSERT代表只在插入时填充

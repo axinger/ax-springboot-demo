@@ -1,7 +1,7 @@
 package com.github.axinger.model.plc;
 
-import com.github.axinger.model.enums.PlcDataType;
 import com.github.axinger.model.annotation.PlcField;
+import com.github.axinger.model.enums.PlcDataType;
 import lombok.Data;
 
 @Data

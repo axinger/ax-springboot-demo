@@ -34,7 +34,7 @@
         FROM user
         WHERE id > #{lastId}
         ORDER BY id ASC
-            LIMIT #{pageSize}
+        LIMIT #{pageSize}
     </select>
 
 

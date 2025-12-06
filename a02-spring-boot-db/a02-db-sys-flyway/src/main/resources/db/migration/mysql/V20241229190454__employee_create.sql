@@ -1,7 +1,7 @@
 CREATE TABLE `sys_employee`
 (
-    `id`      bigint NOT NULL AUTO_INCREMENT,
-    `dept_id` int          DEFAULT NULL,
+    `id`      VARCHAR(255) NOT NULL,
+    `dept_id` VARCHAR(255) DEFAULT NULL,
     `email`   varchar(255) DEFAULT NULL,
     `gender`  int          DEFAULT NULL,
     `name`    varchar(255) DEFAULT NULL,

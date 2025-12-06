@@ -26,6 +26,7 @@
 ```
 
 # 二.语法
+
 ```text
 mysql不存储boolean,默认为0是false,非0是true
 ```
@@ -227,7 +228,7 @@ SELECT name, info->'$.city' AS city FROM users;
 -- Bob   | "Shanghai"
 ```
 
-###  (3).条件查询（WHERE 中使用 JSON）
+### (3).条件查询（WHERE 中使用 JSON）
 
 ```sql
 -- 查找 age > 28 的用户
@@ -238,6 +239,7 @@ SELECT * FROM users WHERE info->>'$.city' = 'Beijing';
 ```
 
 更安全的方式（显式转为 UNSIGNED）：
+
 ```sql
 SELECT * FROM users WHERE CAST(info->>'$.age' AS UNSIGNED) > 28;
 -- 或者直接用 -> 并配合 JSON_UNQUOTE
@@ -248,6 +250,7 @@ SELECT * FROM users WHERE JSON_UNQUOTE(info->'$.age') > 28;
 SELECT * FROM users WHERE info->'$.age' > 28;
 -- 因为 -> 返回的是 JSON 标量（如 30），可直接比较
 ```
+
 ### (4).检查 JSON 是否包含某个键或值
 
 ```sql
@@ -271,10 +274,6 @@ SELECT * FROM users WHERE JSON_OVERLAPS(info->'$.hobbies', '["reading"]');
 -- 或使用 JSON_SEARCH（适合模糊匹配字符串）
 SELECT * FROM users WHERE JSON_SEARCH(info->'$.hobbies', 'one', 'reading') IS NOT NULL;
 ```
-
-
-
-
 
 # 三.7种jon
 

@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 @Data
 
@@ -34,38 +33,41 @@ import java.util.TreeMap;
 public class SysUser {
 
 
-    private Map<String, Object> otherProperties = new HashMap<>();
-
-    private String id;
-
-    /// JSON 中使用 "user_name" 或 "uname" 都能正确反序列化到 username
-    @JsonAlias({"user_name", "uname", "username", "firstName"})
-    private String name;
-
-    private String lastName;
-
-    @JsonFormat(shape = JsonFormat.Shape.NUMBER) // 强制枚举用数字而非字符串
-    private SysGender gender;
-
-    /// 忽略某个字段，不参与序列化和反序列化
-    @JsonIgnore
-    private String password;
-
-    private String secretKey;
-
-    @JsonProperty(value = "xPoint")
-    private String xPoint;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private LocalDateTime createTime;
-
-    private LocalDateTime updateTime;
-
-
     /// JsonManagedReference：标记“正向”引用（会被序列化）
     /// 序列化 User 时会包含 orders，但每个 Order 中的 user 字段不会被输出，避免循环。
     @JsonManagedReference
     public List<SysOrder> orders;
+    /// 用途：在反序列化时 合并 JSON 数据到已有对象（而非完全覆盖），适用于部分更新（PATCH）场景
+    @JsonMerge
+    public Map<String, Object> settings = new HashMap<>();
+    private Map<String, Object> otherProperties = new HashMap<>();
+    private String id;
+    /// JSON 中使用 "user_name" 或 "uname" 都能正确反序列化到 username
+    @JsonAlias({"user_name", "uname", "username", "firstName"})
+    private String name;
+    private String lastName;
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER) // 强制枚举用数字而非字符串
+    private SysGender gender;
+    /// 忽略某个字段，不参与序列化和反序列化
+    @JsonIgnore
+    private String password;
+    private String secretKey;
+    @JsonProperty(value = "xPoint")
+    private String xPoint;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime createTime;
+    private LocalDateTime updateTime;
+    @JsonRawValue
+    private String data;
+    private String data2;
+
+//    @JsonSetter("full_name")
+//    public void setFullNameFromJson(String name) {
+//        this.fullName = name.trim();
+//    }
+
+//    @JacksonInject("dataSource")
+//    private DataSource ds; // 不从 JSON 来，而是由外部注入
 
     // 动态属性,不解析
     @JsonAnySetter
@@ -85,20 +87,4 @@ public class SysUser {
     public String getFullName() {
         return name + " " + lastName;
     }
-
-//    @JsonSetter("full_name")
-//    public void setFullNameFromJson(String name) {
-//        this.fullName = name.trim();
-//    }
-
-//    @JacksonInject("dataSource")
-//    private DataSource ds; // 不从 JSON 来，而是由外部注入
-
-    @JsonRawValue
-    private String data;
-    private String data2;
-
-    /// 用途：在反序列化时 合并 JSON 数据到已有对象（而非完全覆盖），适用于部分更新（PATCH）场景
-    @JsonMerge
-    public Map<String, Object> settings = new HashMap<>();
 }

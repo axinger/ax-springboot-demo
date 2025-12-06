@@ -1,6 +1,6 @@
 CREATE TABLE students
 (
-    id       BIGSERIAL PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     name     varchar(50),
     age      int,
     birthday date

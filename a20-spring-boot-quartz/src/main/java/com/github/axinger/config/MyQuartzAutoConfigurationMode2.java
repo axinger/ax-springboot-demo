@@ -17,7 +17,7 @@ public class MyQuartzAutoConfigurationMode2 {
 
     @Autowired
     private DataSourceProperties dataSourceProperties;
-    
+
     @Autowired
     private DynamicDataSourceProperties properties;
 

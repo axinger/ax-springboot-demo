@@ -3,9 +3,9 @@ package com.github.axinger.wcs.api;
 
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.github.axinger.model.plc.PLCBaseReadDTO;
-import com.github.axinger.model.enums.PlcDataType;
 import com.github.axinger.model.annotation.PlcField;
+import com.github.axinger.model.enums.PlcDataType;
+import com.github.axinger.model.plc.PLCBaseReadDTO;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.plc4x.java.api.PlcConnection;

@@ -22,19 +22,19 @@
         <module>a4404-modbus</module>
     </modules>
 
-<!--    <dependencyManagement>-->
+    <!--    <dependencyManagement>-->
 
-<!--        <dependencies>-->
-<!--            &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.plc4x/plc4j-driver-all &ndash;&gt;-->
-<!--            <dependency>-->
-<!--                <groupId>org.apache.plc4x</groupId>-->
-<!--                <artifactId>plc4j-driver-all</artifactId>-->
-<!--                <version>0.12.0</version>-->
-<!--                <type>pom</type>-->
-<!--                <scope>runtime</scope>-->
-<!--            </dependency>-->
-<!--        </dependencies>-->
+    <!--        <dependencies>-->
+    <!--            &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.plc4x/plc4j-driver-all &ndash;&gt;-->
+    <!--            <dependency>-->
+    <!--                <groupId>org.apache.plc4x</groupId>-->
+    <!--                <artifactId>plc4j-driver-all</artifactId>-->
+    <!--                <version>0.12.0</version>-->
+    <!--                <type>pom</type>-->
+    <!--                <scope>runtime</scope>-->
+    <!--            </dependency>-->
+    <!--        </dependencies>-->
 
-<!--    </dependencyManagement>-->
+    <!--    </dependencyManagement>-->
 
 </project>

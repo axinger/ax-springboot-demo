@@ -5,19 +5,19 @@
 <mapper namespace="com.github.axinger.sys.mapper.DepartmentMapper">
 
     <resultMap id="BaseResultMap" type="com.github.axinger.sys.domain.DepartmentEntity">
-        <id property="id" column="id" jdbcType="BIGINT"/>
-        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
     </resultMap>
 
     <resultMap id="BaseResultMapOfEmployee" type="com.github.axinger.sys.domain.DepartmentEntity"
                extends="BaseResultMap">
         <collection property="empList" ofType="com.github.axinger.sys.domain.EmployeeEntity">
             <!--            含有相同的字段名-->
-            <id property="id" column="e_id" jdbcType="BIGINT"/>
-            <result property="name" column="e_name" jdbcType="VARCHAR"/>
-            <result property="email" column="email" jdbcType="VARCHAR"/>
-            <result property="gender" column="gender" jdbcType="INTEGER"/>
-            <result property="deptId" column="dept_id" jdbcType="INTEGER"/>
+            <id property="id" column="e_id"/>
+            <result property="name" column="e_name"/>
+            <result property="email" column="email"/>
+            <result property="gender" column="gender"/>
+            <result property="deptId" column="dept_id"/>
         </collection>
     </resultMap>
 

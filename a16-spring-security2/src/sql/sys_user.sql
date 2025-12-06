@@ -16,7 +16,7 @@
 
 SET NAMES utf8mb4;
 SET
-FOREIGN_KEY_CHECKS = 0;
+    FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -28,15 +28,15 @@ CREATE TABLE `sys_user`
     `username`    varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL,
     `password`    varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
     `email`       varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-    `phone`       varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-    `status`      tinyint NULL DEFAULT 1 COMMENT '0-禁用 1-启用',
-    `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
-    `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `version`     bigint NULL DEFAULT 0,
-    `is_deleted`  tinyint NULL DEFAULT 0 COMMENT '0-未删除 1-已删除',
+    `phone`       varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NULL DEFAULT NULL,
+    `status`      tinyint                                                       NULL DEFAULT 1 COMMENT '0-禁用 1-启用',
+    `create_time` datetime                                                      NULL DEFAULT CURRENT_TIMESTAMP,
+    `update_time` datetime                                                      NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `version`     bigint                                                        NULL DEFAULT 0,
+    `is_deleted`  tinyint                                                       NULL DEFAULT 0 COMMENT '0-未删除 1-已删除',
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `idx_username` (`username` ASC) USING BTREE,
-    INDEX         `idx_status` (`status` ASC) USING BTREE
+    INDEX `idx_status` (`status` ASC) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 4
   CHARACTER SET = utf8mb4
@@ -57,4 +57,4 @@ VALUES (3, 'tom', '$2a$10$awyqdVCX6dq/7FTaHd3BcuwRn.pdiVsfdgg9HWsiLS/1MJH2Fp/uS'
         '2025-07-12 23:09:11', '2025-07-19 17:13:54', 0, 0);
 
 SET
-FOREIGN_KEY_CHECKS = 1;
+    FOREIGN_KEY_CHECKS = 1;

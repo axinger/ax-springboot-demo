@@ -9,7 +9,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         property = "type"                // JSON 中的字段名
 )
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = Dog.class, name = "dog"),
-    @JsonSubTypes.Type(value = Cat.class, name = "cat")
+        @JsonSubTypes.Type(value = Dog.class, name = "dog"),
+        @JsonSubTypes.Type(value = Cat.class, name = "cat")
 })
-public abstract class Animal { }
+public abstract class Animal {
+}

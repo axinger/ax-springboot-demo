@@ -5,13 +5,13 @@
 <mapper namespace="com.github.axinger.auth.db.mapper.SysUserRolesMapper">
 
     <resultMap id="BaseResultMap" type="com.github.axinger.auth.db.entity.SysUserRolesEntity">
-            <id property="id" column="id" />
-            <result property="userId" column="user_id" />
-            <result property="roleId" column="role_id" />
-            <result property="createTime" column="create_time" />
-            <result property="updateTime" column="update_time" />
-            <result property="version" column="version" />
-            <result property="deleted" column="deleted" />
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="roleId" column="role_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="version" column="version"/>
+        <result property="deleted" column="deleted"/>
     </resultMap>
 
     <sql id="Base_Column_List">

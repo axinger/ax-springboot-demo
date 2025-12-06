@@ -31,6 +31,8 @@ public class JobController {
     private final CompletableFuture<Boolean> future = new CompletableFuture<>();
     @Autowired
     private QuartzTemplate quartzTemplate;
+    @Resource
+    private Scheduler scheduler;
 
     @Operation(summary = "添加一个任务", description = "添加描述")
     @GetMapping("/add")
@@ -48,14 +50,12 @@ public class JobController {
         return Result.success();
     }
 
-
     @Operation(summary = "是否存在一个任务", description = "添加描述")
     @GetMapping("/notExists")
     public Object notExists(String id) {
         Boolean b = quartzTemplate.isExists(id, null);
         return Result.success(b ? "存在" : "不存在");
     }
-
 
     @GetMapping("/delete")
     public Object delete(String id) {
@@ -90,14 +90,12 @@ public class JobController {
         return Result.success();
     }
 
-
     @GetMapping("/list")
     public Result<?> all() {
         List<Object> list = new ArrayList<>();
         list.add(quartzTemplate.getAllJob());
         return Result.success(list);
     }
-
 
     @SneakyThrows
     @GetMapping("/addJob2")
@@ -139,10 +137,6 @@ public class JobController {
 
         return Result.success();
     }
-
-
-    @Resource
-    private Scheduler scheduler;
 
     @Operation(summary = "延迟任务", description = "添加描述")
     @SneakyThrows

@@ -31,8 +31,8 @@ public class SysUserEntity implements Serializable {
     /**
      * 创建时间
      */
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+    @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    private String id;
     /**
      * 用户名
      */

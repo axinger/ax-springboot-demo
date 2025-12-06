@@ -78,10 +78,10 @@ public class PaymentOrderConfig {
                 System.out.println("testServer = " + testServer);
 
 
-    //            template.header("Authorization", "Bearer " + "Refund");
-    //            String url = template.url();
-    //            String originalPath = template.path();
-    //            template.uri(contextPath+url + originalPath);
+                //            template.header("Authorization", "Bearer " + "Refund");
+                //            String url = template.url();
+                //            String originalPath = template.path();
+                //            template.uri(contextPath+url + originalPath);
 
             };
         }

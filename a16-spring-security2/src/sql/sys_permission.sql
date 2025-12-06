@@ -16,7 +16,7 @@
 
 SET NAMES utf8mb4;
 SET
-FOREIGN_KEY_CHECKS = 0;
+    FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
 -- Table structure for sys_permission
@@ -28,21 +28,21 @@ CREATE TABLE `sys_permission`
     `name`        varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL,
     `code`        varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '权限编码(角色或权限标识)',
     `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-    `type`        tinyint NULL DEFAULT 1 COMMENT '1-菜单 2-按钮 3-API',
-    `parent_id`   int NULL DEFAULT 0 COMMENT '父权限ID',
+    `type`        tinyint                                                       NULL DEFAULT 1 COMMENT '1-菜单 2-按钮 3-API',
+    `parent_id`   int                                                           NULL DEFAULT 0 COMMENT '父权限ID',
     `path`        varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '访问路径',
     `method`      varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT 'HTTP方法(*表示所有)',
-    `icon`        varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '图标',
-    `sort`        int NULL DEFAULT 0 COMMENT '排序',
-    `status`      tinyint NULL DEFAULT 1 COMMENT '0-禁用 1-启用',
-    `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
-    `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `version`     bigint NULL DEFAULT 0,
-    `is_deleted`  tinyint NULL DEFAULT 0,
+    `icon`        varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NULL DEFAULT NULL COMMENT '图标',
+    `sort`        int                                                           NULL DEFAULT 0 COMMENT '排序',
+    `status`      tinyint                                                       NULL DEFAULT 1 COMMENT '0-禁用 1-启用',
+    `create_time` datetime                                                      NULL DEFAULT CURRENT_TIMESTAMP,
+    `update_time` datetime                                                      NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `version`     bigint                                                        NULL DEFAULT 0,
+    `is_deleted`  tinyint                                                       NULL DEFAULT 0,
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `idx_code` (`code` ASC) USING BTREE,
-    INDEX         `idx_parent_id` (`parent_id` ASC) USING BTREE,
-    INDEX         `idx_type` (`type` ASC) USING BTREE
+    INDEX `idx_parent_id` (`parent_id` ASC) USING BTREE,
+    INDEX `idx_type` (`type` ASC) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 14
   CHARACTER SET = utf8mb4
@@ -84,4 +84,4 @@ VALUES (10, '数据导出', 'data:export', '导出数据', 2, 0, '', NULL, '', 5
         '2025-07-12 23:09:11', 0, 0);
 
 SET
-FOREIGN_KEY_CHECKS = 1;
+    FOREIGN_KEY_CHECKS = 1;

@@ -2,7 +2,6 @@ package com.github.axinger;
 
 import com.github.axinger.dao.UserRepository;
 import com.github.axinger.model.User;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +16,7 @@ import java.util.Optional;
 public class DataRedisTests {
 
     @Autowired
-    private  UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Test
     public void test1() {

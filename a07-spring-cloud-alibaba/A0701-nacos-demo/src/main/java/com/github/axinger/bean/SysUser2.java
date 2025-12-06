@@ -1,12 +1,10 @@
 package com.github.axinger.bean;
 
-import com.axing.common.util.json.JsonUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -40,7 +38,7 @@ public class SysUser2 {
         try {
             log.info("\n\n👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇");
 //            log.info("User2初始化={}", JsonUtil.toJsonStr(this));
-            log.info("User2初始化age={},name={}", this.age,this.name);
+            log.info("User2初始化age={},name={}", this.age, this.name);
             log.info("\n👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆\n");
         } catch (Exception e) {
             log.error("User2初始化 error: {}", e.getMessage());

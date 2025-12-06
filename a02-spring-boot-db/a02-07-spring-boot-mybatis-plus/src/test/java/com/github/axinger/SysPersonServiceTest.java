@@ -50,24 +50,22 @@ class SysPersonServiceTest {
         System.out.println("list = " + list);
 
     }
+
     @Test
     void test_新增list() {
         String jsonList = """
                 [
                     {
                         "name": "jim",
-                        "age": 10,
-                        "id":1
+                        "age": 10
                     },
                     {
                         "name": "tom",
-                        "age": 10,
-                        "id":2
+                        "age": 10
                     },
                     {
                         "name": "lili",
-                        "age": 11,
-                        "id":3
+                        "age": 11
                     }
                 ]
                 """;
@@ -251,7 +249,7 @@ class SysPersonServiceTest {
     void test_save() {
         sysPersonService.removeById(1L);
         SysPersonEntity book1 = new SysPersonEntity();
-        book1.setId(1L);
+        book1.setId("");
         book1.setName("tom");
         sysPersonService.save(book1);
     }
@@ -325,7 +323,7 @@ class SysPersonServiceTest {
     void test_updateById_bookPrice_2() {
         SysPersonEntity entity = new SysPersonEntity();
 ////        entity.setAge(12);
-        entity.setId(1L);
+        entity.setId("1");
         entity.setVersion(3L); ///乐观锁
 
 //        SysPersonEntity entity = sysPersonService.getById(1);

@@ -16,7 +16,7 @@
 
 SET NAMES utf8mb4;
 SET
-FOREIGN_KEY_CHECKS = 0;
+    FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
 -- Table structure for sys_role_permission
@@ -24,16 +24,16 @@ FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `sys_role_permission`;
 CREATE TABLE `sys_role_permission`
 (
-    `id`            int NOT NULL AUTO_INCREMENT,
-    `role_id`       int NOT NULL,
-    `permission_id` int NOT NULL,
+    `id`            int      NOT NULL AUTO_INCREMENT,
+    `role_id`       int      NOT NULL,
+    `permission_id` int      NOT NULL,
     `create_time`   datetime NULL DEFAULT CURRENT_TIMESTAMP,
     `update_time`   datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `version`       bigint NULL DEFAULT 0,
-    `is_deleted`    tinyint NULL DEFAULT 0,
+    `version`       bigint   NULL DEFAULT 0,
+    `is_deleted`    tinyint  NULL DEFAULT 0,
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `uk_role_permission` (`role_id` ASC, `permission_id` ASC) USING BTREE,
-    INDEX           `idx_permission_id` (`permission_id` ASC) USING BTREE
+    INDEX `idx_permission_id` (`permission_id` ASC) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 21
   CHARACTER SET = utf8mb4
@@ -83,4 +83,4 @@ INSERT INTO `sys_role_permission`
 VALUES (19, 2, 4, '2025-07-19 16:58:13', '2025-07-19 16:58:13', 0, 0);
 
 SET
-FOREIGN_KEY_CHECKS = 1;
+    FOREIGN_KEY_CHECKS = 1;

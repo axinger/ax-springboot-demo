@@ -1,6 +1,5 @@
 package com.github.axinger.controller;
 
-import com.alibaba.fastjson2.JSONObject;
 import com.github.axinger.model.bean.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,7 @@ import java.util.Map;
 @RequestMapping("/env")
 @RequiredArgsConstructor
 public class EnvController {
+    private final Environment environment;
     @Resource
     MyYmlBean myYmlBean;
     @Autowired
@@ -27,9 +27,6 @@ public class EnvController {
     private AxingerPersonProperties axingerPersonProperties;
     @Resource
     private MyUserProperties myUserProperties;
-
-
-    private final Environment environment;
 
     @GetMapping("/1")
     public Object test1() {

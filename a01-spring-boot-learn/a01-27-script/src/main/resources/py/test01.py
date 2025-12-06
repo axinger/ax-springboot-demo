@@ -1,6 +1,7 @@
-import sys
 import json
 import math
+import sys
+
 
 def test1():
     # 获取Java传递的参数
@@ -32,6 +33,7 @@ def test1():
             print(f"错误: 参数必须是数字 ({e})")
     else:
         print("用法: python test01.py <数字1> <数字2>")
+
 
 if __name__ == "__main__":
     test1()

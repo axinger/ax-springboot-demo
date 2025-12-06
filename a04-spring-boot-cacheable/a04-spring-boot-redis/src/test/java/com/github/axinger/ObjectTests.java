@@ -26,15 +26,13 @@ import java.util.concurrent.TimeUnit;
 @SpringBootTest
 public class ObjectTests {
 
+    private static final String SERIAL_NUM = "order:serialNo:";
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
-
     @Autowired
     private ObjectMapper objectMapper; // 注入全局 ObjectMapper
-
     @Autowired
     private RedisUtil redisUtil;
-
     @Autowired
     private JsonRedisUtil jsonRedisUtil;
 
@@ -103,7 +101,6 @@ public class ObjectTests {
         }
     }
 
-
     @Test
     void test2() {
 
@@ -130,7 +127,6 @@ public class ObjectTests {
         System.out.println("user1 = " + user1);
     }
 
-
     /**
      * 自增流水号
      */
@@ -141,8 +137,6 @@ public class ObjectTests {
         }
     }
 
-
-    private static final String SERIAL_NUM = "order:serialNo:";
     void testNum() {
         LocalDateTime dateTime = LocalDateTime.now();
         dateTime = dateTime.plusDays(1);

@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.networknt.schema.JsonSchema;
 import com.networknt.schema.JsonSchemaFactory;
-import com.networknt.schema.ValidationMessage;
 import com.networknt.schema.SpecVersion;
+import com.networknt.schema.ValidationMessage;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +29,7 @@ public class JsonValidationService {
 
     /**
      * 验证JSON字符串是否符合用户Schema
+     *
      * @param jsonString 待验证的JSON字符串
      * @return 验证错误信息集合，为空则表示验证通过
      */

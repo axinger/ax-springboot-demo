@@ -52,13 +52,13 @@
 /// /    public boolean supports(Class<?> authentication) {
 //
 //    /// /      这里直接改成retrun true;表示是支持这个执行
-////        return true;
-////    }
+/// /        return true;
+/// /    }
 //
-////    @Override
-////    public boolean supports(Class<?> authentication) {
-////        return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
-////    }
+/// /    @Override
+/// /    public boolean supports(Class<?> authentication) {
+/// /        return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
+/// /    }
 //    @Override
 //    public boolean supports(Class<?> authentication) {
 //        return authentication.equals(UsernamePasswordAuthenticationToken.class);

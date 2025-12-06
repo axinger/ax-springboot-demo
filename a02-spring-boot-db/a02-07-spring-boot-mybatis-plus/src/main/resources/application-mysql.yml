@@ -8,6 +8,9 @@ spring:
     #    password: ENC(lcvkuMl1WkiShRZJ+Fzlhw==)
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+  flyway:
+    enabled: true
+    locations: classpath:db/migration/mysql
 axinger:
   tenant:
     # 是否开启租户模式

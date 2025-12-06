@@ -1,10 +1,10 @@
 CREATE TABLE `sys_alphabet`
 (
-    `id` int NOT NULL AUTO_INCREMENT,
-    `b`  decimal(10, 2) DEFAULT NULL,
-    `c`  datetime       DEFAULT NULL,
-    `d`  timestamp NULL DEFAULT NULL,
-    `a`  varchar(255)   DEFAULT NULL,
+    `id` VARCHAR(255) NOT NULL,
+    `b`  decimal(10, 2)    DEFAULT NULL,
+    `c`  datetime          DEFAULT NULL,
+    `d`  timestamp    NULL DEFAULT NULL,
+    `a`  varchar(255)      DEFAULT NULL,
     PRIMARY KEY (`id`) USING BTREE
 );
 

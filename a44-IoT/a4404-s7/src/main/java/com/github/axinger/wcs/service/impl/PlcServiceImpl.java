@@ -3,11 +3,11 @@ package com.github.axinger.wcs.service.impl;
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.StrUtil;
 import com.github.axinger.model.dto.PlcDbDataVO;
+import com.github.axinger.model.enums.PlcDataType;
 import com.github.axinger.model.event.PlcEvent;
 import com.github.axinger.model.plc.PLCBaseReadDTO;
 import com.github.axinger.model.plc.PLCReadDTO;
 import com.github.axinger.model.plc.PLCWriteDTO;
-import com.github.axinger.model.enums.PlcDataType;
 import com.github.axinger.model.redis.WorkStatus;
 import com.github.axinger.wcs.api.PlcFoot;
 import com.github.axinger.wcs.job.PlcPool;
@@ -341,7 +341,6 @@ public class PlcServiceImpl implements PlcService {
     public boolean allInput() {
 
 
-
         // 先1,3先进入
 //        for (Integer dbNo : List.of(1, 3)) {
         for (Integer dbNo : List.of(1)) {
@@ -392,7 +391,6 @@ public class PlcServiceImpl implements PlcService {
     public boolean allOutput() {
 
 
-
         //  DB1.DBx190.3	2,4机器人回到零点, 1,3 本来就在原点,也要发一下
         for (Integer dbNo : List.of(2, 4)) {
             PlcFoot foot = foot(dbNo);
@@ -434,7 +432,8 @@ public class PlcServiceImpl implements PlcService {
             }
         }
 
-        log.info("出仓成功................");;
+        log.info("出仓成功................");
+        ;
         return true;
     }
 

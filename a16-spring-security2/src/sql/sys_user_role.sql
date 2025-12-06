@@ -16,7 +16,7 @@
 
 SET NAMES utf8mb4;
 SET
-FOREIGN_KEY_CHECKS = 0;
+    FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -24,16 +24,16 @@ FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `sys_user_role`;
 CREATE TABLE `sys_user_role`
 (
-    `id`          int NOT NULL AUTO_INCREMENT,
-    `user_id`     int NOT NULL,
-    `role_id`     int NOT NULL,
+    `id`          int      NOT NULL AUTO_INCREMENT,
+    `user_id`     int      NOT NULL,
+    `role_id`     int      NOT NULL,
     `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
     `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `version`     bigint NULL DEFAULT 0,
-    `is_deleted`  tinyint NULL DEFAULT 0,
+    `version`     bigint   NULL DEFAULT 0,
+    `is_deleted`  tinyint  NULL DEFAULT 0,
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `uk_user_role` (`user_id` ASC, `role_id` ASC) USING BTREE,
-    INDEX         `idx_role_id` (`role_id` ASC) USING BTREE
+    INDEX `idx_role_id` (`role_id` ASC) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 5
   CHARACTER SET = utf8mb4
@@ -53,4 +53,4 @@ INSERT INTO `sys_user_role`
 VALUES (4, 2, 4, '2025-07-19 17:51:12', '2025-07-19 17:51:12', 0, 0);
 
 SET
-FOREIGN_KEY_CHECKS = 1;
+    FOREIGN_KEY_CHECKS = 1;

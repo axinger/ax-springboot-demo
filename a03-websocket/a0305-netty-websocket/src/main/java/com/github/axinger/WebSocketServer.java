@@ -13,6 +13,10 @@ public class WebSocketServer {
         this.port = port;
     }
 
+    public static void main(String[] args) throws Exception {
+        new WebSocketServer(8080).start();
+    }
+
     public void start() throws Exception {
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
         EventLoopGroup workerGroup = new NioEventLoopGroup();
@@ -20,8 +24,8 @@ public class WebSocketServer {
         try {
             ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup, workerGroup)
-             .channel(NioServerSocketChannel.class)
-             .childHandler(new WebSocketServerInitializer());
+                    .channel(NioServerSocketChannel.class)
+                    .childHandler(new WebSocketServerInitializer());
 
             Channel ch = b.bind(port).sync().channel();
             System.out.println("WebSocket server started at ws://localhost:" + port + "/ws");
@@ -30,9 +34,5 @@ public class WebSocketServer {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
         }
-    }
-
-    public static void main(String[] args) throws Exception {
-        new WebSocketServer(8080).start();
     }
 }

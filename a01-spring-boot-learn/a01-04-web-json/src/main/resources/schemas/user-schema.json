@@ -18,5 +18,9 @@
       "maximum": 120
     }
   },
-  "required": ["username", "email", "age"]
+  "required": [
+    "username",
+    "email",
+    "age"
+  ]
 }

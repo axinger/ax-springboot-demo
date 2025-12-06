@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @ConfigurationProperties(prefix = "my-user")
 public class MyUserProperties {
-    private String username="jim";
+    private String username = "jim";
     private String password;
     private List<String> tip;
 
@@ -24,6 +24,6 @@ public class MyUserProperties {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Dog {
-        private String name="dog";
+        private String name = "dog";
     }
 }
