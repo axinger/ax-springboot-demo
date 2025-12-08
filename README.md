@@ -86,4 +86,8 @@ git config --global user.email "你的新邮箱"
 # 只修改当前仓库
 git config user.name "你的新名字"
 git config user.email "你的新邮箱"
+
+# 查看
+git config user.name
+git config user.email
 ```
