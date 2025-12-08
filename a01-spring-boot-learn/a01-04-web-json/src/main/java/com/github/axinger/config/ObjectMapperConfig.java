@@ -2,12 +2,15 @@ package com.github.axinger.config;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
+import com.github.axinger.jackson.JacksonUser;
+import com.github.axinger.jackson.PersonSerializer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
@@ -53,7 +56,19 @@ public class ObjectMapperConfig {
             // HH:mm:ss
             builder.serializerByType(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern(timeFormat)));
             builder.deserializerByType(LocalTime.class, new LocalTimeDeserializer(DateTimeFormatter.ofPattern(timeFormat)));
+
+// 注册
+//            SimpleModule module = new SimpleModule();
+//            module.addSerializer(JacksonUser.class, new PersonSerializer());
+//            builder.modulesToInstall(module);
         };
     }
+
+//    @Bean
+//    public SimpleModule customJacksonModule() {
+//        SimpleModule module = new SimpleModule();
+//        module.addSerializer(JacksonUser.class, new PersonSerializer());
+//        return module;
+//    }
 
 }
