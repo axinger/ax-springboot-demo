@@ -42,7 +42,7 @@
         <mybatis-plus.version>3.5.9</mybatis-plus.version>
         <guava.version>33.3.0-jre</guava.version>
         <!--        <guava.version>33.4.0-jre</guava.version>-->
-        <hutool.version>5.8.35</hutool.version>
+        <hutool.version>5.8.42</hutool.version>
         <fastjson2.version>2.0.49</fastjson2.version>
         <lombok.version>1.18.34</lombok.version>
         <netty-all.version>4.2.0.Final</netty-all.version>

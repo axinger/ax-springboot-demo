@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @SpringBootTest
-class MainTest {
+class A1002RabbitMqApplicationTest {
 
 
     @Autowired

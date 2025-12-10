@@ -2,16 +2,6 @@ package com.github.axinger;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-@SpringBootApplication
-public class Main {
-
-    public static void main(String[] args) {
-        SpringApplication.run(Main.class, args);
-    }
-
-}
-
 /**
  * https://blog.csdn.net/weixin_41882200/article/details/117128590
  * https://blog.csdn.net/Yearingforthefuture/article/details/119611721
@@ -34,3 +24,13 @@ public class Main {
  * <p>
  * ​ 4、header headers 交换器允许匹配 AMQP 消息的 header 而非路由键，除此之外，header 交换器和 direct 交换器完全一致，但是性能却差很多，因此基本上不会用到该交换器
  */
+@SpringBootApplication
+public class A1002RabbitMqApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(A1002RabbitMqApplication.class, args);
+    }
+
+}
+
+
