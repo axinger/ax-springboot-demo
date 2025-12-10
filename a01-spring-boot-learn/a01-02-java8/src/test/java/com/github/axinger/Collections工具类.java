@@ -141,4 +141,14 @@ public class Collections工具类 {
 
     }
 
+
+    @Test
+    public void test5() {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUid(1L);
+        userInfo.setUid2(2L);
+        userInfo.setGender(1);
+        Map<String, Object> context = Collections.singletonMap("user", userInfo);
+        System.out.println("context = " + context);
+    }
 }

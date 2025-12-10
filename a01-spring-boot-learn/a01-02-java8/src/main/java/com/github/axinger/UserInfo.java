@@ -1,7 +1,9 @@
 package com.github.axinger;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author xing
@@ -13,6 +15,8 @@ import lombok.Data;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserInfo {
     private Long uid;
     private Long uid2;
