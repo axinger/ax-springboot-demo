@@ -100,7 +100,7 @@ public class RedissonLockController {
         // 1.改数据,加写锁
         final RLock writeLock = lock.writeLock();
         try {
-            writeLock.lock();
+            writeLock.lock(3, TimeUnit.SECONDS);
             uuid = UUID.randomUUID().toString();
             TimeUnit.SECONDS.sleep(30);
         } catch (InterruptedException e) {
@@ -118,7 +118,7 @@ public class RedissonLockController {
 
         RReadWriteLock lock = redissonClient.getReadWriteLock("rw-lock");
         final RLock readLock = lock.readLock();
-        readLock.lock();
+        readLock.lock(3, TimeUnit.SECONDS);
         String uuid = "";
         try {
             uuid = (String) redisTemplate.opsForValue().get("writeLockValue");
