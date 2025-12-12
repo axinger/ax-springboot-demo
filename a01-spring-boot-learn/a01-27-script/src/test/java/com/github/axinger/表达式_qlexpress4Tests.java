@@ -33,7 +33,7 @@ public class 表达式_qlexpress4Tests {
                 return orderAmount;
             }
             """;
-
+        //Express4Runner 单例
         // 创建表达式执行器（V4 版本）
         Express4Runner express4Runner = new Express4Runner(InitOptions.DEFAULT_OPTIONS);
 
