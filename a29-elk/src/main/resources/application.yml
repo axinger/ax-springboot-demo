@@ -1,8 +1,0 @@
-logging:
-  config: classpath:logback-spring.xml
-  file:
-    path: logs
-#  level:
-#    com.ax: debug
-
-

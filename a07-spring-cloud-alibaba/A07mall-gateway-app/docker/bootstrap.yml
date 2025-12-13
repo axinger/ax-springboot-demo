@@ -1,5 +1,0 @@
-spring:
-  cloud:
-    nacos:
-      discovery:
-        ip: 192.168.10.203 # 指定注册到nacos的ip,为宿主机ip,不是docker容器内部ip,而无法调用bug

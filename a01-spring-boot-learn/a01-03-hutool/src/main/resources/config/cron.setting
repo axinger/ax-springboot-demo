@@ -1,4 +1,0 @@
-# 我是注释
-[com.github.axinger]
-TestJob.run = 0/5 * * * * ?
-TestJob2.run = 0/10 * * * * ?

@@ -1,6 +1,0 @@
-spring:
-  profiles:
-    active: prd
-#  application:
-#    version: 1.0.2222
-#    description: 生产环境

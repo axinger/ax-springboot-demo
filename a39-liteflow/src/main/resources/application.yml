@@ -1,9 +1,0 @@
-liteflow:
-  #规则文件路径
-  rule-source: config/flow.el.xml,config/flow.el2.xml
-  print-execution-log: false #不希望打印这种中间执行信息
-logging:
-  level:
-    com:
-      yomahub:
-        liteflow: error
