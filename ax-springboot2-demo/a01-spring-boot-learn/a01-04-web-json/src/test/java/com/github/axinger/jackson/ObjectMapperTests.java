@@ -61,6 +61,8 @@ public class ObjectMapperTests {
 
             SysUser sysUser2 = new SysUser();
             sysUser2.setName("tom");
+            /// "status":{"code":"active","description":"用户活跃"}}
+            sysUser2.setStatus(Status.ACTIVE);
             mapper.enable(SerializationFeature.WRAP_ROOT_VALUE);
             String json2 = mapper.writeValueAsString(sysUser2);
             System.out.println("json2 = " + json2);

@@ -61,6 +61,9 @@ public class SysUser {
     private String data;
     private String data2;
 
+    //"status":{"code":"active","description":"用户活跃"}}
+    private Status status;
+
 //    @JsonSetter("full_name")
 //    public void setFullNameFromJson(String name) {
 //        this.fullName = name.trim();
@@ -73,6 +76,12 @@ public class SysUser {
     @JsonAnySetter
     public void setOtherProperty(String key, Object value) {
         otherProperties.put(key, value);
+    }
+
+    /// 重载
+    @JsonAnySetter
+    public void setOtherProperty(Map<String, Object> otherProperties) {
+        this.otherProperties = otherProperties;
     }
 
     @JsonAnyGetter
