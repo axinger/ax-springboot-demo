@@ -1,0 +1,104 @@
+pipeline {
+    agent any
+
+    tools {
+        maven "maven-3.9.9"
+    }
+
+    environment {
+        // 初始化版本号变量
+        PROJECT_VERSION = ''
+    }
+
+    stages {
+        stage('拉取代码') {
+            steps {
+                git credentialsId: '134gitlab', url: 'http://192.168.101.134:15021/root/demo1.git'
+                echo '拉取代码成功'
+            }
+        }
+
+        stage('读取版本号') {
+            steps {
+                script {
+                    // 确保当前目录包含 pom.xml，或在子目录中使用 dir() 切换
+                    def version = sh(
+                        script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout',
+                        returnStdout: true
+                    ).trim()
+                    echo "Project version: ${version}"
+                    // 将版本号保存到环境变量中供后续步骤使用
+                    env.PROJECT_VERSION = version
+                }
+            }
+        }
+
+        stage('构建代码') {
+            steps {
+                sh """
+                    mvn --version
+                    mvn clean package -Dmaven.test.skip=true -Drevision=${env.PROJECT_VERSION}
+                """
+                echo '构建成功'
+            }
+        }
+
+        stage('发送文件到远程服务器') {
+            steps {
+                sshPublisher(
+                    publishers: [
+                        sshPublisherDesc(
+                            configName: '143@SSH',
+                            transfers: [
+                                sshTransfer(
+                                    cleanRemote: false,
+                                    excludes: '',
+                                    execCommand: '',
+                                    execTimeout: 120000,
+                                    flatten: false,
+                                    makeEmptyDirs: false,
+                                    noDefaultExcludes: false,
+                                    patternSeparator: '[, ]+',
+                                    remoteDirectory: '/opt/app/demo1',
+                                    remoteDirectorySDF: false,
+                                    removePrefix: 'target',
+                                    sourceFiles: 'target/*.jar'
+                                ),
+                                sshTransfer(
+                                    cleanRemote: false,
+                                    excludes: '',
+                                    execCommand:  """
+                                      echo "当前路径1: \$(pwd)"
+                                      echo "构建ID: ${BUILD_ID}"
+                                      echo "项目版本: ${env.PROJECT_VERSION}"
+                                      cd /opt/app/demo1
+                                      echo "当前路径2: \$(pwd)"
+                                      docker stop demo1 || true
+                                      docker rm demo1 || true
+                                      docker rmi demo1:${env.PROJECT_VERSION} || true
+                                      docker build -t demo1:${env.PROJECT_VERSION} .
+                                      docker run -d --name demo1 -p 15501:15501 demo1:${env.PROJECT_VERSION}
+                                    """,
+                                    execTimeout: 120000,
+                                    flatten: false,
+                                    makeEmptyDirs: false,
+                                    noDefaultExcludes: false,
+                                    patternSeparator: '[, ]+',
+                                    remoteDirectory: '/opt/app/demo1',
+                                    remoteDirectorySDF: false,
+                                    removePrefix: '',
+                                    sourceFiles: 'Dockerfile'
+                                )
+                            ],
+                            usePromotionTimestamp: false,
+                            useWorkspaceInPromotion: false,
+                            // 控制ssh的日志也显示在webUI
+                            verbose: true
+                        )
+                    ]
+                )
+                echo '文件发送成功'
+            }
+        }
+    }
+}

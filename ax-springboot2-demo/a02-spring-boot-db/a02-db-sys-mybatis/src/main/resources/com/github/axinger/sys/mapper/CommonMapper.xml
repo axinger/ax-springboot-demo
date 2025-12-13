@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.axinger.sys.mapper.CommonMapper">
+
+    <select id="queryTableMap" resultType="java.util.Map">
+        <!-- 使用前校验 SQL -->
+        <bind name="validatedSql" value="@com.github.axinger.config.SqlValidator@validateSelectSql(sql)"/>
+        ${sql}
+    </select>
+
+    <select id="queryTableMap2" resultType="java.util.Map">
+        ${sql}
+    </select>
+
+    <!--    LinkedHashMap 按照查询字段顺序返回-->
+    <select id="queryTableLinkedHashMap" resultType="java.util.LinkedHashMap">
+        ${sql}
+    </select>
+
+    <select id="queryTableLinkedHashMap2" resultType="java.util.LinkedHashMap">
+        ${sql}
+    </select>
+
+    <!--    TreeMap 按照查询字段排序返回-->
+    <select id="queryTableTreeMap" resultType="java.util.TreeMap">
+        ${sql}
+    </select>
+
+
+    <!--    LinkedHashMap 按照查询字段顺序返回-->
+    <select id="queryTableHasId" resultType="java.util.LinkedHashMap" parameterType="map">
+        <!-- 使用前校验 SQL -->
+        <bind name="validatedSql" value="@com.github.axinger.config.SqlValidator@validateSelectSql(sql)"/>
+        ${sql}
+        <where>
+            <if test="params != null and params.id != null">
+                AND id = #{params.id}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertRawSql">
+        ${sql}
+    </insert>
+</mapper>

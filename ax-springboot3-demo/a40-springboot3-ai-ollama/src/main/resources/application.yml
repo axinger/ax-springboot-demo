@@ -1,0 +1,9 @@
+server:
+  port: 8081
+
+spring:
+  ai:
+    ollama:
+      chat:
+        options:
+          model: qwen2.5

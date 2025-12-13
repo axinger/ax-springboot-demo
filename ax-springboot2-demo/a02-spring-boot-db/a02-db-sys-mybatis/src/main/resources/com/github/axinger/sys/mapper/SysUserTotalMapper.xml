@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.axinger.sys.mapper.SysUserTotalMapper">
+
+    <resultMap id="BaseResultMap" type="com.github.axinger.sys.domain.SysUserTotalEntity">
+        <id property="name" column="name"/>
+        <id property="type" column="type"/>
+        <result property="num" column="num"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        name
+        ,type,num
+    </sql>
+</mapper>

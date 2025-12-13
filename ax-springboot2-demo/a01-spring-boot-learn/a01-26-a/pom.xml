@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.github.axinger</groupId>
+        <artifactId>a01-spring-boot-learn</artifactId>
+        <version>2025.10.01-2.7</version>
+    </parent>
+
+    <artifactId>a01-26-a</artifactId>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.github.axinger</groupId>
+            <artifactId>a01-26-b</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.github.axinger.A0126MoreAApplication</mainClass>
+                    <!--                    <arguments>-->
+                    <!--                        <argument>&#45;&#45;spring.config.location=classpath:/application-a.yml</argument>-->
+                    <!--                    </arguments>-->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

@@ -1,0 +1,59 @@
+server:
+  port: 10801
+  servlet:
+    context-path: /A0701NacosDemo
+spring:
+  application:
+    name: A0701NacosDemo
+  cloud:
+    nacos:
+      config: #配置中心
+        server-addr: http://localhost:8848
+        username: nacos
+        password: nacos
+        # 默认一个文件，也可以指定
+        prefix: ${spring.application.name}
+        #        prefix: all
+        refresh-enabled: true
+        file-extension: yaml
+        group: DEFAULT_GROUP
+        namespace: dev
+        enabled: true
+        shared-configs:
+          - data-id: 'A0701NacosDemo.yaml' # 配置文件名-Data Id
+            group: DEFAULT_GROUP   # 默认为DEFAULT_GROUP
+            refresh: true   # 是否动态刷新，默认为false
+        # 默认加载,通用格式的,再加载其他配置,用以下语法
+        extension-configs:
+          - data-id: axinger-doc.yml
+            group: DEFAULT_GROUP
+            refresh: true
+          - data-id: axinger-filter.yml
+            group: DEFAULT_GROUP
+            refresh: true
+          - data-id: axinger-user.yml
+            group: DEFAULT_GROUP
+            refresh: true
+      discovery:
+        #        server-addr: 127.0.0.1:8848
+        server-addr: http://localhost:8848
+        username: nacos
+        password: nacos
+        namespace: dev
+        group: DEFAULT_GROUP
+#        enabled: false
+
+
+axinger:
+  doc:
+    title: nacos案例
+    description: 123
+    version: v1234
+    websiteName: 11111
+    websiteUrl: 11111
+  filter:
+    blacklist: /order/**
+    whitelist: /order/1,/order/2,/test/**
+  user:
+    name: axinger
+    age: 18

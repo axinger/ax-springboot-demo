@@ -1,0 +1,22 @@
+server:
+  port: 10708
+  servlet:
+    context-path: /payment
+
+spring:
+  application:
+    name: mall-payment-app
+  zipkin:
+    base-url: http://hadoop135:9411/
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      #抽样百分比，默认10%的数据发到zipkin，1为100%
+      probability: 1
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html

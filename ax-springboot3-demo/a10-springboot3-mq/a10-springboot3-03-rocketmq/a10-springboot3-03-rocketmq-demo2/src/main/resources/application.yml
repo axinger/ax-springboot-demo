@@ -1,0 +1,20 @@
+server:
+  port: 12011
+
+rocketmq:
+  #  name-server: 127.0.0.1:9876 # 访问地址
+  #  name-server: hadoop102:9876 # 访问地址
+  name-server: hadoop10011:9876 # 访问地址
+  #  name-server: hadoop143:9876 # 访问地址
+
+  producer:
+
+    group: Group_1 # 必须指定group
+    send-message-timeout: 30000 # 消息发送超时时长，默认3s
+  #    retry-times-when-send-failed: 3 # 同步发送消息失败重试次数，默认2
+  #    retry-times-when-send-async-failed: 3 # 异步发送消息失败重试次数，默认2
+  consumer:
+
+    group: sys_msg_group
+#    pull-batch-size: 3
+

@@ -1,0 +1,27 @@
+server:
+  port: 6700
+spring:
+  application:
+    name: nacos-gateway-main
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: test_jianshu
+          uri: https://www.jianshu.com/
+          predicates:
+            - Path=/jianshu/**
+
+        - id: nacos-gateway-server-login
+          uri: lb://nacos-gateway-server-login
+          predicates:
+            - Path=/login/**
+
+        - id: nacos-gateway-server-order
+          uri: lb://nacos-gateway-server-order
+          predicates:
+            - Path=/order/**
+

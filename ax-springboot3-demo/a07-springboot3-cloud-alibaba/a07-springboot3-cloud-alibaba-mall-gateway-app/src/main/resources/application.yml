@@ -1,0 +1,47 @@
+server:
+  port: 6700
+spring:
+  application:
+    name: mall-gateway-app
+  cloud:
+    gateway:
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: # 允许哪些网站的跨域请求
+              - "http://localhost:8090"
+            allowedMethods: # 允许的跨域ajax的请求方式
+              - "GET"
+              - "POST"
+              - "DELETE"
+              - "PUT"
+              - "OPTIONS"
+            allowedHeaders: "*" # 允许在请求中携带的头信息
+            allowCredentials: true # 是否允许携带cookie
+            maxAge: 360000 # 这次跨域检测的有效期
+
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+  #      routes: #走nacos
+  #        - id: mall-order-app
+  #          uri: lb://mall-order-app
+  #          predicates:
+  #            - Path=/order/**
+  #
+  #        - id: mall-payment-app
+  #          uri: lb://mall-payment-app
+  #          predicates:
+  #            - Path=/payment/**
+
+
+  zipkin:
+    base-url: http://192.168.101.135:9411/
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      #抽样百分比，默认10%的数据发到zipkin，1为100%
+      probability: 1

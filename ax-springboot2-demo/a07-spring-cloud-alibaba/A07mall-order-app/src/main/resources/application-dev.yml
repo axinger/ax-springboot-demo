@@ -1,0 +1,54 @@
+server:
+  port: 10707
+  servlet:
+    context-path: /order
+
+spring:
+  application:
+    name: mall-order-app
+  zipkin:
+    base-url: http://hadoop135:9411/
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      #抽样百分比，默认10%的数据发到zipkin，1为100%
+      probability: 1
+server-url:
+  nacos-payment-service: http://mall-payment-app
+  gateway-service: http://mall-gateway-app
+server-name:
+  payment-service: mall-payment-app
+
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+#springdoc:
+##  swagger-ui:
+##    path: /swagger-ui.html
+##    tags-sorter: alpha
+##    operations-sorter: alpha
+##    show-extensions: true
+##  api-docs:
+##    path: /v3/api-docs
+#  group-configs:
+#    - group: '订单系统'
+##      paths-to-match: '/order/**'
+#      paths-to-match: '/**'
+#      packages-to-scan: com.github.axinger
+##  default-flat-param-object: false
+
+axinger:
+  doc:
+    title: nacos案例
+    description: 123
+    version: v1234
+    websiteName: 11111
+    websiteUrl: 11111
+  filter:
+    blacklist: /order/**
+    whitelist: /order/1,/order/2

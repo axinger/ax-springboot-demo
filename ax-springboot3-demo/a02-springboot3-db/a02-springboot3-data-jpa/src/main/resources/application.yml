@@ -1,0 +1,5 @@
+spring:
+  profiles:
+    #      active: sqlserver
+    #    active: pgsql
+    active: mysql

@@ -1,0 +1,26 @@
+server:
+  port: 12033
+
+spring:
+  profiles:
+    active: dev
+  web:
+    resources:
+      #      static-locations: "classpath:/dist"
+      add-mappings: false
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+
+axinger:
+  doc:
+    title: docker打包项目
+    description: docker打包项目
+    version: @version@
+
+

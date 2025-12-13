@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.axinger.mapper.StudentMapper">
+
+    <resultMap id="BaseResultMap" type="com.github.axinger.domain.Student">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="age" column="age" jdbcType="SMALLINT"/>
+        <result property="gender" column="gender" jdbcType="SMALLINT"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="version" column="version" jdbcType="BIGINT"/>
+        <result property="deleted" column="deleted" jdbcType="SMALLINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        ,name,age,
+        gender,address,create_time,
+        update_time,version,deleted
+    </sql>
+</mapper>

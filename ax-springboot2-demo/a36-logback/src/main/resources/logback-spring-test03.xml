@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scanPeriod="60 seconds" debug="false">
+
+    <!--    <springProperty scope="context" name="logging.file.name" source="logging.file.name" defaultValue="logs"/>-->
+
+    <!--预读spring.application.name,不能直接${spring.application.name}-->
+    <springProperty scope="context" name="app.name" source="spring.application.name" defaultValue="my-app"/>
+    <springProperty scope="context" name="logging.file.name" source="logging.file.name"
+                    defaultValue="./logs/${app.name}"/>
+
+
+    <property name="LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS}  %-5level  ${PID:- } --- [%t] %logger{100} : %msg%n"/>
+    <!--    <property name="maxHistory" value="60"/>-->
+    <!--    <property name="maxFileSize" value="10MB"/>-->
+
+    <springProperty scope="context" name="maxHistory" source="logging.file.maxHistory" defaultValue="60"/>
+    <springProperty scope="context" name="maxFileSize" source="logging.file.maxFileSize" defaultValue="10MB"/>
+
+
+    <!-- 控制台输出 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- 2025-01-06 14:06:19.803 WARN  6480 - [main] com.github.axinger.A36LogbackApplicationTest : info = warn 日志-->
+            <!--            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level ${PID} -&#45;&#45; [%t] %logger{100} : %msg%n</pattern>-->
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 按照每天生成日志文件 -->
+    <appender name="ROLLING_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>${logging.file.name}/%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <MaxHistory>${maxHistory}</MaxHistory>
+            <maxFileSize>${maxFileSize}</maxFileSize>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!-- 设置日志文件编码为 UTF-8 -->
+            <charset>UTF-8</charset>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!--专门记录info-->
+    <appender name="ROLLING_FILE_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${logging.file.name}/%d{yyyy-MM-dd}.%i.info.log</fileNamePattern>
+            <MaxHistory>${maxHistory}</MaxHistory>
+            <maxFileSize>${maxFileSize}</maxFileSize>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!--专门记录error-->
+    <appender name="ROLLING_FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${logging.file.name}/%d{yyyy-MM-dd}.%i.error.log</fileNamePattern>
+            <MaxHistory>${maxHistory}</MaxHistory>
+            <maxFileSize>${maxFileSize}</maxFileSize>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="ROLLING_FILE"/>
+        <appender-ref ref="ROLLING_FILE_INFO"/>
+        <appender-ref ref="ROLLING_FILE_ERROR"/>
+    </root>
+</configuration>

@@ -1,0 +1,21 @@
+server:
+  servlet:
+    context-path: /
+  port: 12021
+
+elasticsearch:
+  schema: http
+  address: hadoop103
+  port: 9200
+  connect-timeout: 5000
+  socket-timeout: 5000
+  connection-request-timeout: 5000
+  max-connect-num: 100
+  max-connect-per-route: 100
+  username:
+  password:
+
+spring:
+  data:
+    elasticsearch:
+

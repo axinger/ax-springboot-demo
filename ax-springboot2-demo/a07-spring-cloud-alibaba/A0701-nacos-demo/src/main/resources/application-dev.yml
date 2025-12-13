@@ -1,0 +1,4 @@
+#spring:
+#  config:
+#    import:
+#      - optional:nacos:axinger-user.yml  # 这个方式在nacos中不适配

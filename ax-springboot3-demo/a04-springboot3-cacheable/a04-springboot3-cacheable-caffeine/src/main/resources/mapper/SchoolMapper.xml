@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.axinger.mapper.SchoolMapper">
+
+    <resultMap id="BaseResultMap" type="com.github.axinger.domain.School">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="area" column="area" jdbcType="DOUBLE"/>
+        <result property="schoolName" column="school_name" jdbcType="VARCHAR"/>
+        <result property="zone" column="zone" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        ,area,school_name,
+        zone
+    </sql>
+</mapper>

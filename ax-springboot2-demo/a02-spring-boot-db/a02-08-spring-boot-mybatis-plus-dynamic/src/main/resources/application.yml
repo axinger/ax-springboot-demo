@@ -1,0 +1,11 @@
+server:
+  port: 12002
+spring:
+
+  application:
+    name: a17-spring-boot-mybatis-plus
+  profiles:
+    active: dev
+axinger:
+  response:
+    base-packages: com.github.axinger

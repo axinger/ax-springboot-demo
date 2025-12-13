@@ -1,0 +1,9 @@
+server:
+  port: 14022
+
+
+# application.yml
+spring:
+  profiles:
+    active: dev  # 默认激活开发环境
+

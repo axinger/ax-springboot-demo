@@ -1,0 +1,15 @@
+syntax = "proto3";
+package com.github.axinger.api;
+//option java_outer_classname = "Api";
+import "google/protobuf/empty.proto";
+import "user.proto";  // 导入 User 消息
+import "product.proto";  // 导入 Product 消息
+
+message ResponsePayload {
+  oneof payload {
+    google.protobuf.Empty empty = 1;
+    User user = 2;
+    Product product = 3;
+    UserList userList = 4;
+  }
+}

@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://192.168.101.142:1433;DatabaseName=ax_test2;encrypt=false;trustServerCertificate=false
+    username: sa
+    password: Cepai@wit2022
+  jpa:
+    database: sql_server
+    hibernate:
+      ddl-auto: update
+    #    properties:
+    #      hibernate:
+    #        dialect: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true

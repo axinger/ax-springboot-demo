@@ -1,0 +1,19 @@
+axinger:
+  user:
+    username: jim,tom
+    password: 1234
+    dog: # 必须缩进两格
+      min: 1 # 必须缩进四格
+      max: 100
+
+  person:
+    id: 1
+    name: jim
+    age: 18
+    time: 12:00:00
+    time2: "13:00:00"
+    created-date: "2000-01-01 13:00:00"
+    created-time: "13:00:01"
+    updated-date-time: "2000-01-02 14:00:00"
+    updated-date: "2000-01-02"
+    updated-time: "14:00:01"

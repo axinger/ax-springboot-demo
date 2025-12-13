@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--自动装配 ,属性名或者类名 2种方式  -->
+    <!--
+    autowire="byName" 根据属性名称
+    autowire="byType" 类别 只能有一个
+    -->
+
+    <bean id="helloWord" class="com.github.axinger.helloword.HelloWord" autowire="byType">
+
+        <!--这个是手动装配-->
+        <!--        <property name="idCard" ref="idCard"></property>-->
+        <constructor-arg ref="helloService"></constructor-arg>
+    </bean>
+
+
+    <bean id="helloService" class="com.github.axinger.helloword.HelloService"></bean>
+
+
+</beans>

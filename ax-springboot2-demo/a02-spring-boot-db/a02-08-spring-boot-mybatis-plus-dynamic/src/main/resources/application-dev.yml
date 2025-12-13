@@ -1,0 +1,88 @@
+jasypt:
+  encryptor:
+    #  采用的加密算法
+    algorithm: PBEWITHHMACSHA512ANDAES_256
+    # 盐粒
+    password: 1234
+    property:
+      prefix: ENC(
+      suffix: )
+    iv-generator-classname: org.jasypt.iv.RandomIvGenerator
+
+spring:
+  application:
+    name: a17-spring-boot-mybatis-plus
+
+  #SpringBoot中会集成flyway的版本
+  #  flyway:
+  #    #开启自动创建flyway元数据表标识 默认: false
+  ##    baseline-on-migrate: true
+  #    #如果数据库中已经存在数据，从基线版本之前的脚本不再执行
+  #    #    enabled: true
+  #    enabled: true #注册多数据源
+  datasource:
+    #    url: jdbc:mysql://localhost:3306/ax_test?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+    #    username: root
+    #    password: 123456
+    #    driver-class-name: com.mysql.cj.jdbc.Driver
+    dynamic:
+      primary: db_1 #设置默认的数据源或者数据源组,默认值即为master
+      strict: false #无数据源启动，严格匹配数据源,默认false. true未匹配到指定数据源时抛异常,false使用默认数据源
+      lazy: true #默认false非懒启动，系统加载到数据源立即初始化连接池，缺点在于，如果参数配置有误，则启动的时候不知道，初始化的时候失败，可能一直抛异常。
+      datasource:
+        db_1:
+          url: jdbc:mysql://localhost:3306/ax_test01?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+          username: root
+          #          password: Abcd#1234
+          password: ENC(dclW3RclF3sVdZkNxj+UwqZ8U8tNoX1NBrno5/CRMsjveE+6de5/XlFzoCj0wSzU)
+          driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+        db_2:
+          url: jdbc:mysql://localhost:3306/ax_test02?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+          username: root
+          password: Abcd#1234
+          driver-class-name: com.mysql.cj.jdbc.Driver
+
+  #        db_2:
+  #          driver-class-name: com.mysql.jdbc.Driver
+  #          url: ENC(JKgrD5Wdhc1DtXKouajuL66h4CqS1O5FkR9mD5sEEVmNQfZ+fU+38pgdVDuRxl2S4mo+JMcR5zWjTFH+4IU6Zss+y5hIje9m2KtSCvE5abb3WDMx7aOK7+9sxeDhmxWIZqks/LEOxD8kZz3p6B6BH4UOfo3SiDNjvJyuzuFFFmBa6xInHsa4uqEQPqmdnbrdLsUuKH0vv36exM2Q1I21cMbLDQ4g4tPiaw9Quih5iyX314Jy5l+GujzFoBemZlJa8IjvqdtiOuGCvcYkTg1HdQF9vm76lRNw1aKS7hSJamJxdLLzCzhm27Nw8OtxPlgvIPHsanvHywTL2XoD7eGfjw==) # 内置加密,使用请查看详细文档
+  #          username: ENC(aCBKXfXJ1mfKr4Zvm+wWoBvResWzTirWBUL9hcGBRA2/eI9jaVYpkHLtCMdT2TAeGW49H/E/+NIYPox0Hodbt1A0fy+fU2TuWOjFl4vvGssWIWyCLU30ezB5UpY0yU6hKR6uaqD7XBNQ7lfNV9U8hVGvH59LMgVBjevjzO9MrwFOb8RVR63uPM/4JZ1/lh23fdYhygQ/KvPGAFi2D48Rve93G1bo5zD8yN4qOsPQxxzWOlx4pGnJZpdhkfUZLS4cqZe3bIwGH7CZsOCntdbp/J4oRulpejwWTv3+srnSSx8zPWMEi7dDdxpgZNYrgO98OmKiOx8oOZ6OqKXSk1E4xw==)
+  #          password: ENC(Ks/J+kjGB7ahvzW7BiWFJvqt/1P3o1rKDTxmVKIFmVsMnxwFTSb1O26kc6O65vPgpjtjfo4ZZUsOmgpXvvMZw8fcX5jRXt9W5sSUJ8Fhhj1ApYulmGlC5TEld2K0nTGEy2GgF5LPA+/agw3G2yT/LSL9HExAQLMApUfh5Entt6ELZWnUkXNlucCkfncMLBO3lS7Ql8TN3hdHmqk5P5RMetJA7tGnCxVMMy26o6aPZfAwWBDWVA1B5WxDtTcSHAYeZm0SW6Sj8/nE+jQ+Ej0hQO32H6xoKmcnIXdjqt+AGQoXDaS1Rwu8pHoHskp8k7P3BCOMmMC0VAZX4eRSrnll3A==)
+  #          public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtpUzRs5LueS/+MwdAg0bRdRXTAIqdtVjkW/vKLVe7NoJ3l0JvtHS+yrbpngrXyZhtpaFGMRhxUditTc48IaTDv0dPnFoRVBnNVR86HMjRDAusuCwsyG83ypShGtkOJO3xQy0m5W/LBVtRlFH1jgPrw7Kb7GBIIWm64wKES6cyKXHuhiEdxycMedEmM0qKi3DlbkB4eCYRYtY18FEwAEdYl/maq4YVImqCTofApw5DC0nBnSZhvCkcc7eTh3+bTOuKZ5+n/W1eogiBC9Oc7SCHhcV6Q7mx/9y7cio+zytd5e35TQkUmkpPsS5lP/joXn4wHFHYEqyCJa9bBJXwncmOwIDAQAB
+  #          init:
+  #            schema: db2/order/schema.sql # 配置则生效,自动初始化表结构
+  #            data: db2/order/data.sql # 配置则生效,自动初始化数据
+  #            continue-on-error: true # 默认true,初始化失败是否继续
+  #            separator: ";" # sql默认分号分隔符，一般无需更改
+
+  #    log颜色
+  output:
+    ansi:
+      enabled: always
+
+mybatis-plus:
+  #枚举包,必须有
+  #  type-enums-package: com.ax.a16.enums
+  #  mapper-locations: classpath*:/mybatis/*.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  #  typeAliasesPackage: com.example.demo.model
+  #  configuration:
+  #开启下划线转驼峰
+  #  map-underscore-to-camel-case: true
+  #  #开启返回map结果集的下划线转驼峰
+  #  object-wrapper-factory: com.baomidou.mybatisplus.extension.MybatisMapWrapperFactory
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql日志
+
+logging:
+  #  file:
+  #    path:
+  #  config: classpath:log4j2.xml
+  #  file:
+  #    name: log/myspringboot.log
+  #    path: log
+  level:
+    com.ax.demo.mapper: debug
+#  pattern:
+#    console: '%clr(%d{HH:mm:ss}){yellow} [%clr(%thread){red}] %-5level --- %clr(%logger){green} | %msg%n'

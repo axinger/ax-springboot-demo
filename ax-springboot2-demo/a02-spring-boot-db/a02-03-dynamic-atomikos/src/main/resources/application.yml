@@ -1,0 +1,8 @@
+server:
+  port: 12002
+spring:
+  profiles:
+    active: jta
+logging:
+  level:
+    root: info

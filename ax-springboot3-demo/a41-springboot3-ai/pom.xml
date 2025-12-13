@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.github.axinger</groupId>
+        <artifactId>ax-springboot3-demo</artifactId>
+        <version>2025.03.01-3.4</version>
+    </parent>
+
+    <artifactId>a41-springboot3-ai</artifactId>
+
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <spring-ai.version>1.0.2</spring-ai.version>
+    </properties>
+
+    <dependencyManagement>
+
+        <dependencies>
+
+
+<!--            <dependency>-->
+
+<!--                <groupId>org.springframework.ai</groupId>-->
+<!--                <artifactId>spring-ai-dependencies</artifactId>-->
+<!--                <version>1.0.2</version>-->
+<!--                <type>pom</type>-->
+<!--                <scope>import</scope>-->
+<!--            </dependency>-->
+
+            <!-- https://mvnrepository.com/artifact/org.springframework.ai/spring-ai -->
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.ai</groupId>-->
+<!--                <artifactId>spring-ai</artifactId>-->
+<!--                <version>1.0.0-M6</version>-->
+<!--                <type>pom</type>-->
+<!--            </dependency>-->
+
+        </dependencies>
+    </dependencyManagement>
+
+
+    <dependencies>
+        <!-- Spring AI 核心依赖 -->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.ai</groupId>-->
+<!--            <artifactId>spring-ai-core</artifactId>-->
+<!--            <version>${spring-ai.version}</version>-->
+<!--        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.ai/spring-ai-client-chat -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-client-chat</artifactId>
+            <version>${spring-ai.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.ai/spring-ai-core -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-core</artifactId>
+            <version>1.0.0-M6</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.ai/spring-ai-ollama -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-ollama</artifactId>
+            <version>1.0.0-M6</version>
+        </dependency>
+
+        <!-- Anthropic 模型支持 -->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.ai</groupId>-->
+<!--            <artifactId>spring-ai-anthropic-spring-boot-starter</artifactId>-->
+<!--            <version>${spring-ai.version}</version>-->
+<!--        </dependency>-->
+
+        <!-- MCP 服务器支持 - WebMVC版本 -->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.ai</groupId>-->
+<!--            <artifactId>spring-ai-mcp-server-webmvc-spring-boot-starter</artifactId>-->
+<!--            <version>${spring-ai.version}</version>-->
+<!--        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.ai/spring-ai-mcp-server-spring-boot-starter -->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.ai</groupId>-->
+<!--            <artifactId>spring-ai-mcp-server-spring-boot-starter</artifactId>-->
+<!--            <version>1.0.0-M6</version>-->
+<!--        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.ai/spring-ai-mcp-server-webflux-spring-boot-starter -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-mcp-server-webflux-spring-boot-starter</artifactId>
+            <version>1.0.0-M6</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.ai/spring-ai-mcp-server-webmvc-spring-boot-starter -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-mcp-server-webmvc-spring-boot-starter</artifactId>
+            <version>1.0.0-M6</version>
+        </dependency>
+
+
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.ai/spring-ai-anthropic-spring-boot-starter -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-anthropic-spring-boot-starter</artifactId>
+            <version>1.0.0-M6</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.ai/spring-ai-starter-mcp-client-webflux -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-starter-mcp-client-webflux</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.ai/spring-ai-starter-mcp-server-webflux -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-starter-mcp-server-webflux</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.ai/spring-ai-openai-spring-boot-starter -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-openai-spring-boot-starter</artifactId>
+            <version>1.0.0-M6</version>
+        </dependency>
+    </dependencies>
+
+</project>

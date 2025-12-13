@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.axinger.mapper.EmployeeMapper">
+
+    <resultMap id="BaseResultMap" type="com.github.axinger.domain.EmployeeEntity">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="gender" column="gender" jdbcType="INTEGER"/>
+        <result property="deptId" column="dept_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMapOfDepartment" type="com.github.axinger.domain.EmployeeEntity" extends="BaseResultMap">
+        <collection property="departmentEntity" ofType="com.github.axinger.domain.DepartmentEntity">
+            <!--            含有相同的字段名-->
+            <id property="id" column="d_id" jdbcType="BIGINT"/>
+            <result property="name" column="d_name" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        ,name,email,
+        gender,dept_id
+    </sql>
+
+    <select id="leftDepartment" resultMap="BaseResultMapOfDepartment">
+        SELECT *
+        FROM (SELECT d.id   as d_id,
+                     d.name as d_name,
+                     e.*
+              FROM department d
+                       left JOIN employee e ON e.dept_id = d.id) AS t
+            ${ew.customSqlSegment}
+    </select>
+</mapper>

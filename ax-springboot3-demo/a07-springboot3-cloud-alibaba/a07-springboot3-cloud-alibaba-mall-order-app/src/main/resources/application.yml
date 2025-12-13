@@ -1,0 +1,34 @@
+server:
+  port: 9002
+  servlet:
+    context-path: /order
+
+spring:
+  application:
+    name: mall-order-app #订单作为消费者
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://192.168.101.135:8848
+        namespace: axing-mall-dev
+
+  zipkin:
+    base-url: http://192.168.101.135:9411/
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      #抽样百分比，默认10%的数据发到zipkin，1为100%
+      probability: 1
+
+
+
+server-url:
+  nacos-payment-service: http://mall-payment-app
+  gateway-service: http://mall-gateway-app
+
+server-name:
+  payment-service: mall-payment-app
+axing:
+  cloud:
+    must-fetch-gateway: false

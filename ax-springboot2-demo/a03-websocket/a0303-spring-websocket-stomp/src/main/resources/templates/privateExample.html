@@ -1,0 +1,118 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>聊起来</title>
+    <script src="https://cdn.bootcss.com/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdn.bootcss.com/stomp.js/2.3.3/stomp.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha256-JAW99MJVpJBGcbzEuXk4Az05s/XyDdBomFqNlM3ic+I="
+            src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+
+    <script type="text/javascript">
+        var stompClient = null;
+
+        function setConnected(connected) {
+            document.getElementById("connect").disabled = connected;
+            document.getElementById("disconnect").disabled = !connected;
+            $("#response").html();
+        }
+
+        function connect() {
+            let userId = document.getElementById('user').value
+
+            var socket = new SockJS("http://localhost:11030/privateServer?userId=" + userId);
+            // var socket = new SockJS("http://localhost:11030/greeting");
+            stompClient = Stomp.over(socket);
+            // stompClient.heartbeat.outgoing = 20000;
+            // client will send heartbeats every 20000ms
+            // stompClient.heartbeat.incoming = 0;
+
+            // 准备认证信息，这里以用户名为例
+
+            let headers = {};
+            headers["userId"] = userId; // 替换为实际的用户名
+
+            stompClient.connect(headers, function (frame) {
+                setConnected(true);
+                console.log('Connected: ' + frame);
+                stompClient.subscribe('/user/' + userId + '/message', function (response) {
+                    var responseData = document.getElementById('responseData');
+                    var p = document.createElement('p');
+                    p.style.wordWrap = 'break-word';
+                    p.appendChild(document.createTextNode(response.body));
+                    responseData.appendChild(p);
+                });
+
+                stompClient.subscribe('/user/' + userId + '/hi', function (messageDTO) {
+                    // 处理接收到的消息
+                    console.log('发送消息成功返回: ' + messageDTO);
+                })
+
+            }, function (error) {
+                alert("STOMP error " + error);
+            });
+
+        }
+
+        function disconnect() {
+            if (stompClient != null) {
+                stompClient.disconnect();
+            }
+            setConnected(false);
+            console.log("Disconnected");
+
+        }
+
+        function sendMsg() {
+            var headers = {
+                login: 'mylogin',
+                passcode: 'mypasscode',
+// additional header
+                'accessToken': 'HWPO325J9814GBHJF933'
+            };
+            var content = document.getElementById('content').value;
+            var to = document.getElementById('to').value;
+            stompClient.send("/app/alone", {'accessToken': 'HWPO325J9814GBHJF933'}, JSON.stringify({
+                'content': content,
+                'to': to
+            }));
+        }
+    </script>
+</head>
+<body onload="disconnect()">
+
+<div>
+    <div>
+        <labal>连接用户</labal>
+        <input id="user" type="text"/>
+        <button id="connect" onclick="connect();">Connect</button>
+
+    </div>
+
+    <div>
+        <labal>取消连接</labal>
+        <button disabled="disabled" id="disconnect" onclick="disconnect();">Disconnect</button>
+    </div>
+
+    <div id="conversationDiv">
+        <labal>发送消息</labal>
+        <div>
+            <labal>内容</labal>
+            <input id="content" type="text"/>
+        </div>
+        <div>
+            <labal>发给谁</labal>
+            <input id="to" type="text"/>
+        </div>
+        <button id="sendMsg" onclick="sendMsg();">Send</button>
+
+    </div>
+    <div>
+        <labal>接收到的消息:</labal>
+        <p id="responseData"></p>
+
+    </div>
+</div>
+
+</body>
+</html>

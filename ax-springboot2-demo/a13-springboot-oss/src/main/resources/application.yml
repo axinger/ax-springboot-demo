@@ -1,0 +1,55 @@
+server:
+  port: 11011
+  servlet:
+    context-path: /
+spring:
+  profiles:
+    include:
+      swagger
+  application:
+    name: oss-demo
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/ax_test02?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+    #    url: jdbc:mysql://hadoop102:3306/ax_test01?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: Abcd#1234
+    #    username: ENC(RWzRR1pJfaSLFjgjg2xqig==)
+    #    password: ENC(lcvkuMl1WkiShRZJ+Fzlhw==)
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+axinger:
+  oss:
+    endpoint: http://localhost:19000
+    access-key-id: admin
+    secret-access-key: admin123
+    region: 1
+
+
+dromara:
+  x-file-storage: #文件存储配置
+    default-platform: my-minio #默认使用的存储平台
+    thumbnail-suffix: ".min.jpg" #缩略图后缀，例如【.min.jpg】【.png】
+
+    #对于兼容 Amazon S3 的存储平台，直接将配置写在 Amazon S3 中即可（不是 Amazon S3 V2），具体兼容性见下图。
+    amazon-s3: # Amazon S3 V2
+      - platform: my-s3-1 # 存储平台标识
+        enable-storage: true  # 启用存储
+        access-key: admin
+        secret-key: admin123
+        region: ap-east-1 # 必填
+        end-point: http://localhost:19000
+        bucket-name: ax-test1 #桶名称
+        domain: http://localhost:19001/ # 访问域名，注意“/”结尾，例如：https://abcd.s3.ap-east-1.amazonaws.com/
+    #        base-path: s3/ # 基础路径
+
+    minio: # Amazon S3 V2
+      - platform: my-minio # 存储平台标识
+        enable-storage: true  # 启用存储
+        access-key: admin
+        secret-key: admin123
+        end-point: http://localhost:19000
+        bucket-name: ax-test1 #桶名称
+        domain: http://localhost:19001/ # 访问域名，注意“/”结尾，例如：https://abcd.s3.ap-east-1.amazonaws.com/
+    #        base-path: s3/ # 基础路径
+

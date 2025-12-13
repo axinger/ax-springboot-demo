@@ -1,0 +1,31 @@
+server:
+  servlet:
+    context-path: /
+  port: 11013
+
+spring: # 等待连接获取的最大超时时间
+  kafka:
+    # 以逗号分隔的地址列表，用于建立与Kafka集群的初始连接(kafka 默认的端口号为9092)
+    #    bootstrap-servers: 192.168.101.143:9092
+    bootstrap-servers: localhost:9092
+    producer:
+      # 发生错误后，消息重发的次数。
+      retries: 5
+      #当有多个消息需要被发送到同一个分区时，生产者会把它们放在同一个批次里。该参数指定了一个批次可以使用的内存大小，按照字节数计算。
+      batch-size: 16384
+      # 设置生产者内存缓冲区的大小。
+      buffer-memory: 33554432
+      # 键的序列化方式
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # 值的序列化方式
+      #      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: '*'
+
+# 配置多个 KafkaTemplate 类型
+# 默认的 KafkaTemplate<String, UserDTO> 用于发送 UserDTO 对象
+# 另外配置一个 KafkaTemplate<String, String> 用于发送字符串消息

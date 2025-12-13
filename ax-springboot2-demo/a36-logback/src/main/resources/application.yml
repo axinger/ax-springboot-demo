@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: a36-logback
+
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+  profiles:
+    active: dev
+#    active: prd
+
+#logging:
+#  config: classpath:logback-spring-test01.xml

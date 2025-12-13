@@ -1,0 +1,2 @@
+com.axing.common.mongodb.config.MongoAutoConfig
+com.axing.common.mongodb.service.MongoService

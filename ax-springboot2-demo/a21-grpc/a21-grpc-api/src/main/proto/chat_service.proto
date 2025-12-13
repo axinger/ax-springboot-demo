@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.github.axinger.api";
+import "google/protobuf/wrappers.proto";
+
+service ChatService {
+
+  // 链接
+  rpc Connection (stream ChatRequest) returns (stream ChatResponse) {}
+
+  // 发送消息
+  rpc SendMessage (ChatRequest) returns (ChatMessageResponse);
+}
+
+
+message ChatRequest {
+  string userId = 1;
+  string toUserId = 2;
+  oneof content {
+    string message = 3;
+    ChatHeartbeat heartbeat = 4;
+  }
+}
+
+message ChatResponse {
+  string userId = 1;
+  string toUserId = 2;
+  oneof content {
+    string message = 3;
+    ChatHeartbeat heartbeat = 4;
+  }
+}
+
+message ChatHeartbeat {
+  int64 timestamp = 1;
+}
+
+message ChatMessageResponse {
+  string userId = 1;
+  string toUserId = 2;
+  SendCode sendCode = 3;
+}
+
+enum SendCode {
+  UNKNOWN = 0;
+  SUCCESS = 1;
+  FAILURE = 2;
+}

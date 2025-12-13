@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>ax-springboot2-demo</artifactId>
+        <groupId>com.github.axinger</groupId>
+        <version>2025.10.01-2.7</version>
+    </parent>
+    <artifactId>a27-springdoc</artifactId>
+    <name>a27-springdoc</name>
+    <description>a27-springdoc</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.axinger</groupId>
+            <artifactId>doc-config-spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.axinger</groupId>
+            <artifactId>result-config-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.axinger</groupId>
+            <artifactId>logback-config-spring-boot-starter</artifactId>
+        </dependency>
+
+        <!--        <dependency>-->
+        <!--            <groupId>com.github.axinger</groupId>-->
+        <!--            <artifactId>config-spring-boot-starter</artifactId>-->
+        <!--        </dependency>-->
+
+        <!--        <dependency>-->
+        <!--            <groupId>com.github.axinger</groupId>-->
+        <!--            <artifactId>advice-spring-boot-starter</artifactId>-->
+        <!--        </dependency>-->
+
+        <!--        <dependency>-->
+        <!--            <groupId>org.springdoc</groupId>-->
+        <!--            <artifactId>springdoc-openapi-ui</artifactId>-->
+        <!--        </dependency>-->
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

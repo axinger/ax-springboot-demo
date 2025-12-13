@@ -1,0 +1,19 @@
+spring:
+  redis:
+    host: 192.168.101.135
+    port: 6379
+    database: 8
+    password: 123456
+  #数据库 多数据源
+  datasource:
+    dynamic:
+      primary: iot_edge_db
+      strict: false
+      datasource:
+        # iot数据库
+        iot_edge_db:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://192.168.101.131:3308/iot_edge?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+          username: root
+          password: 123456

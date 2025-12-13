@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.github.axinger</groupId>
+        <artifactId>a44-IoT</artifactId>
+        <version>2025.10.01-2.7</version>
+    </parent>
+
+    <artifactId>a4401-opcua</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.milo</groupId>
+            <artifactId>milo-sdk-client</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <!--        <dependency>-->
+        <!--            <groupId>org.eclipse.milo</groupId>-->
+        <!--            <artifactId>sdk-client</artifactId>-->
+        <!--            <version>0.6.4</version>-->
+        <!--        </dependency>-->
+        <dependency>
+            <groupId>org.eclipse.milo</groupId>
+            <artifactId>milo-sdk-server</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-integration</artifactId>
+        </dependency>
+        <!-- 常用的是基于 Eclipse Milo（开源 OPC UA 实现）的扩展 -->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.integration</groupId>-->
+        <!--            <artifactId>spring-integration-opc-ua</artifactId>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.eclipse.milo</groupId>-->
+        <!--            <artifactId>sdk-client</artifactId>-->
+        <!--            <version>0.6.6</version>  &lt;!&ndash; Eclipse Milo 版本 &ndash;&gt;-->
+        <!--        </dependency>-->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

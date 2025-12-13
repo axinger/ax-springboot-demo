@@ -1,0 +1,10 @@
+#spring:
+#  filter:
+#    cors:
+#      enabled: true
+#      url-pattern: /*
+#      allowed-origins: "http://localhost:8081, http://172.16.10.200:8081, http://172.16.10.201:8081"
+#      allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+#      allowed-headers: "*"
+#      allow-credentials: true
+#      max-age: 3600

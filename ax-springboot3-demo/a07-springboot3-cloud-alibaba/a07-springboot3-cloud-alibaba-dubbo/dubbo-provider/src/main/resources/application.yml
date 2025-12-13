@@ -1,0 +1,34 @@
+dubbo:
+  scan:
+    base-packages: ax.com.dubbo.provider.service
+  application:
+    name: dubbo-test-provider
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    address: nacos://localhost:8848
+    username: nacos
+    password: nacos
+#  config-center:
+#    address: nacos://localhost:8848
+#    username: nacos
+#    password: nacos
+#    group: dubbo
+#  metadata-report:
+#    address: nacos://localhost:8848
+#    username: nacos
+#    password: nacos
+#    group: dubbo
+
+server:
+  port: 7092
+spring:
+  application:
+    name: a07-spring-cloud-alibaba-dubbo-provider
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://localhost:8848
+        password: nacos
+        username: nacos

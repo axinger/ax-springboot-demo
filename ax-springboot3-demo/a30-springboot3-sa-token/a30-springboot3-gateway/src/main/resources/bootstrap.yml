@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: token-gateway
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    nacos:
+      discovery:
+        username: nacos
+        password: nacos
+        server-addr: http://192.168.101.135:8848

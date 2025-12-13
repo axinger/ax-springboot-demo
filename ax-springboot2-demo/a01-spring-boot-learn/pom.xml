@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>ax-springboot2-demo</artifactId>
+        <groupId>com.github.axinger</groupId>
+        <version>2025.10.01-2.7</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+    <artifactId>a01-spring-boot-learn</artifactId>
+
+
+    <modules>
+        <module>a01-01-spring-boot-mvc</module>
+        <module>a01-02-java8</module>
+        <module>a01-02-guava</module>
+        <module>a01-03-hutool</module>
+        <module>a01-04-web-json</module>
+        <module>a01-05-jdk11-b</module>
+        <module>a01-05-jdk11</module>
+        <module>a01-06-future-async</module>
+        <module>a01-07-sql-transactional</module>
+        <module>a01-08-strategy</module>
+        <module>a01-09-response</module>
+        <module>a01-10-jdk17</module>
+        <module>a01-11-rxjava</module>
+        <module>a01-12-spring-web-flux</module>
+        <module>a01-12-sse</module>
+        <module>a01-13graphics</module>
+        <module>a01-14-lombok</module>
+        <module>a01-15-async</module>
+        <module>a01-16-demo-juc</module>
+        <module>a01-17-http-request</module>
+        <module>a01-18-spring-aop</module>
+        <module>a01-20-spring5</module>
+        <module>same-class-starter</module>
+        <module>a01-21-annotation</module>
+        <module>a01-22-main-a</module>
+        <module>a01-22-main-b</module>
+        <module>a01-24-event</module>
+        <module>a01-01-request</module>
+        <module>a01-25-thymeleaf</module>
+        <module>a01-26-a</module>
+        <module>a01-26-b</module>
+        <module>a01-19-okhttp</module>
+        <module>a01-02-apache-commons</module>
+        <module>a01-27-script</module>
+    </modules>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.axinger</groupId>
+            <artifactId>util-spring-boot-starter</artifactId>
+        </dependency>
+
+    </dependencies>
+
+
+    <dependencyManagement>
+
+
+        <dependencies>
+            <dependency>
+                <groupId>com.github.axinger</groupId>
+                <artifactId>a01-26-b</artifactId>
+                <version>${axinger.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

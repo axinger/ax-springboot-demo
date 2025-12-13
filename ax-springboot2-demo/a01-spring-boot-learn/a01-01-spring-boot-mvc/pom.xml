@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>a01-spring-boot-learn</artifactId>
+        <groupId>com.github.axinger</groupId>
+        <version>2025.10.01-2.7</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>a01-01-spring-boot-mvc</artifactId>
+    <properties>
+        <!-- 定义时间戳格式 -->
+        <maven.build.timestamp.format>yyyyMMdd.HHmmss+0800</maven.build.timestamp.format>
+        <!-- 生成带时间戳的文件名 -->
+        <build.final.name>${project.artifactId}-${project.version}-${maven.build.timestamp}</build.final.name>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.axinger</groupId>
+            <artifactId>doc-config-spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.axinger</groupId>
+            <artifactId>advice-config-spring-boot-starter</artifactId>
+        </dependency>
+
+        <!-- 它是 Spring 为促进 Spring Boot 升级而提供的支持。用于帮助迁移 application properties。-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-properties-migrator</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.github.axinger</groupId>-->
+        <!--            <artifactId>same-class-starter</artifactId>-->
+        <!--&lt;!&ndash;            <scope>test</scope>&ndash;&gt;-->
+        <!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-commons</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-captcha</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-extra</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.12.3</version> <!-- 请根据需求更改为所需版本 -->
+        </dependency>
+    </dependencies>
+
+
+    <!--指定运行环境,每次切换需要更新一下maven,有缓存-->
+    <!--    <profiles>-->
+    <!--        <profile>-->
+    <!--            <id>my-dev</id>-->
+    <!--            <properties>-->
+    <!--                <my-env>dev</my-env>-->
+    <!--            </properties>-->
+    <!--        </profile>-->
+    <!--        <profile>-->
+    <!--            <id>my-prd</id>-->
+    <!--            <properties>-->
+    <!--                <my-env>prd</my-env>-->
+    <!--            </properties>-->
+    <!--            &lt;!&ndash;默认变量&ndash;&gt;-->
+    <!--            <activation>-->
+    <!--                <activeByDefault>true</activeByDefault>-->
+    <!--            </activation>-->
+    <!--        </profile>-->
+    <!--        <profile>-->
+    <!--            <id>my-test</id>-->
+    <!--            <properties>-->
+    <!--                <my-env>test</my-env>-->
+    <!--            </properties>-->
+    <!--        </profile>-->
+    <!--    </profiles>-->
+
+    <build>
+        <finalName>${build.final.name}</finalName>
+        <!--        <resources>-->
+        <!--            <resource>-->
+        <!--                <directory>src/main/resources</directory>-->
+        <!--                <excludes>-->
+        <!--                    <exclude>application-*.yml</exclude>-->
+        <!--                </excludes>-->
+        <!--            </resource>-->
+        <!--            <resource>-->
+        <!--                <directory>src/main/resources</directory>-->
+        <!--                <filtering>true</filtering>-->
+        <!--                <includes>-->
+        <!--                    <include>application.yml</include>-->
+        <!--                    <include>application-${env}*.yml</include>-->
+        <!--                </includes>-->
+        <!--            </resource>-->
+        <!--        </resources>-->
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                    <!-- 关键：禁用默认的分类器，避免生成 -original.jar -->
+                    <classifier/>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--跳过测试-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+</project>

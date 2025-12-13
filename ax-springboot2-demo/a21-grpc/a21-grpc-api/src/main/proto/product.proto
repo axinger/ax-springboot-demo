@@ -1,0 +1,10 @@
+syntax = "proto3";
+package com.github.axinger.api;
+// 指定生成的外部类名称
+//option java_outer_classname = "Api";
+
+message Product {
+  int32 id = 1;
+  string title = 2;
+  float price = 3;
+}

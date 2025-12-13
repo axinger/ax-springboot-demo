@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.axinger.sys.mapper.SysUserMapper">
+
+    <resultMap id="BaseResultMap" type="com.github.axinger.sys.domain.SysUserEntity">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="email" column="email"/>
+        <result property="phone" column="phone"/>
+        <result property="age" column="age"/>
+        <result property="info" column="info"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="infoList" column="info_list"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <!--        <result property="info" column="info"/>-->
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="deleted" column="deleted"/>
+    </resultMap>
+
+
+    <!--
+
+            # 场景需求
+            # 插入时：允许字段为 null，按正常逻辑插入。
+            # 更新时：仅当传入值 不为 null 时才覆盖旧值，否则保留原值。
+            phone = IF(VALUES(phone) IS NOT NULL, VALUES(phone), phone),
+            age = IF(VALUES(age) IS NOT NULL, VALUES(age), age)
+            # IF() 函数适用于 MySQL。若使用 PostgreSQL，需改用 CASE WHEN：
+            # phone = CASE WHEN VALUES(phone) IS NOT NULL THEN VALUES(phone) ELSE phone END
+
+            #若需更通用地处理多个字段，可通过 MyBatis 动态 SQL 生成条件： 这个不行
+                    <trim suffixOverrides=",">
+                    <if test="item.phone != null">phone = VALUES(phone),</if>
+                    <if test="item.age != null">age = VALUES(age),</if>
+                </trim>
+    -->
+    <insert id="insertOrUpdateOnDuplicate">
+        INSERT INTO sys_user (username, password, email, phone, age, info, info_list, create_time, update_time)
+        VALUES (
+        #{username},
+        #{password},
+        #{email},
+        #{phone},
+        #{age},
+        #{info, typeHandler=com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler},  <!-- 如果 info 是 JSON 类型，需要自定义 typeHandler -->
+        #{infoList, typeHandler=com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler},
+        #{createTime},
+        #{updateTime}
+        )
+        ON DUPLICATE KEY UPDATE
+        password = VALUES(password),
+        phone = VALUES(phone),
+        age = VALUES(age),
+        info = VALUES(info),
+        info_list = VALUES(info_list),
+        update_time = VALUES(update_time)
+    </insert>
+
+    <insert id="batchInsertOrUpdateOnDuplicate">
+        INSERT INTO sys_user (
+        username, password, email, phone, age,
+        info, info_list, create_time, update_time
+        )
+        VALUES
+        <foreach collection="list" item="user" separator=",">
+            (
+            #{user.username},
+            #{user.password},
+            #{user.email},
+            #{user.phone},
+            #{user.age},
+            #{user.info,   typeHandler=com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler},
+            #{user.infoList, typeHandler=com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler},
+            #{user.createTime},
+            #{user.updateTime}
+            )
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        password = VALUES(password),
+        phone = VALUES(phone),
+        age = VALUES(age),
+        info = VALUES(info),
+        info_list = VALUES(info_list),
+        update_time = VALUES(update_time)
+    </insert>
+    <!--resultMap 或者 resultType-->
+    <select id="getUserByMap" resultType="com.github.axinger.sys.domain.SysUserEntity">
+        SELECT *
+        FROM sys_user
+        WHERE username = #{username}
+    </select>
+
+
+    <select id="getUserByIdAndName" resultMap="BaseResultMap">
+        SELECT *
+        FROM sys_user
+        WHERE username = #{username}
+    </select>
+
+    <select id="getUserByQuery" resultMap="BaseResultMap">
+        SELECT *
+        FROM sys_user
+        WHERE username = #{username}
+    </select>
+
+    <select id="conditionalPage" resultMap="BaseResultMap">
+        SELECT *
+        FROM sys_user ${ew.customSqlSegment}
+    </select>
+
+</mapper>

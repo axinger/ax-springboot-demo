@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+
+    <!--source是启动配置文件中的配置，如果没有则使用默认值 1是系统名称，2是日志输出路径-->
+    <!--    <springProperty name="log.dir" scope="context" source="logging.file.name" defaultValue="./logs"/>-->
+
+    <springProperty scope="context" name="app.name" source="spring.application.name" defaultValue="dir_IS_UNDEFINED"/>
+    <springProperty scope="context" name="log.dir" source="logging.file.name"
+                    defaultValue="./logs/${app.name}"/>
+
+    <!--文件保留时间-->
+    <!--    <property name="log.maxHistory" value="7"/>-->
+    <springProperty scope="context" name="log.maxHistory" source="logging.file.maxHistory" defaultValue="60"/>
+
+
+    <!--单个文件最大大小-->
+    <!--    <property name="log.maxFileSize" value="10MB"/>-->
+    <springProperty scope="context" name="log.maxFileSize" source="logging.file.maxFileSize" defaultValue="10MB"/>
+    <!--所有日志最多占有多大硬盘-->
+    <!--    <property name="log.totalSizeCap" value="100GB"/>-->
+    <springProperty scope="context" name="log.totalSizeCap" source="logging.file.totalSizeCap" defaultValue="100GB"/>
+    <!--日志的输出格式-->
+
+    <!--    [%thread]  就是 [%t] -->
+    <!--    2025-05-10 19:15:10.003 [main] ERROR com.github.axinger.event.Start1 - error = error 日志-->
+    <springProperty scope="context" name="logging.pattern.console" source="logging.pattern.console"
+                    defaultValue="%d{yyyy-MM-dd HH:mm:ss.SSS}  %-5level  ${PID:- } --- [%t] %logger{100} : %msg%n"/>
+    <springProperty scope="context" name="logging.pattern.file" source="logging.pattern.file"
+                    defaultValue="%d{yyyy-MM-dd HH:mm:ss.SSS}  %-5level  ${PID:- } --- [%t] %logger{100} : %msg%n"/>
+
+    <!--输出到控制台 ConsoleAppender-->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <!--展示格式 layout-->
+        <encoder>
+            <pattern>${logging.pattern.file}</pattern>
+        </encoder>
+    </appender>
+
+
+    <!-- 日志记录器，日期滚动记录
+            INFO  级别
+    -->
+    <appender name="FILE_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 此日志文件只记录info级别的 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>info</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <!--日志名称，如果没有File 属性，那么只会使用FileNamePattern的文件路径规则
+            如果同时有<File>和<FileNamePattern>，那么当天日志是<File>，明天会自动把今天
+            的日志改名为今天的日期。即，<File> 的日志都是当天的。
+        -->
+        <File>${log.dir}/info.log</File>
+        <!--滚动策略，按照时间滚动 TimeBasedRollingPolicy-->
+        <!--                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+        <!--滚动策略，按照尺寸和时间滚动 SizeAndTimeBasedRollingPolicy-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--文件路径,定义了日志的切分方式——把每一天的日志归档到一个文件中,以防止日志填满整个磁盘空间-->
+            <!--<FileNamePattern>${log.dir}/info.%d{yyyy-MM-dd}.log</FileNamePattern>-->
+            <!--fileNamePattern 中的 %i 占位符会在相同日期的日志文件之间加以区分，避免覆盖旧文件-->
+            <!--归档文件名称-->
+            <fileNamePattern>${log.dir}/info.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!--文件最大保存历史数量-->
+            <maxHistory>${log.maxHistory}</maxHistory>
+            <!--单个日志最大容量 至少10MB才能看得出来-->
+            <maxFileSize>${log.maxFileSize}</maxFileSize>
+            <!--所有日志最多占多大容量-->
+            <totalSizeCap>${log.totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <!--日志输出编码格式化-->
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${logging.pattern.file}</pattern>
+        </encoder>
+    </appender>
+
+    <!--   DEBUG-->
+    <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>debug</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <File>${log.dir}/debug.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log.dir}/debug.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>${log.maxHistory}</maxHistory>
+            <maxFileSize>${log.maxFileSize}</maxFileSize>
+            <totalSizeCap>${log.totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${logging.pattern.file}</pattern>
+        </encoder>
+    </appender>
+
+
+    <!--    WARN-->
+    <appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <File>${log.dir}/warn.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log.dir}/warn.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>${log.maxHistory}</maxHistory>
+            <maxFileSize>${log.maxFileSize}</maxFileSize>
+            <totalSizeCap>${log.totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${logging.pattern.f}</pattern>
+        </encoder>
+    </appender>
+
+
+    <!--    ERROR-->
+    <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <File>${log.dir}/error.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log.dir}/error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>${log.maxHistory}</maxHistory>
+            <maxFileSize>${log.maxFileSize}</maxFileSize>
+            <totalSizeCap>${log.totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${logging.pattern.file}</pattern>
+        </encoder>
+    </appender>
+
+    <!--    ALL, 不过滤-->
+    <appender name="ALL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${log.dir}/all.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log.dir}/all.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>${log.maxHistory}</maxHistory>
+            <maxFileSize>${log.maxFileSize}</maxFileSize>
+            <totalSizeCap>${log.totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${logging.pattern.file}</pattern>
+        </encoder>
+    </appender>
+
+
+    !-- 异步日志 -->
+    <appender name="ASYNC_INFO" class="ch.qos.logback.classic.AsyncAppender">
+        <queueSize>1024</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+        <includeCallerData>false</includeCallerData>
+        <appender-ref ref="FILE_INFO"/>
+    </appender>
+
+    <appender name="ASYNC_ERROR" class="ch.qos.logback.classic.AsyncAppender">
+        <queueSize>1024</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+        <includeCallerData>false</includeCallerData>
+        <appender-ref ref="FILE_ERROR"/>
+    </appender>
+
+
+    <root level="INFO">
+        <!--        <appender-ref ref="CONSOLE"/>-->
+        <appender-ref ref="ALL"/>
+        <appender-ref ref="WARN"/>
+        <appender-ref ref="DEBUG"/>
+        <appender-ref ref="ASYNC_INFO"/>
+        <appender-ref ref="ASYNC_ERROR"/>
+    </root>
+
+
+    <!--    <springProfile name="dev">-->
+    <!--        <root level="INFO">-->
+    <!--            <appender-ref ref="CONSOLE"/>-->
+    <!--            <appender-ref ref="ERROR"/>-->
+    <!--            <appender-ref ref="WARN"/>-->
+    <!--            <appender-ref ref="INFO"/>-->
+    <!--            <appender-ref ref="DEBUG"/>-->
+    <!--            <appender-ref ref="ALL"/>-->
+    <!--        </root>-->
+    <!--    </springProfile>-->
+
+    <!--    <springProfile name="prd">-->
+    <!--        <root level="INFO">-->
+    <!--            <appender-ref ref="ERROR"/>-->
+    <!--            <appender-ref ref="WARN"/>-->
+    <!--            <appender-ref ref="INFO"/>-->
+    <!--            <appender-ref ref="DEBUG"/>-->
+    <!--            <appender-ref ref="ALL"/>-->
+    <!--        </root>-->
+    <!--    </springProfile>-->
+
+</configuration>

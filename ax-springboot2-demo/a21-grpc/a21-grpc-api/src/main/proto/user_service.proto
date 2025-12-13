@@ -1,0 +1,14 @@
+syntax = "proto3";
+package com.github.axinger.api;
+//option java_outer_classname = "Api";
+// 导入必要的消息和枚举
+import "status_code.proto";       // 导入 StatusCode 枚举
+import "response_payload.proto";  // 导入 ResponsePayload 消息
+import "response.proto";  // 导入 UnifiedResponse 消息
+import "user.proto";         // 导入 UserList 消息
+
+// 定义 gRPC 服务
+service UserService {
+  // 获取用户列表的方法
+  rpc GetUserList (UserList) returns (Response);
+}

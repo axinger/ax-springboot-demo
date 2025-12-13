@@ -1,0 +1,48 @@
+spring:
+  batch:
+    job:
+      #设置为 false -需要jobLaucher.run执行
+      enabled: false
+
+    jdbc:
+      initialize-schema: always
+
+  #    table-prefix: my-batch
+
+  datasource:
+    #    driver-class-name: com.mysql.cj.jdbc.Driver
+    #    url: jdbc:mysql://hadoop102:3306/ax_test3?autoReconnect=true&useUnicode=true&characterEncoding=utf-8&&zeroDateTimeBehavior=CONVERT_TO_NULL&&serverTimezone=GMT%2B8&&nullCatalogMeansCurrent=true
+    #    username: root
+    #    password: 123456
+
+    dynamic:
+      primary: db_ax_sub #设置默认的数据源或者数据源组,默认值即为master
+      strict: false #无数据源启动，严格匹配数据源,默认false. true未匹配到指定数据源时抛异常,false使用默认数据源
+      lazy: true #默认false非懒启动，系统加载到数据源立即初始化连接池，缺点在于，如果参数配置有误，则启动的时候不知道，初始化的时候失败，可能一直抛异常。
+      datasource:
+
+        db_ax_sub:
+          url: jdbc:mysql://hadoop102:3306/ax_test3?autoReconnect=true&useUnicode=true&characterEncoding=utf-8&&zeroDateTimeBehavior=CONVERT_TO_NULL&&serverTimezone=GMT%2B8&&nullCatalogMeansCurrent=true
+          username: root
+          password: 123456
+          driver-class-name: com.mysql.cj.jdbc.Driver
+
+        spring_batch:
+          url: jdbc:mysql://hadoop102:3306/spring_batch?autoReconnect=true&useUnicode=true&characterEncoding=utf-8&&zeroDateTimeBehavior=CONVERT_TO_NULL&&serverTimezone=GMT%2B8&&nullCatalogMeansCurrent=true
+          username: root
+          password: 123456
+          driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis-plus:
+  #枚举包,必须有 3.5.1 取消了
+  #  type-enums-package: com.ax.a16.enums
+  #  mapper-locations: classpath*:/mybatis/*.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  #  typeAliasesPackage: com.example.demo.model
+  #  configuration:
+  #开启下划线转驼峰
+  #  map-underscore-to-camel-case: true
+  #  #开启返回map结果集的下划线转驼峰
+  #  object-wrapper-factory: com.baomidou.mybatisplus.extension.MybatisMapWrapperFactory
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql日志

@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: a04-spring-boot-postgres
+  datasource:
+    url: jdbc:postgresql://hadoop132:5432/ax_test
+    username: postgres
+    password: 123456
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database: postgresql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      #create----每次运行该程序，没有表格会新建表格，表内有数据会清空
+      #create-drop----每次程序结束的时候会清空表
+      #update----每次运行程序，没有表格会新建表格，表内有数据不会清空，只会更新
+      #validate----运行程序会校验数据与数据库的字段类型是否相同，不同会报错
+  #      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+  #    log颜色
+  output:
+    ansi:
+      enabled: always
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql日志
+
+

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <bean id="dog" class="com.github.axinger.xml.model.Dog">
+        <property name="title" value="title"></property>
+        <property name="name" value="dafei"></property>
+    </bean>
+
+    <bean id="dog2" class="com.github.axinger.xml.model.Dog">
+        <property name="title" value="dog2_title"></property>
+        <property name="name" value="dog2_name"></property>
+    </bean>
+
+    <!--这个注册一下就行了-->
+    <bean id="personPostProcessor" class="com.github.axinger.xml.model.PersonPostProcessor">
+    </bean>
+
+
+    <!--手动装配-->
+    <bean id="person" class="com.github.axinger.xml.model.Person" init-method="initMethod"
+          destroy-method="destroyMethod">
+
+        <!--类,必须写set对应的方法-->
+        <property name="name" value="jim"></property>
+
+        <!--特殊符号
+        1.意转义,
+        2. CDATA方式xml方式, <![CDATA[]]>
+        -->
+        <property name="title">
+            <value><![CDATA[<<含有特殊符号title>>]]></value>
+        </property>
+
+        <property name="dogs">
+            <list>
+                <!--多个实例-->
+                <ref bean="dog"></ref>
+                <ref bean="dog2"></ref>
+            </list>
+        </property>
+    </bean>
+
+    <!--自动装配 ,属性名或者类名 2种方式-->
+
+    <bean id="idCard" class="com.github.axinger.xml.model.IdCard">
+
+
+    </bean>
+
+    <bean id="personAuto" class="com.github.axinger.xml.model.Person">
+
+        <property name="idCard" ref="idCard"></property>
+
+    </bean>
+
+
+    <bean id="user" class="com.github.axinger.xml.model.User">
+
+        <!--有参构造,无关顺序-->
+        <constructor-arg name="title" value="标题"></constructor-arg>
+
+        <constructor-arg name="name" value="jim"></constructor-arg>
+        <!--设置空值-->
+        <constructor-arg name="address">
+            <null/>
+        </constructor-arg>
+        <!--下标方式-->
+        <!--        <constructor-arg index="0" value="jim"></constructor-arg>-->
+
+
+    </bean>
+
+
+</beans>

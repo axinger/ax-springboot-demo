@@ -1,0 +1,25 @@
+spring:
+  iotdb-session:
+    username: root
+    password: root
+    ip: hadoop132
+    port: 6667
+    maxSize: 100
+
+  iotdb:
+    username: root
+    password: root
+    driver-name: org.apache.iotdb.jdbc.IoTDBDriver
+    url: jdbc:iotdb://localhost:6667/
+    initial-size: 5
+    min-idle: 10
+    max-active: 50
+    max-wait: 60000
+    remove-abandoned: true
+    remove-abandoned-timeout: 30
+    time-between-eviction-runs-millis: 60000
+    min-evictable-idle-time-millis: 300000
+    test-while-idle: false
+    test-on-borrow: false
+    test-on-return: false
+

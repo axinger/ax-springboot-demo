@@ -1,0 +1,11 @@
+syntax = "proto3";
+package com.github.axinger.api;
+//option java_outer_classname = "Api";
+import "status_code.proto";  // 导入 StatusCode 枚举
+import "response_payload.proto";  // 导入 ResponsePayload 消息
+
+message Response {
+  StatusCode code = 1;
+  string message = 2;
+  ResponsePayload payload = 4;
+}

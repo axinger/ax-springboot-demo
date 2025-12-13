@@ -1,0 +1,13 @@
+server:
+  port: 8080
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+ocr:
+  python-path: /path/python/bin/python
+  script-path: /path/to/ocr_script.py
+  upload-dir: /tmp/uploads/

@@ -1,0 +1,11 @@
+###
+POST http://localhost:11001/point/1
+Content-Type: application/json
+
+{
+  "xPoint": "1",
+  "yPoint": "2",
+  "zPoint": "3",
+  "createTime": "2025-10-25 13:25:28",
+  "updateTime": "2025-10-25 13:25:28"
+}

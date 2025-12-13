@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SSE Example</title>
+</head>
+<body>
+<h1>SSE连接</h1>
+
+<div class="container">
+    <h1>实时消息</h1>
+    <div class="controls">
+        <div class="buttons">
+            <button id="startBtn">实时监听消息</button>
+            <button disabled id="stopBtn">停止消息监听</button>
+        </div>
+    </div>
+    <table>
+        <thead>
+        <tr>
+            <th>编号</th>
+            <th>作者</th>
+            <th>时间</th>
+            <th>内容</th>
+        </tr>
+        </thead>
+        <tbody id="messages"></tbody>
+    </table>
+</div>
+
+<script>
+    let eventSource;
+    const messageContainer = document.getElementById('messages');
+    const startBtn = document.getElementById('startBtn');
+    const stopBtn = document.getElementById('stopBtn');
+
+    function startStream() {
+        const url = `http://localhost:12012/messages/stream`;
+        eventSource = new EventSource(url);
+        eventSource.onmessage = event => {
+            const data = JSON.parse(event.data);
+            if (data) {
+                const message = `
+                    <tr>
+                        <td class="${data.type}">${data.id}</td>
+                        <td>${data.author}</td>
+                        <td>${data.time}</td>
+                        <td>${data.message}</td>
+                    </tr>
+                `;
+                messageContainer.insertAdjacentHTML('afterbegin', message);
+            }
+        };
+        startBtn.disabled = true;
+        stopBtn.disabled = false;
+    }
+
+    function stopStream() {
+        if (eventSource) {
+            eventSource.close();
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+        }
+    }
+
+    startBtn.addEventListener('click', startStream);
+    stopBtn.addEventListener('click', stopStream);
+</script>
+</body>
+</html>

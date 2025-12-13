@@ -1,0 +1,47 @@
+# 安装jdk和Python环境
+
+# 使用已有的 Python3 镜像
+FROM python:3.8 AS python-stage
+
+# 如果需要额外的 Python 库，可以提前安装
+# RUN pip install --no-cache-dir some-package
+
+# 使用已有的 JDK 镜像作为基础
+FROM eclipse-temurin:17-jdk
+
+# 从 python-stage 阶段复制 Python 环境到目标镜像
+COPY --from=python-stage /usr/local /usr/local
+
+# 确保 Python 环境变量正确
+ENV PATH="/usr/local/bin:$PATH"
+
+# 检查 JDK 和 Python 是否正常运行
+RUN java -version && python3 --version
+
+
+RUN bash -c 'mkdir -p {config,target}'
+#RUN sh -c 'mkdir config target'
+
+#将配置文件添加到容器中
+COPY /docker/application.yml /config/application.yml
+
+#将本地文件添加到容器中
+COPY /target/*.jar /target/server.jar
+
+#配置容器，使其可执行化
+# 自动识别config/application.yml
+
+# 指定环境
+#ENTRYPOINT java -jar -Dspring.profiles.active=prd /target/server.jar
+
+# 不指定,用application.yml 控制
+ENTRYPOINT java -jar  /target/server.jar
+
+#配置时区，不然会发现打包到docker中启动的容器日志里的时间是差8个小时的
+#这条命令会先通过 cp 命令将主机上的 /usr/share/zoneinfo/Asia/Shanghai 文件复制到容器中的 /etc/localtime 路径上，
+#从而使容器中的系统时区与主机保持一致。接着，echo 命令将 Asia/Shanghai 设置为默认的容器时区，以便在后续操作过程中使用。
+#使用上海时区, GTM+8,不同系统可能存在差异
+RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
+
+# 暴露端口,需要和服务的端口一致
+EXPOSE 45033

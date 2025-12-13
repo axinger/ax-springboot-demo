@@ -1,0 +1,15 @@
+server:
+  port: 45033
+
+
+spring:
+  profiles:
+    #    active: prd
+    active: dev
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+
+config:
+  name: 开发环境,使用外部application.yml

@@ -1,0 +1,26 @@
+server:
+  port: 12077
+
+spring:
+  application:
+    name: demo-sentinel
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://hadoop102:8848
+        username: nacos
+        password: nacos
+        namespace: demo_dev
+        group: DEFAULT_GROUP
+
+    sentinel:
+      transport:
+        #        client-ip: hadoop102
+        port: 8719
+        dashboard: localhost:12080
+      datasource:
+        ds1:
+          nacos:
+            server-addr:
+#        dashboard: hadoop102:12080
+

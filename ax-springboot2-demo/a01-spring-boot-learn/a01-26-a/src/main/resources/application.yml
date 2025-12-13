@@ -1,0 +1,5 @@
+#spring:
+#  profiles:
+#    active: a
+server:
+  port: 19091

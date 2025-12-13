@@ -1,0 +1,17 @@
+server:
+  port: 11007
+spring:
+  application:
+    name: a14501-mqtt-demo
+
+axinger:
+  mqtt-server:
+    url: tcp://192.168.101.130:1883
+    username: admin
+    password: public
+    completion-timeout: 3000
+    client-id: ${spring.application.name}
+    consumer-topic:
+      - iot/test-device/telemetry
+
+

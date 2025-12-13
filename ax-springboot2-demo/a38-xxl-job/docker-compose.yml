@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  axinger-demo:
+    container_name: a38-xxl-job
+    build:
+      #      context: ./dir  # 指定包含 Dockerfile 的目录
+      dockerfile: Dockerfile  # 如果 Dockerfile 名字不是默认的 "Dockerfile"，则需要指定文件名
+      tags: # 可以指定多个标签
+        - axinger/a38-xxl-job:latest
+        - axinger/a38-xxl-job:1.0
+    ports:
+      - "13801:13801"
+    environment:
+      - DEBUG=1
+    networks:
+      mynetwork:
+
+networks:
+  mynetwork:
+    external: true

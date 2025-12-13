@@ -1,0 +1,10 @@
+spring:
+  web:
+    resources:
+      #      static-locations: "classpath:/dist"
+      add-mappings: false
+  datasource:
+    url: jdbc:mysql://hadoop102:3306/ax_test1?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver

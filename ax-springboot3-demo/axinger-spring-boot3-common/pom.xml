@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>ax-springboot3-demo</artifactId>
+        <groupId>com.github.axinger</groupId>
+        <version>2025.03.01-3.4</version>
+    </parent>
+    <artifactId>axinger-spring-boot3-common</artifactId>
+    <packaging>pom</packaging>
+    <modelVersion>4.0.0</modelVersion>
+    <name>阿星阿星springboot3-common工具类</name>
+
+    <properties>
+
+        <axing-project.version>${axinger.version}</axing-project.version>
+    </properties>
+
+    <modules>
+        <module>util-springboot3-starter</module>
+        <module>response-springboot3-starter</module>
+        <module>quartz-springboot3-starter</module>
+        <module>doc-springboot3-starter</module>
+        <module>redis-springboot3-starter</module>
+        <module>config-springboot3-starter</module>
+        <module>mybatis-springboot3-starter</module>
+        <module>mongodb-springboot3-starter</module>
+        <module>minio-springboot3-starter</module>
+        <module>advice-springboot3-starter</module>
+        <module>json-springboot3-starter</module>
+        <module>weblog-springboot3-starter</module>
+        <module>excel-springboot3-starter</module>
+        <module>dto-springboot3-starter</module>
+        <module>http-springboot3-starter</module>
+        <module>log-springboot3-starter</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+
+    </dependencies>
+
+    <!-- 在工具模块的 pom.xml 中添加 -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.axinger.auth.db.mapper.UserPermissionsAndRoleMapper">
+
+
+    <!-- 查询所有需要权限验证的API规则 -->
+    <select id="getAllPermissionRules" resultType="com.github.axinger.auth.db.dto.PermissionRulesVO">
+        SELECT a.path as path, p.code as code
+        FROM sys_permission_apis pa
+                 JOIN sys_permissions p ON pa.permission_id = p.id
+                 JOIN sys_apis a ON pa.api_id = a.id
+        WHERE pa.deleted = 0
+          AND p.deleted = 0
+          AND a.deleted = 0
+          AND a.enabled = 1
+        ORDER BY a.path
+    </select>
+
+    <!-- 查询所有需要角色验证的API规则 -->
+    <select id="getAllRoleRules" resultType="com.github.axinger.auth.db.dto.PermissionRulesVO">
+        SELECT a.path as path, r.code as code
+        FROM sys_role_permissions rp
+                 JOIN sys_roles r ON rp.role_id = r.id
+                 JOIN sys_permission_apis pa ON rp.permission_id = pa.permission_id
+                 JOIN sys_apis a ON pa.api_id = a.id
+        WHERE rp.deleted = 0
+          AND r.deleted = 0
+          AND pa.deleted = 0
+          AND a.deleted = 0
+          AND a.enabled = 1
+    </select>
+
+
+    <!-- 查询用户的角色 -->
+    <select id="getUserRoles" resultType="com.github.axinger.auth.db.dto.UsersRoleDTO">
+        SELECT r.id          AS id,
+               r.name        AS name,
+               r.code        AS code,
+               r.description AS description
+        FROM sys_roles r
+                 JOIN
+             sys_user_roles ur ON r.id = ur.role_id
+        WHERE ur.user_id = #{userId}
+          AND r.deleted = 0
+          AND ur.deleted = 0
+    </select>
+
+
+    <!-- 查询用户的权限 -->
+    <select id="getUserPermissions" resultType="com.github.axinger.auth.db.dto.UserPermissionsDTO">
+        SELECT DISTINCT p.id          AS id,
+                        p.name        AS name,
+                        p.code        AS code,
+                        p.description AS description,
+                        p.category    AS category
+        FROM sys_permissions p
+                 JOIN
+             sys_role_permissions rp ON p.id = rp.permission_id
+                 JOIN
+             sys_user_roles ur ON rp.role_id = ur.role_id
+        WHERE ur.user_id = #{userId}
+          AND p.deleted = 0
+          AND rp.deleted = 0
+          AND ur.deleted = 0
+        ORDER BY p.category, p.name
+    </select>
+
+
+    <!-- 查询用户的API访问权限和角色 -->
+    <select id="getUserApiPermissionsAndRole" resultType="com.github.axinger.auth.db.dto.ApiPermissionDTO">
+        SELECT a.path                                                             AS path,
+               a.method                                                           AS method,
+
+               u.id                                                               AS userId,
+               u.username                                                         AS username,
+               p.id                                                               AS permissionId,
+               p.name                                                             AS permissionName,
+               p.code                                                             AS permissionCode,
+               GROUP_CONCAT(DISTINCT r.id ORDER BY r.id SEPARATOR ',')            AS roleIds,
+               GROUP_CONCAT(DISTINCT r.name ORDER BY r.sort_order SEPARATOR ', ') AS roleNames,
+               GROUP_CONCAT(DISTINCT r.code ORDER BY r.code SEPARATOR ',')        AS roleCodes
+        FROM sys_users u
+                 JOIN
+             sys_user_roles ur ON u.id = ur.user_id AND ur.deleted = 0
+                 JOIN
+             sys_roles r ON ur.role_id = r.id AND r.deleted = 0
+                 JOIN
+             sys_role_permissions rp ON r.id = rp.role_id AND rp.deleted = 0
+                 JOIN
+             sys_permissions p ON rp.permission_id = p.id AND p.deleted = 0
+                 JOIN
+             sys_permission_apis pa ON p.id = pa.permission_id AND pa.deleted = 0
+                 JOIN
+             sys_apis a ON pa.api_id = a.id AND a.deleted = 0 AND a.enabled = 1
+
+
+        WHERE u.id = #{userId}
+          AND u.deleted = 0
+        GROUP BY a.path, a.method, p.code, u.id, u.username
+        ORDER BY a.path, a.method;
+    </select>
+
+</mapper>

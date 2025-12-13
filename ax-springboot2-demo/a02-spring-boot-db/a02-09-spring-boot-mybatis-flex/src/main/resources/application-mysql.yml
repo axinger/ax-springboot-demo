@@ -1,0 +1,56 @@
+spring:
+  application:
+    name: a04-spring-boot-mybatis-plus
+
+  datasource:
+    url: jdbc:mysql://hadoop132:3308/ax_test?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      #create----每次运行该程序，没有表格会新建表格，表内有数据会清空
+      #create-drop----每次程序结束的时候会清空表
+      #update----每次运行程序，没有表格会新建表格，表内有数据不会清空，只会更新
+      #validate----运行程序会校验数据与数据库的字段类型是否相同，不同会报错
+  #      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+  #    log颜色
+  output:
+    ansi:
+      enabled: always
+
+#mybatis-plus:
+#  #枚举包,必须有 3.5.1 取消了
+#  #  type-enums-package: com.ax.a16.enums
+#  #  mapper-locations: classpath*:/mybatis/*.xml
+#  #实体扫描，多个package用逗号或者分号分隔
+#  #  typeAliasesPackage: com.example.demo.model
+#  #  configuration:
+#  #开启下划线转驼峰
+#  #  map-underscore-to-camel-case: true
+#  #  #开启返回map结果集的下划线转驼峰
+#  #  object-wrapper-factory: com.baomidou.mybatisplus.extension.MybatisMapWrapperFactory
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql日志
+mybatis-flex:
+  global-config:
+    print-banner: false
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  datasource:
+    ds1:
+      url: jdbc:mysql://hadoop132:3308/ax_test?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+      username: root
+      password: 123456
+      driver-class-name: com.mysql.cj.jdbc.Driver
+
+    ds2:
+      url: jdbc:mysql://hadoop132:3308/ax_test?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+      username: root
+      password: 123456
+      driver-class-name: com.mysql.cj.jdbc.Driver

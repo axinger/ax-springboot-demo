@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.github.axinger</groupId>
+        <artifactId>ax-springboot2-demo</artifactId>
+        <version>2025.10.01-2.7</version>
+    </parent>
+    <packaging>pom</packaging>
+    <artifactId>a04-spring-boot-cacheable</artifactId>
+
+    <modules>
+        <module>a04-spring-boot-caffeine</module>
+        <module>a04-spring-boot-redis-mysql</module>
+        <module>a04-spring-boot-redis</module>
+        <module>a0404-spring-boot-redisson</module>
+        <module>a0405-spring-boot-jetcache</module>
+    </modules>
+</project>

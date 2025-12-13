@@ -1,0 +1,7 @@
+server:
+  port: 11012
+  servlet:
+    context-path: /
+spring:
+  cache:
+    type: caffeine

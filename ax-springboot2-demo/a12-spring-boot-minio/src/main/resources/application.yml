@@ -1,0 +1,27 @@
+server:
+  port: 11011
+  servlet:
+    context-path: /
+spring:
+  profiles:
+    include:
+      swagger
+  application:
+    name: minio-demo
+
+axinger:
+  response:
+    base-packages: com.github.axinger
+  minio:
+    #    url: http://hadoop102:19000
+    #    username: admin #访问的key
+    #    password: admin123 #访问的秘钥
+
+    url: http://localhost:19000
+    username: admin #访问的key
+    password: admin123 #访问的秘钥
+
+img-proxy:
+  key: 3a7856b2f492a8c1e0d54f7b8c9d2e1f0a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d
+  salt: 2b6948a1f3c5d7e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3
+  url: http://localhost:17011

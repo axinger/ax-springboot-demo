@@ -1,0 +1,11 @@
+syntax = "proto3";
+package com.github.axinger.api;
+//option java_outer_classname = "Api";
+message User {
+  int32 id = 1;
+  string name = 2;
+}
+
+message UserList {
+  repeated User data = 1;
+}

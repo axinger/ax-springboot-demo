@@ -1,0 +1,17 @@
+# 指定要使用的基础镜像 （例如：openjdk 8版本）
+FROM openjdk:8-jre-alpine
+# 将构建环境设为非交互式模式
+ENV DEBIAN_FRONTEND noninteractive
+# 容器内的工作目录，将应用程序和配置文件复制到该目录下。
+WORKDIR /app
+# 暴露容器的端口号，这里默认使用了8080（运行时可以通过 -p 参数来指定映射的端口）
+EXPOSE 8080
+# 将本地的 jar 包拷贝到容器中，
+COPY app.jar /app/
+# 将本地的配置文件复制到容器中，
+COPY application.properties /app/
+# 将 entrypoint.sh 文件复制到容器中，并赋予执行权限
+COPY entrypoint.sh /app/
+RUN chmod +x /app/entrypoint.sh
+# 启动容器时将会执行 entrypoint.sh 脚本
+ENTRYPOINT ["/app/entrypoint.sh"]

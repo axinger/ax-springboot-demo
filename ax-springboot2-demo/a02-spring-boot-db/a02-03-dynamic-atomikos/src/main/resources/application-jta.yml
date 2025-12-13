@@ -1,0 +1,54 @@
+spring:
+  datasource:
+    dynamic:
+      datasource:
+        master:
+          url: jdbc:mysql://hadoop102:3306/ax_test1?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+          username: root
+          password: 123456
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          xa-driver-class-name: com.mysql.cj.jdbc.MysqlXADataSource
+          xa-max-pool-size: 20
+          xa-min-pool-size: 8
+        slave:
+          url: jdbc:mysql://hadoop102:3306/ax_test2?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+          username: root
+          password: 123456
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          xa-driver-class-name: com.mysql.cj.jdbc.MysqlXADataSource
+          xa-max-pool-size: 20
+          xa-min-pool-size: 8
+    #  datasource:
+    #    master:
+    #      max-pool-size: 20
+    #      min-pool-size: 8
+    #      unique-resource-name: master
+    #      xa-data-source-class-name: com.mysql.cj.jdbc.MysqlXADataSource
+    #      xa-properties:
+    #        URL: jdbc:mysql://hadoop102:3306/ax_test1?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+    #        password: 123456
+    #        user: root
+    #    slave:
+    #      max-pool-size: 20
+    #      min-pool-size: 8
+    #      unique-resource-name: slave
+    #      xa-data-source-class-name: com.mysql.cj.jdbc.MysqlXADataSource
+    #      xa-properties:
+    #        URL: jdbc:mysql://hadoop102:3306/ax_test2?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+    #        password: 123456
+    #        user: root
+
+  jta:
+    enabled: false
+    log-dir: ./jta.log
+
+#    atomikos:
+#      connectionfactory:
+#        xa-properties:
+logging:
+  level:
+    com.atomikos: info
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

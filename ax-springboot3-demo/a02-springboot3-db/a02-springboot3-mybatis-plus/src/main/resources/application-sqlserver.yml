@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: a04-springboot3-mybatis-plus
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://192.168.101.142:1433;DatabaseName=ax_test;encrypt=false;trustServerCertificate=false
+    username: sa
+    password: Cepai@wit2022
+
+  jpa:
+    database: sql_server
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      #create----每次运行该程序，没有表格会新建表格，表内有数据会清空
+      #create-drop----每次程序结束的时候会清空表
+      #update----每次运行程序，没有表格会新建表格，表内有数据不会清空，只会更新
+      #validate----运行程序会校验数据与数据库的字段类型是否相同，不同会报错
+  #      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+  #    log颜色
+  output:
+    ansi:
+      enabled: always
+
+mybatis-plus:
+  #枚举包,必须有 3.5.1 取消了
+  #  type-enums-package: com.ax.a16.enums
+  #  mapper-locations: classpath*:/mybatis/*.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  #  typeAliasesPackage: com.example.demo.model
+  #  configuration:
+  #开启下划线转驼峰
+  #  map-underscore-to-camel-case: true
+  #  #开启返回map结果集的下划线转驼峰
+  #  object-wrapper-factory: com.baomidou.mybatisplus.extension.MybatisMapWrapperFactory
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql日志
+    use-generated-keys: true # 取消sqlserver 插入不返回id
+
+axinger:
+  tenant:
+    # 是否开启租户模式
+    enable: true
+    # 需要排除的多租户的表
+    exclusionTable:
+      - "t_sys_district"
+      - "oauth_client_details"
+    # 租户字段名称
+    column: tenant_id

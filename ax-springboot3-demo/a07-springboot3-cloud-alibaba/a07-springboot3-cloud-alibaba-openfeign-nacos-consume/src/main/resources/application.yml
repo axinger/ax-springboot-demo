@@ -1,0 +1,10 @@
+server:
+  port: 8071
+
+spring:
+  application:
+    name: openfeign-nacos-consume
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://localhost:8848

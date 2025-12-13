@@ -1,0 +1,10 @@
+server:
+  port: 8072
+
+spring:
+  application:
+    name: openfeign-nacos-provider
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://47.101.156.93:8848

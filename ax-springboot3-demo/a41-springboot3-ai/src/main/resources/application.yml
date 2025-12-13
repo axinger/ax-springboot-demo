@@ -1,0 +1,19 @@
+server:
+  port: 8081
+
+
+spring:
+  ai:
+#    anthropic:
+#      api-key: 这里换成你的api-key
+    ollama:
+      chat:
+        options:
+          model: qwen2.5
+    mcp:
+      server:
+        enabled: true
+        name: book-management-server
+        version: "1.0.0"
+        type: SYNC
+        sse-message-endpoint: /mcp/message

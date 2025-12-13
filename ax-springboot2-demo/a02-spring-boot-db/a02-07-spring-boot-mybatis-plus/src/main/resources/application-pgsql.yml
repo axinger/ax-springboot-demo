@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:15432/ax_test01?options=-c%20timezone=Asia/Shanghai
+    username: admin
+    password: 'Abcd#1234'
+    driver-class-name: org.postgresql.Driver
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration/postgresql
+axinger:
+  tenant:
+    # 是否开启租户模式
+    enable: true
+    # 需要排除的多租户的表
+    exclusionTable:
+      - "t_sys_district"
+      - "oauth_client_details"
+    # 租户字段名称
+    column: tenant_id
+

@@ -1,0 +1,19 @@
+server:
+  port: 12002
+  #spring默认用了HikariDataSource，而他需要的是jdbc-url而不是url，导致每次都在报错缺少jdbcUrl，而自以为配上了url
+
+# @ConfigurationProperties(prefix = "spring.datasource.dynamic")
+spring:
+  datasource:
+    dynamic:
+      datasource:
+        master:
+          url: jdbc:mysql://hadoop102:3306/ax_test1?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+          username: root
+          password: 123456
+          driver-class-name: com.mysql.cj.jdbc.Driver
+        slave:
+          url: jdbc:mysql://hadoop102:3306/ax_test2?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+          username: root
+          password: 123456
+          driver-class-name: com.mysql.cj.jdbc.Driver

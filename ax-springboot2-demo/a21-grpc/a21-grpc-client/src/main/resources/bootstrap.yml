@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: a21-grpc-server
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: http://localhost:8848
+#        #        username: nacos
+#        #        password: nacos
+#        namespace: dev
+#        group: DEFAULT_GROUP
+
+

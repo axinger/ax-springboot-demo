@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.axinger.mapper.SysPersonMapper">
+    <resultMap id="BaseResultMap" type="com.github.axinger.domain.Person">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="age" jdbcType="INTEGER" property="age"/>
+        <result column="birthday" jdbcType="TIMESTAMP" property="birthday"/>
+        <result column="gender" jdbcType="INTEGER" property="gender"/>
+        <result column="height" jdbcType="DOUBLE" property="height"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="weight" jdbcType="DOUBLE" property="weight"/>
+        <result column="tenant_id" jdbcType="VARCHAR" property="tenantId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="update_count" jdbcType="BIGINT" property="updateCount"/>
+        <result column="version" jdbcType="BIGINT" property="version"/>
+        <result column="deleted" jdbcType="INTEGER" property="deleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        `id`
+        , `age`, `birthday`, `gender`, `height`, `name`, `weight`, `tenant_id`, `create_time`, `update_time`,
+        `update_count`, `version`, `deleted`
+    </sql>
+
+</mapper>

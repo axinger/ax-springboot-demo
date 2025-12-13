@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: a04-springboot3-mybatis-plus
+  profiles:
+    #    active: sqlserver
+    active: mysql
+#    active: pgsql

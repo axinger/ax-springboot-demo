@@ -1,0 +1,12 @@
+server:
+  port: 11023
+pulsar:
+  #  service-url: pulsar://hadoop103:6650
+  service-url: pulsar://127.0.0.1:6650
+  listener-threads: 10
+  io-threads: 10
+#  consumer:
+#    thread-pool-size: 10 # 设置消费者线程池大小
+#  tenant: public
+
+

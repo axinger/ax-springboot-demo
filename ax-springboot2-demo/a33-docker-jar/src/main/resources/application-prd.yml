@@ -1,0 +1,8 @@
+server:
+  port: 13301
+
+spring:
+  application:
+    version: ${DEMO_VERSION:2.0.0}
+    description: ${DEMO_DESCRIPTION:生产环境}
+    debug: ${DEMO_DEBUG:0} # 从环境变量中获取
