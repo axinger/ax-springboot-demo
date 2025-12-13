@@ -6,7 +6,7 @@
     <parent>
         <artifactId>a30-springboot3-sa-token</artifactId>
         <groupId>com.github.axinger</groupId>
-        <version>2025.03.01-3.4</version>
+        <version>2025.12.01-3.5</version>
     </parent>
     <artifactId>a30-springboot3-account</artifactId>
 

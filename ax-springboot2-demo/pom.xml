@@ -15,7 +15,7 @@
     <groupId>com.github.axinger</groupId>
     <artifactId>ax-springboot2-demo</artifactId>
     <!--年-月-第几个版本-springboot版本-->
-    <version>2025.10.01-2.7</version>
+    <version>2025.12.01-2.7</version>
     <name>ax-springboot2-demo-${project.version}</name>
     <description>个人代码总结</description>
     <packaging>pom</packaging>

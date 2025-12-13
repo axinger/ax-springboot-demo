@@ -5,7 +5,7 @@
     <parent>
         <artifactId>a01-spring-boot-learn</artifactId>
         <groupId>com.github.axinger</groupId>
-        <version>2025.10.01-2.7</version>
+        <version>2025.12.01-2.7</version>
     </parent>
 
     <artifactId>a01-20-spring5</artifactId>

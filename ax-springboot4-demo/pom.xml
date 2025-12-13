@@ -9,38 +9,29 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.8</version>
+        <version>4.0.0</version>
     </parent>
 
     <groupId>com.github.axinger</groupId>
     <artifactId>ax-springboot3-demo</artifactId>
     <!--年-月-第几个版本-springboot版本-->
-    <version>2025.12.01-3.5</version>
-    <name>ax-springboot3-demo-${project.version}</name>
+    <version>2025.12.01-4.0</version>
+    <name>ax-springboot4-demo-${project.version}</name>
     <description>个人代码总结</description>
     <packaging>pom</packaging>
 
 
     <!--统一管理jar包版本-->
     <properties>
-        <java.version>21</java.version>  <!-- 定义 JDK 版本 -->
+        <java.version>21</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <repackage.skip>false</repackage.skip>
         <axinger.version>${project.version}</axinger.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-boot-admin.version>3.0.0</spring-boot-admin.version>
-        <!--        <spring-cloud.version>2021.0.6</spring-cloud.version>-->
-        <!--        <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>-->
-
         <spring-cloud.version>2023.0.3</spring-cloud.version>
-        <!--        <spring-cloud-alibaba.version>2023.0.1.2</spring-cloud-alibaba.version>-->
         <spring-cloud-alibaba.version>2023.0.3.2</spring-cloud-alibaba.version>
-
-
-        <!--        <spring-cloud-alibaba.version>2022.0.0.0-RC1</spring-cloud-alibaba.version>-->
-        <!-- 覆盖SpringBoot中okhttp3的旧版本声明，解决MinIO 8.3.x的依赖冲突 -->
-        <!--        <okhttp.version>4.10.0</okhttp.version>-->
         <mybatis-starter.version>2.3.2</mybatis-starter.version>
         <mybatis-plus.version>3.5.6</mybatis-plus.version>
         <mybatis-plus3.version>3.5.10.1</mybatis-plus3.version>
@@ -52,7 +43,6 @@
         <netty-all.version>4.1.113.Final</netty-all.version>
         <redisson.version>3.36.0</redisson.version>
         <minio.version>8.5.9</minio.version>
-        <!--        <snakeyaml.version>2.0</snakeyaml.version>-->
         <poi-version>5.2.3</poi-version>
         <itextpdf.version>5.5.13.3</itextpdf.version>
     </properties>
@@ -85,22 +75,7 @@
 
 
     <modules>
-        <module>axinger-spring-boot3-cloud</module>
-        <module>axinger-spring-boot3-common</module>
-        <module>a01-springboot3-learn</module>
-        <module>a02-springboot3-db</module>
-        <module>a07-springboot3-cloud-alibaba</module>
-        <module>a04-springboot3-cacheable</module>
-        <module>a10-springboot3-mq</module>
-        <module>a16-springboot3-security</module>
-        <module>a27-springboot3-springdoc</module>
-        <module>a27-springboot3-springdoc2</module>
-        <module>a30-springboot3-sa-token</module>
-        <module>a35-springboot3-flowable</module>
-        <module>a38-springboot3-xxl-job</module>
-        <module>a21-springboot3-oauth2</module>
-        <module>a40-springboot3-ai-ollama</module>
-        <module>a41-springboot3-ai</module>
+
     </modules>
 
     <dependencies>
@@ -614,22 +589,22 @@
     </dependencyManagement>
 
     <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <excludes>
-                    <exclude>application-*.yml</exclude>
-                </excludes>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-                <includes>
-                    <include>application.yml</include>
-                    <include>application-${my-env}.yml</include>
-                </includes>
-            </resource>
-        </resources>
+        <!--        <resources>-->
+        <!--            <resource>-->
+        <!--                <directory>src/main/resources</directory>-->
+        <!--                <excludes>-->
+        <!--                    <exclude>application-*.yml</exclude>-->
+        <!--                </excludes>-->
+        <!--            </resource>-->
+        <!--            <resource>-->
+        <!--                <directory>src/main/resources</directory>-->
+        <!--                <filtering>true</filtering>-->
+        <!--                <includes>-->
+        <!--                    <include>application.yml</include>-->
+        <!--                    <include>application-${my-env}.yml</include>-->
+        <!--                </includes>-->
+        <!--            </resource>-->
+        <!--        </resources>-->
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -639,7 +614,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>versions-maven-plugin</artifactId>
-                    <version>2.15.0</version>
+                    <!--                    <version>2.15.0</version>-->
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -660,33 +635,8 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
-<!--                <configuration>-->
-<!--                    <annotationProcessorPaths>-->
-<!--                        <path>-->
-<!--                            <groupId>org.springframework.boot</groupId>-->
-<!--                            <artifactId>spring-boot-configuration-processor</artifactId>-->
-<!--                        </path>-->
-<!--                        <path>-->
-<!--                            <groupId>org.projectlombok</groupId>-->
-<!--                            <artifactId>lombok</artifactId>-->
-<!--                        </path>-->
-<!--                    </annotationProcessorPaths>-->
-<!--                </configuration>-->
+                <!--                <version>3.11.0</version>-->
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--                <configuration>-->
-<!--                    <skip>${repackage.skip}</skip>-->
-<!--&lt;!&ndash;                    <excludes>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <exclude>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <groupId>org.projectlombok</groupId>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <artifactId>lombok</artifactId>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </exclude>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </excludes>&ndash;&gt;-->
-<!--                </configuration>-->
-<!--            </plugin>-->
         </plugins>
     </build>
 

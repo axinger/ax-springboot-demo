@@ -8,12 +8,12 @@
     <!--            <parent>-->
     <!--                <artifactId>ax-springboot2-demo</artifactId>-->
     <!--                <groupId>com.github.axinger</groupId>-->
-    <!--                <version>2025.10.01-2.7</version>-->
+    <!--                <version>2025.12.01-2.7</version>-->
     <!--            </parent>-->
 
     <groupId>com.github.axinger</groupId>
     <artifactId>axinger-config-bom</artifactId>
-    <version>2025.10.01-2.7</version>
+    <version>2025.12.01-2.7</version>
     <packaging>pom</packaging>
     <!--    <name>阿星依赖管理BOM</name>-->
 

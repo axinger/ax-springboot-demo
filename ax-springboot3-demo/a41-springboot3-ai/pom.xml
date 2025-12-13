@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.github.axinger</groupId>
         <artifactId>ax-springboot3-demo</artifactId>
-        <version>2025.03.01-3.4</version>
+        <version>2025.12.01-3.5</version>
     </parent>
 
     <artifactId>a41-springboot3-ai</artifactId>

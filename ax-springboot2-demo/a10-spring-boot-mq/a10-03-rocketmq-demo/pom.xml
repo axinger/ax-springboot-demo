@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.github.axinger</groupId>
         <artifactId>a10-spring-boot-mq</artifactId>
-        <version>2025.10.01-2.7</version>
+        <version>2025.12.01-2.7</version>
     </parent>
 
     <artifactId>a10-03-rocketmq-demo</artifactId>
