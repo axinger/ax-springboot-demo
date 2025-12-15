@@ -42,8 +42,7 @@
         <!-- 覆盖SpringBoot中okhttp3的旧版本声明，解决MinIO 8.3.x的依赖冲突 -->
         <!--        <okhttp.version>4.10.0</okhttp.version>-->
         <mybatis-starter.version>2.3.2</mybatis-starter.version>
-        <mybatis-plus.version>3.5.6</mybatis-plus.version>
-        <mybatis-plus3.version>3.5.10.1</mybatis-plus3.version>
+        <mybatis-plus3.version>3.5.15</mybatis-plus3.version>
         <guava.version>33.3.0-jre</guava.version>
         <hutool.version>5.8.32</hutool.version>
         <fastjson2.version>2.0.49</fastjson2.version>
@@ -99,7 +98,6 @@
         <module>a35-springboot3-flowable</module>
         <module>a38-springboot3-xxl-job</module>
         <module>a21-springboot3-oauth2</module>
-        <module>a40-springboot3-ai-ollama</module>
         <module>a41-springboot3-ai</module>
     </modules>
 
@@ -506,17 +504,6 @@
                 <version>3.12.0</version>
             </dependency>
 
-            <!--            <dependency>-->
-            <!--                <groupId>com.baomidou</groupId>-->
-            <!--                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>-->
-            <!--                <version>${mybatis-plus.version}</version>-->
-            <!--            </dependency>-->
-
-            <!--            <dependency>-->
-            <!--                <groupId>com.baomidou</groupId>-->
-            <!--                <artifactId>mybatis-plus-extension</artifactId>-->
-            <!--                <version>${mybatis-plus.version}</version>-->
-            <!--            </dependency>-->
 
             <dependency>
                 <groupId>com.baomidou</groupId>

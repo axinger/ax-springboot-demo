@@ -1,4 +1,11 @@
+server:
+  # 优雅关机
+  shutdown: graceful # 优雅
+
 spring:
+  lifecycle:
+    # 设置关闭阶段的超时时间，默认为30秒
+    timeout-per-shutdown-phase: 30s
   profiles:
     # 这个用来打包
     #    active: '@my-env@'
@@ -7,6 +14,13 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
 
+#开放端点用于SpringBoot Admin的监控
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  # 暴露所有端点（生产环境慎用！）
+        # 或按需选择：health, info, metrics, prometheus...
 
 axinger:
   delayExpression: 2000L

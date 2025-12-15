@@ -11,6 +11,7 @@ spring:
   flyway:
     enabled: true
     locations: classpath:db/migration/mysql
+    baseline-on-migrate: true
 axinger:
   tenant:
     # 是否开启租户模式
