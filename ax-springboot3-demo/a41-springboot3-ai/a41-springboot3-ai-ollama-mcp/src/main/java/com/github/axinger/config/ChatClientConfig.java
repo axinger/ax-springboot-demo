@@ -14,11 +14,10 @@ import org.springframework.context.annotation.Primary;
 public class ChatClientConfig {
 
 
-
     /**
      * 配置ChatClient，注册系统指令和工具函数
      */
-    @Bean(name = "studentChatClient")
+    @Bean
     @Primary
     public ChatClient studentChatClient(ChatModel chatModel, StudentTool studentTool) {
         return ChatClient.builder(chatModel)

@@ -31,14 +31,17 @@ spring:
           keep-alive: 5m # Controls how long the model will stay loaded into memory following the request
     mcp:
       client:
-        enabled: true
+        toolcallback:
+          enabled: true
         name: mcp-client
-        version: 1.0.0
-        type: SYNC
-        sse-message-endpoint: /mcp/stream
-        request-timeout: 30s
-        stdio:
-          servers-configuration: classpath:/mcp-servers-config.json
+#        stdio:
+#          servers-configuration: classpath:/mcp-server-config.json # MCP服务配置
+        enabled: true
+        type: ASYNC
+        sse:
+          connections:
+            author-info-server:
+              url: http://localhost:14101
       server:
         enabled: true
         name: stuednt-management-server
