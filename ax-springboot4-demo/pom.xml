@@ -13,7 +13,7 @@
     </parent>
 
     <groupId>com.github.axinger</groupId>
-    <artifactId>ax-springboot3-demo</artifactId>
+    <artifactId>ax-springboot4-demo</artifactId>
     <!--年-月-第几个版本-springboot版本-->
     <version>2025.12.01-4.0</version>
     <name>ax-springboot4-demo-${project.version}</name>

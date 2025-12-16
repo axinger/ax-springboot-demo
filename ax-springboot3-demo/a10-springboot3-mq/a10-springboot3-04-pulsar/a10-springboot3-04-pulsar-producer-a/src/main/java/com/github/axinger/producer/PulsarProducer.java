@@ -3,9 +3,11 @@ package com.github.axinger.producer;
 import cn.hutool.core.date.LocalDateTimeUtil;
 import com.alibaba.fastjson2.JSON;
 import com.github.axinger.topic.Topic;
-import io.github.majusko.pulsar.producer.PulsarTemplate;
 import org.apache.pulsar.client.api.PulsarClientException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.pulsar.core.PulsarTemplate;
+import org.springframework.pulsar.support.PulsarHeaders;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -22,13 +24,7 @@ public class PulsarProducer {
 
 
     public void send(Map<String, Object> message) {
-        try {
-//            String jsonString = JSON.toJSONString(message);
-
-            template.send(Topic.EXCLUSIVE_TOPIC, message);
-        } catch (PulsarClientException e) {
-            e.printStackTrace();
-        }
+        template.send(Topic.EXCLUSIVE_TOPIC, message);
     }
 
     /**
@@ -43,19 +39,25 @@ public class PulsarProducer {
      */
     public void deliverAfter() {
 
-        try {
-            Map<String, Object> map = new HashMap<>();
-            map.put("date", LocalDateTimeUtil.format(LocalDateTime.now(), "yyyy-MM-dd HH:mm:ss"));
-            map.put("data", "发送延迟消息");
+        Map<String, Object> map = new HashMap<>();
+        map.put("date", LocalDateTimeUtil.format(LocalDateTime.now(), "yyyy-MM-dd HH:mm:ss"));
+        map.put("data", "发送延迟消息");
 
-            String jsonString = JSON.toJSONString(map);
+        String jsonString = JSON.toJSONString(map);
 
-            template.createMessage("deliverAfterTopic", map)
-                    .deliverAfter(10, TimeUnit.SECONDS)
-                    .send().toString();
+//            template.send(Topic.EXCLUSIVE_TOPIC, message);
 
-        } catch (PulsarClientException e) {
-            throw new RuntimeException(e);
-        }
+//            var msg = MessageBuilder.withPayload(jsonString)
+//                    .setHeader(PulsarHeaders.DELIVER_AT_TIME, delay)
+//                    .build();
+//
+//
+//            template.newMessage(map)
+//                    .sendAsync();
+//
+//            template.createMessage("deliverAfterTopic", map)
+//                    .deliverAfter(10, TimeUnit.SECONDS)
+//                    .send();
+
     }
 }

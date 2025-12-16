@@ -1,5 +1,19 @@
 server:
   port: 11023
+
+spring:
+  pulsar:
+    client:
+      service-url: pulsar://localhost:6650
+      threads:
+        io: 2
+        listener: 2
+    admin:
+      service-url: http://localhost:8080
+    #      service-url: pulsar://127.0.0.1:6650
+    listener:
+      concurrency: 5
+      schemaType: JSON
 pulsar:
   #  service-url: pulsar://hadoop103:6650
   service-url: pulsar://127.0.0.1:6650

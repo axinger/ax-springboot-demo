@@ -4,7 +4,9 @@ import com.github.axinger.model.dto.LoginDTO;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/postTest")
@@ -18,8 +20,14 @@ public class PostController {
     }
 
     @PostMapping("/login2")
-    public Object login2(@RequestBody @Validated LoginDTO dto) {
-        return dto;
+    public Object login2(@RequestParam("username") String username,
+                         @RequestParam("password") String password,
+                         @RequestBody @Validated LoginDTO dto) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("username", username);
+        map.put("password", password);
+        map.put("dto", dto);
+        return map;
     }
 
     /**

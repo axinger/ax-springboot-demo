@@ -32,26 +32,28 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-pulsar</artifactId>
-            <!--                    <version>3.2.0</version>-->
         </dependency>
 
-        <!-- Pulsar 客户端（Pulsar Admin 依赖） -->
-        <dependency>
-            <groupId>org.apache.pulsar</groupId>
-            <artifactId>pulsar-client</artifactId>
-        </dependency>
+        <!--        &lt;!&ndash; Pulsar 客户端（Pulsar Admin 依赖） &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.pulsar</groupId>-->
+        <!--            <artifactId>pulsar-client</artifactId>-->
+        <!--            <version>4.1.2</version>-->
+        <!--        </dependency>-->
 
-        <!-- 其他可能需要的依赖 -->
-        <dependency>
-            <groupId>org.apache.pulsar</groupId>
-            <artifactId>pulsar-common</artifactId>
-        </dependency>
+        <!--        &lt;!&ndash; 其他可能需要的依赖 &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.pulsar</groupId>-->
+        <!--            <artifactId>pulsar-common</artifactId>-->
+        <!--            <version>4.1.2</version>-->
+        <!--        </dependency>-->
 
 
-        <dependency>
-            <groupId>org.apache.pulsar</groupId>
-            <artifactId>pulsar-client-admin</artifactId>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.pulsar</groupId>-->
+        <!--            <artifactId>pulsar-client-admin</artifactId>-->
+        <!--            <version>4.1.2</version>-->
+        <!--        </dependency>-->
 
     </dependencies>
 

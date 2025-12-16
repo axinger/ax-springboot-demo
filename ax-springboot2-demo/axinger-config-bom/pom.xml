@@ -85,7 +85,7 @@
 
             <dependency>
                 <groupId>com.github.axinger</groupId>
-                <artifactId>request-log-spring-boot-starter</artifactId>
+                <artifactId>request-spring-boot-starter</artifactId>
                 <version>${axinger.version}</version>
             </dependency>
 

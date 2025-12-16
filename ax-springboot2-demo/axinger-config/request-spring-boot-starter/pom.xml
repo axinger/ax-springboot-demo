@@ -9,7 +9,7 @@
         <version>2025.12.01-2.7</version>
     </parent>
 
-    <artifactId>request-log-spring-boot-starter</artifactId>
+    <artifactId>request-spring-boot-starter</artifactId>
 
     <dependencies>
         <dependency>
@@ -20,6 +20,16 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.axinger</groupId>
+            <artifactId>jackson-config-spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-extra</artifactId>
         </dependency>
     </dependencies>
 
