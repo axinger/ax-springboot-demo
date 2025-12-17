@@ -26,6 +26,7 @@ show_operation_menu() {
     echo "1) start"
     echo "2) stop"
     echo "3) restart"
+    echo "4) log"
 }
 
 # 根据 JAR 文件名检查是否正在运行（返回 PID 列表）
@@ -115,11 +116,30 @@ case "$op_input" in
     1) operation="start" ;;
     2) operation="stop" ;;
     3) operation="restart" ;;
+    4) operation="log" ;;
     *)
-        echo "❌ 无效操作，请输入 1、2 或 3。"
+        echo "❌ 无效操作，请输入 1,2,3,4"
         exit 1
         ;;
 esac
+
+# 查看服务日志
+view_service_log() {
+    local service_name="$1"
+    local log_file="$base_dir/$service_name/$service_name.log"
+    
+    if [ ! -f "$log_file" ]; then
+        echo "❌ 日志文件不存在: $log_file"
+        return 1
+    fi
+    
+    # 显示将要执行的命令
+    echo "即将执行: tail -f \"$log_file\""
+    read -p "按回车键确认执行，或按 Ctrl+C 退出..." confirm
+    
+    echo "🔍 正在查看 $service_name 的日志 (按 Ctrl+C 退出):"
+    tail -f "$log_file"
+}
 
 # 执行操作
 for svc in "${selected[@]}"; do
@@ -139,6 +159,9 @@ for svc in "${selected[@]}"; do
             stop_service_by_jar "$jar_name"
             sleep 1
             start_service "$svc"
+            ;;
+        log)
+            view_service_log "$svc"
             ;;
     esac
 done

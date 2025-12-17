@@ -1,0 +1,6 @@
+[user]
+	name = jim
+	email = jim@qq.com
+
+[includeIf "gitdir/i:D:/code-axinger/"]
+	path = ~/.gitconfig-personal
