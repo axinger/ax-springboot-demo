@@ -1,4 +1,4 @@
-CREATE TABLE `department`
+CREATE TABLE `sys_department`
 (
     `id`                varchar(36)  NOT NULL COMMENT '部门ID，UUID格式的唯一标识符',
     `name`              varchar(100) NOT NULL COMMENT '部门名称，如"技术部"、"市场部"',
@@ -9,7 +9,7 @@ CREATE TABLE `department`
   DEFAULT CHARSET = utf8mb4 COMMENT ='部门信息表';
 
 
-CREATE TABLE `employee`
+CREATE TABLE `sys_employee`
 (
     `id`               varchar(36)  NOT NULL COMMENT '员工ID，UUID格式的唯一标识符',
     `name`             varchar(100) NOT NULL COMMENT '员工姓名',
@@ -22,14 +22,14 @@ CREATE TABLE `employee`
 
 
 -- 插入初始部门数据  COMMENT '公司领导统一为e003',COMMENT 'CEO没有直属领导'
-INSERT INTO `department` (`id`, `name`, `dept_leader_id`, `company_leader_id`)
+INSERT INTO `sys_department` (`id`, `name`, `dept_leader_id`, `company_leader_id`)
 VALUES ('d001', '技术部', 'e002', 'e003'),
        ('d002', '市场部', 'e004', 'e003'),
        ('d003', '人事部', NULL, 'e003');
 
 
 -- 插入初始员工数据
-INSERT INTO `employee` (`id`, `name`, `position`, `department_id`, `direct_leader_id`)
+INSERT INTO `sys_employee` (`id`, `name`, `position`, `department_id`, `direct_leader_id`)
 VALUES ('e001', '张三', '初级开发', 'd001', 'e002'),
        ('e002', '李四', '技术经理', 'd001', 'e003'),
        ('e003', '王五', 'CEO', 'd003', NULL),

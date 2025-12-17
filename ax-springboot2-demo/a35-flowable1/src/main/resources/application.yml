@@ -1,34 +1,50 @@
 server:
-  port: 8080
+#  servlet:
+#    context-path: /workflow
+  port: 13501
 spring:
   application:
     name: a35-flowable
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.101.134:3306/ax_flowable?autoReconnect=true&useUnicode=true&characterEncoding=utf-8&&zeroDateTimeBehavior=CONVERT_TO_NULL&&serverTimezone=GMT%2B8&&nullCatalogMeansCurrent=true
+    url: jdbc:mysql://localhost:3306/ax_test3501_flowable?autoReconnect=true&useUnicode=true&characterEncoding=utf-8&&zeroDateTimeBehavior=CONVERT_TO_NULL&&serverTimezone=GMT%2B8&&nullCatalogMeansCurrent=true
     username: root
-    password: 123456
-
+    password: Abcd#1234
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+  security:
+    user:
+      name: admin
+      password: admin123
+      roles: ADMIN
 flowable:
   #关闭定时任务JOB
   async-executor-activate: false
   # 库与数据库表今儿个不一致时,自动升级新版本
-  database-schema-update: false
+  database-schema-update: true
   #  在processes文件夹下的xml会被springboot自动部署
   process-definition-location-prefix: classpath*:/processes/
   process-definition-location-suffixes: "**.bpmn20.xml, **.bpmn"
-#  idm:
-#    enabled: true
-#    app:
-#      admin:
-#        user-id: admin
-#        password: 123456
-#  datasource:
-#    type: com.zaxxer.hikari.HikariDataSource
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://127.0    .0.1:3306/flowable_demo?autoReconnect=true&useUnicode=true&characterEncoding=utf-8&&zeroDateTimeBehavior=CONVERT_TO_NULL&&serverTimezone=GMT%2B8&&nullCatalogMeansCurrent=true
-#    username: root
-#    password: 123456
 
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
 
+logging:
+  level:
+    org:
+      flowable: INFO
+      springframework:
+        security: info

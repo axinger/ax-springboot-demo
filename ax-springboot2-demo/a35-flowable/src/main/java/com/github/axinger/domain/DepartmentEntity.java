@@ -10,7 +10,7 @@ import java.io.Serializable;
 /**
  * @TableName department
  */
-@TableName(value = "ax_department")
+@TableName(value = "sys_department")
 @Data
 public class DepartmentEntity implements Serializable {
     @TableField(exist = false)
