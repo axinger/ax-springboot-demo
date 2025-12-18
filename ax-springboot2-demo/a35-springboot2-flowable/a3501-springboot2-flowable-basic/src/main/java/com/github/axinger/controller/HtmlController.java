@@ -26,7 +26,13 @@ public class HtmlController {
     }
 
     @GetMapping("/task")
-    public String task() {
+    public String task(HttpSession session) {
+        A35UserEntity user = (A35UserEntity) session.getAttribute("user");
+        if (user == null) {
+            // 用户已登录，重定向到任务列表页面
+            return "redirect:/login";
+        }
+        session.setAttribute("user", user);
         return "task";
     }
 

@@ -7,8 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @MapperScan("com.github.axinger.mapper")
 //@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @SpringBootApplication
-public class A35FlowableApplication {
+public class A3501FlowableApplication {
     public static void main(String[] args) {
-        SpringApplication.run(A35FlowableApplication.class, args);
+        SpringApplication.run(A3501FlowableApplication.class, args);
     }
 }

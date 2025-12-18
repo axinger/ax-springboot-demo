@@ -300,7 +300,7 @@
         .then(data => {
             if (data.success) {
                 sessionStorage.removeItem('currentUser');
-                window.location.href = '/login.html';
+                window.location.href = '/login';
             } else {
                 alert('退出登录失败: ' + data.message);
             }
