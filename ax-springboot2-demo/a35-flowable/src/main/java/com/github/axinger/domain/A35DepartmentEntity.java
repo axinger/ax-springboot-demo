@@ -10,9 +10,9 @@ import java.io.Serializable;
 /**
  * @TableName department
  */
-@TableName(value = "sys_department")
+@TableName(value = "a35__department")
 @Data
-public class DepartmentEntity implements Serializable {
+public class A35DepartmentEntity implements Serializable {
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
     /**

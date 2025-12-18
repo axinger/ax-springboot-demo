@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.github.axinger.mapper.DepartmentMapper">
+<mapper namespace="com.github.axinger.mapper.A35DepartmentMapper">
 
-    <resultMap id="BaseResultMap" type="com.github.axinger.domain.DepartmentEntity">
+    <resultMap id="BaseResultMap" type="com.github.axinger.domain.A35DepartmentEntity">
         <id property="id" column="id" jdbcType="VARCHAR"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="deptLeaderId" column="dept_leader_id" jdbcType="VARCHAR"/>

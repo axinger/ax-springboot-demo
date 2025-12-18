@@ -5,14 +5,16 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
  * @TableName employee
  */
-@TableName(value = "sys_employee")
+@TableName(value = "a35_user_info")
 @Data
-public class EmployeeEntity implements Serializable {
+public class A35UserEntity implements Serializable {
+    @Serial
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
     /**
@@ -25,6 +27,9 @@ public class EmployeeEntity implements Serializable {
      */
     @TableField(value = "name")
     private String name;
+
+    @TableField(value = "password")
+    private String password;
     /**
      *
      */

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>任务中心</title>
+    <!-- Bootstrap CSS -->
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .task-container {
+            margin: 20px auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .section-title {
+            border-bottom: 2px solid #0d6efd;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            color: #0d6efd;
+        }
+        .task-card {
+            transition: transform 0.2s;
+        }
+        .task-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .navbar-brand {
+            font-weight: bold;
+        }
+        .nav-link {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Flowable 工作流系统</a>
+        <div class="navbar-nav ms-auto">
+            <span class="navbar-text me-3" id="currentUser">欢迎，<span id="username"></span></span>
+            <button class="btn btn-outline-light" id="logoutBtn">退出登录</button>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid task-container">
+    <h1 class="text-center mb-4">任务中心</h1>
+    
+    <!-- 可填写的流程 -->
+    <div class="section">
+        <h3 class="section-title">可申请的流程</h3>
+        <div class="row" id="availableProcessesContainer">
+            <!-- 动态加载可申请的流程 -->
+        </div>
+    </div>
+    
+    <hr>
+    
+    <!-- 我申请的流程 -->
+    <div class="section">
+        <h3 class="section-title">我申请的流程</h3>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-primary">
+                <tr>
+                    <th>流程实例ID</th>
+                    <th>流程名称</th>
+                    <th>开始时间</th>
+                    <th>状态</th>
+                    <th>业务标识</th>
+                </tr>
+                </thead>
+                <tbody id="myApplicationsContainer">
+                    <!-- 动态加载我申请的流程 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <hr>
+    
+    <!-- 待我审批 -->
+    <div class="section">
+        <h3 class="section-title">待我审批</h3>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-warning">
+                <tr>
+                    <th>任务ID</th>
+                    <th>任务名称</th>
+                    <th>流程实例ID</th>
+                    <th>创建时间</th>
+                    <th>状态</th>
+                    <th>描述</th>
+                </tr>
+                </thead>
+                <tbody id="pendingApprovalsContainer">
+                    <!-- 动态加载待审批任务 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <hr>
+    
+    <!-- 已完结的任务 -->
+    <div class="section">
+        <h3 class="section-title">已完结的任务</h3>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-success">
+                <tr>
+                    <th>任务ID</th>
+                    <th>任务名称</th>
+                    <th>流程实例ID</th>
+                    <th>开始时间</th>
+                    <th>结束时间</th>
+                    <th>处理人</th>
+                    <th>耗时(毫秒)</th>
+                </tr>
+                </thead>
+                <tbody id="finishedTasksContainer">
+                    <!-- 动态加载已完结任务 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script>
+    // 页面加载完成后获取任务数据
+    document.addEventListener('DOMContentLoaded', function() {
+        // 从sessionStorage获取用户信息
+        const currentUser = sessionStorage.getItem('currentUser');
+        if (currentUser) {
+            document.getElementById('username').textContent = currentUser;
+        }
+        
+        loadTaskData();
+    });
+
+    // 加载任务数据
+    function loadTaskData() {
+        fetch('/api/tasks/dashboard')
+            .then(response => response.json())
+            .then(data => {
+                renderAvailableProcesses(data.availableProcesses);
+                renderMyApplications(data.myApplications);
+                renderPendingApprovals(data.pendingApprovals);
+                renderFinishedTasks(data.finishedTasks);
+            })
+            .catch(error => {
+                console.error('获取任务数据失败:', error);
+                alert('获取任务数据失败，请刷新页面重试');
+            });
+    }
+
+    // 渲染可申请的流程
+    function renderAvailableProcesses(processes) {
+        const container = document.getElementById('availableProcessesContainer');
+        container.innerHTML = '';
+        
+        if (!processes || processes.length === 0) {
+            container.innerHTML = '<p class="text-muted">暂无可申请的流程</p>';
+            return;
+        }
+        
+        processes.forEach(process => {
+            const col = document.createElement('div');
+            col.className = 'col-md-4 mb-3';
+            col.innerHTML = `
+                <div class="card task-card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">${process.name || '未命名流程'}</h5>
+                        <p class="card-text">
+                            <small class="text-muted">版本: ${process.version}</small><br>
+                            <small class="text-muted">Key: ${process.key}</small>
+                        </p>
+                        <button class="btn btn-primary" onclick="applyForProcess('${process.key}')">申请</button>
+                    </div>
+                </div>
+            `;
+            container.appendChild(col);
+        });
+    }
+
+    // 渲染我申请的流程
+    function renderMyApplications(applications) {
+        const container = document.getElementById('myApplicationsContainer');
+        container.innerHTML = '';
+        
+        if (!applications || applications.length === 0) {
+            const row = document.createElement('tr');
+            row.innerHTML = '<td colspan="5" class="text-center text-muted">暂无申请的流程</td>';
+            container.appendChild(row);
+            return;
+        }
+        
+        applications.forEach(app => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${app.id}</td>
+                <td>${app.processDefinitionName || '未知流程'}</td>
+                <td>${formatDate(app.startTime)}</td>
+                <td>
+                    <span class="badge ${app.status === '运行中' ? 'bg-warning' : 'bg-success'}">
+                        ${app.status}
+                    </span>
+                </td>
+                <td>${app.businessKey || '-'}</td>
+            `;
+            container.appendChild(row);
+        });
+    }
+
+    // 渲染待审批任务
+    function renderPendingApprovals(tasks) {
+        const container = document.getElementById('pendingApprovalsContainer');
+        container.innerHTML = '';
+        
+        if (!tasks || tasks.length === 0) {
+            const row = document.createElement('tr');
+            row.innerHTML = '<td colspan="6" class="text-center text-muted">暂无待审批任务</td>';
+            container.appendChild(row);
+            return;
+        }
+        
+        tasks.forEach(task => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${task.id}</td>
+                <td>${task.name || '未命名任务'}</td>
+                <td>${task.processInstanceId}</td>
+                <td>${formatDate(task.createTime)}</td>
+                <td>
+                    <span class="badge ${task.status === '指派给我' ? 'bg-warning' : 'bg-info'}">
+                        ${task.status}
+                    </span>
+                </td>
+                <td>${task.description || '-'}</td>
+            `;
+            container.appendChild(row);
+        });
+    }
+
+    // 渲染已完结任务
+    function renderFinishedTasks(tasks) {
+        const container = document.getElementById('finishedTasksContainer');
+        container.innerHTML = '';
+        
+        if (!tasks || tasks.length === 0) {
+            const row = document.createElement('tr');
+            row.innerHTML = '<td colspan="7" class="text-center text-muted">暂无已完结任务</td>';
+            container.appendChild(row);
+            return;
+        }
+        
+        tasks.forEach(task => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${task.id}</td>
+                <td>${task.name || '未命名任务'}</td>
+                <td>${task.processInstanceId}</td>
+                <td>${formatDate(task.startTime)}</td>
+                <td>${formatDate(task.endTime)}</td>
+                <td>${task.assignee || '-'}</td>
+                <td>${task.durationInMillis || '-'}</td>
+            `;
+            container.appendChild(row);
+        });
+    }
+
+    // 格式化日期
+    function formatDate(dateString) {
+        if (!dateString) return '-';
+        const date = new Date(dateString);
+        return date.toLocaleString('zh-CN');
+    }
+
+    // 申请流程（示例函数）
+    function applyForProcess(processKey) {
+        alert(`申请流程: ${processKey}\n此功能需根据具体业务实现`);
+        // 实际应用中，这里会跳转到具体的流程申请页面
+    }
+
+    // 退出登录
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+        fetch('/api/logout', {
+            method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                sessionStorage.removeItem('currentUser');
+                window.location.href = '/login.html';
+            } else {
+                alert('退出登录失败: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('退出登录请求失败:', error);
+            alert('退出登录请求失败');
+        });
+    });
+</script>
+</body>
+</html>
