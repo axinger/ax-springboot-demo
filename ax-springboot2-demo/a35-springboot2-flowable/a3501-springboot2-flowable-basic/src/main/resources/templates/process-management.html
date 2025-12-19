@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>流程管理</title>
+    <!-- Bootstrap CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .management-container {
+            margin: 20px auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .section-title {
+            border-bottom: 2px solid #0d6efd;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            color: #0d6efd;
+        }
+        .navbar-brand {
+            font-weight: bold;
+        }
+        .nav-link {
+            cursor: pointer;
+        }
+        .sidebar {
+            height: calc(100vh - 100px);
+            position: sticky;
+            top: 20px;
+        }
+        .main-content {
+            height: calc(100vh - 100px);
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Flowable 工作流系统</a>
+        <div class="navbar-nav ms-auto">
+            <span class="navbar-text me-3" id="currentUser">欢迎，<span id="username"></span></span>
+            <button class="btn btn-outline-light" id="logoutBtn">退出登录</button>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid mt-2">
+    <div class="row">
+        <!-- 侧边栏 -->
+        <div class="col-md-3 col-lg-2 sidebar bg-light p-3">
+            <h5 class="border-bottom pb-2">功能菜单</h5>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#" onclick="showSection('processDefinitions')">流程定义</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="showSection('processInstances')">流程实例</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="showSection('tasks')">任务管理</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="showSection('history')">历史记录</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 主内容区域 -->
+        <div class="col-md-9 col-lg-10 main-content">
+            <div class="management-container">
+                <!-- 流程定义部分 -->
+                <div id="processDefinitionsSection">
+                    <h2 class="section-title">流程定义管理</h2>
+                    <div class="d-flex justify-content-between mb-3">
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deployProcessModal">部署流程</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-primary">
+                            <tr>
+                                <th>ID</th>
+                                <th>名称</th>
+                                <th>Key</th>
+                                <th>版本</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="processDefinitionsContainer">
+                                <!-- 动态加载流程定义 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 流程实例部分 -->
+                <div id="processInstancesSection" class="d-none">
+                    <h2 class="section-title">流程实例管理</h2>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-primary">
+                            <tr>
+                                <th>实例ID</th>
+                                <th>流程定义</th>
+                                <th>业务Key</th>
+                                <th>开始时间</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="processInstancesContainer">
+                                <!-- 动态加载流程实例 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 任务管理部分 -->
+                <div id="tasksSection" class="d-none">
+                    <h2 class="section-title">任务管理</h2>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-primary">
+                            <tr>
+                                <th>任务ID</th>
+                                <th>任务名称</th>
+                                <th>流程实例ID</th>
+                                <th>创建时间</th>
+                                <th>处理人</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tasksContainer">
+                                <!-- 动态加载任务 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 历史记录部分 -->
+                <div id="historySection" class="d-none">
+                    <h2 class="section-title">历史记录</h2>
+                    <ul class="nav nav-tabs" id="historyTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="process-history-tab" data-bs-toggle="tab" data-bs-target="#processHistory" type="button">流程历史</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="task-history-tab" data-bs-toggle="tab" data-bs-target="#taskHistory" type="button">任务历史</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="historyTabContent">
+                        <div class="tab-pane fade show active" id="processHistory" role="tabpanel">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead class="table-primary">
+                                    <tr>
+                                        <th>实例ID</th>
+                                        <th>流程定义</th>
+                                        <th>开始时间</th>
+                                        <th>结束时间</th>
+                                        <th>持续时间</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="processHistoryContainer">
+                                        <!-- 动态加载流程历史 -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="taskHistory" role="tabpanel">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead class="table-primary">
+                                    <tr>
+                                        <th>任务ID</th>
+                                        <th>任务名称</th>
+                                        <th>流程实例ID</th>
+                                        <th>开始时间</th>
+                                        <th>结束时间</th>
+                                        <th>处理人</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="taskHistoryContainer">
+                                        <!-- 动态加载任务历史 -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 部署流程模态框 -->
+<div class="modal fade" id="deployProcessModal" tabindex="-1" aria-labelledby="deployProcessModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deployProcessModalLabel">部署流程</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="deployProcessForm">
+                    <div class="mb-3">
+                        <label for="processFile" class="form-label">选择BPMN文件</label>
+                        <input type="file" class="form-control" id="processFile" accept=".bpmn,.bpmn20.xml" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="deploymentName" class="form-label">部署名称</label>
+                        <input type="text" class="form-control" id="deploymentName" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="submitDeployBtn">部署</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 查看流程图模态框 -->
+<div class="modal fade" id="processDiagramModal" tabindex="-1" aria-labelledby="processDiagramModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="processDiagramModalLabel">流程图</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="processDiagramImg" src="" alt="流程图" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script>
+    // 页面加载完成后初始化
+    document.addEventListener('DOMContentLoaded', function() {
+        // 从sessionStorage获取用户信息
+        const currentUser = sessionStorage.getItem('currentUser');
+        if (currentUser) {
+            document.getElementById('username').textContent = currentUser;
+        }
+        
+        // 默认加载流程定义数据
+        loadProcessDefinitions();
+    });
+
+    // 显示指定部分，隐藏其他部分
+    function showSection(sectionId) {
+        // 隐藏所有部分
+        document.getElementById('processDefinitionsSection').classList.add('d-none');
+        document.getElementById('processInstancesSection').classList.add('d-none');
+        document.getElementById('tasksSection').classList.add('d-none');
+        document.getElementById('historySection').classList.add('d-none');
+        
+        // 显示指定部分
+        document.getElementById(sectionId + 'Section').classList.remove('d-none');
+        
+        // 更新导航链接的活动状态
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.remove('active');
+        });
+        event.target.classList.add('active');
+        
+        // 根据部分加载对应数据
+        switch(sectionId) {
+            case 'processDefinitions':
+                loadProcessDefinitions();
+                break;
+            case 'processInstances':
+                loadProcessInstances();
+                break;
+            case 'tasks':
+                loadTasks();
+                break;
+            case 'history':
+                loadHistory();
+                break;
+        }
+    }
+
+    // 加载流程定义
+    function loadProcessDefinitions() {
+        fetch('/api/process-definition/list')
+            .then(response => response.json())
+            .then(data => {
+                renderProcessDefinitions(data);
+            })
+            .catch(error => {
+                console.error('获取流程定义失败:', error);
+                alert('获取流程定义失败，请刷新页面重试');
+            });
+    }
+
+    // 渲染流程定义
+    function renderProcessDefinitions(processDefinitions) {
+        const container = document.getElementById('processDefinitionsContainer');
+        container.innerHTML = '';
+        
+        if (!processDefinitions || processDefinitions.length === 0) {
+            const row = document.createElement('tr');
+            row.innerHTML = '<td colspan="5" class="text-center text-muted">暂无流程定义</td>';
+            container.appendChild(row);
+            return;
+        }
+        
+        processDefinitions.forEach(definition => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${definition.id}</td>
+                <td>${definition.name || '未命名'}</td>
+                <td>${definition.key}</td>
+                <td>${definition.version}</td>
+                <td>
+                    <button class="btn btn-sm btn-info" onclick="viewProcessDiagram('${definition.id}')">查看流程图</button>
+                    <button class="btn btn-sm btn-warning" onclick="suspendProcess('${definition.id}')">挂起</button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteProcess('${definition.deploymentId}')">删除</button>
+                </td>
+            `;
+            container.appendChild(row);
+        });
+    }
+
+    // 加载流程实例
+    function loadProcessInstances() {
+        fetch('/api/process-instance/list')
+            .then(response => response.json())
+            .then(data => {
+                renderProcessInstances(data);
+            })
+            .catch(error => {
+                console.error('获取流程实例失败:', error);
+                alert('获取流程实例失败，请刷新页面重试');
+            });
+    }
+
+    // 渲染流程实例
+    function renderProcessInstances(processInstances) {
+        const container = document.getElementById('processInstancesContainer');
+        container.innerHTML = '';
+        
+        if (!processInstances || processInstances.length === 0) {
+            const row = document.createElement('tr');
+            row.innerHTML = '<td colspan="6" class="text-center text-muted">暂无流程实例</td>';
+            container.appendChild(row);
+            return;
+        }
+        
+        processInstances.forEach(instance => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${instance.id}</td>
+                <td>${instance.processDefinitionName || instance.processDefinitionKey}</td>
+                <td>${instance.businessKey || '-'}</td>
+                <td>${formatDate(instance.startTime)}</td>
+                <td>
+                    <span class="badge ${instance.suspended ? 'bg-warning' : 'bg-success'}">
+                        ${instance.suspended ? '已挂起' : '运行中'}
+                    </span>
+                </td>
+                <td>
+                    <button class="btn btn-sm btn-info" onclick="viewProcessDiagram('${instance.id}')">查看流程图</button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteProcessInstance('${instance.id}')">删除</button>
+                </td>
+            `;
+            container.appendChild(row);
+        });
+    }
+
+    // 加载任务
+    function loadTasks() {
+        fetch('/api/task/all')
+            .then(response => response.json())
+            .then(data => {
+                renderTasks(data);
+            })
+            .catch(error => {
+                console.error('获取任务失败:', error);
+                alert('获取任务失败，请刷新页面重试');
+            });
+    }
+
+    // 渲染任务
+    function renderTasks(tasks) {
+        const container = document.getElementById('tasksContainer');
+        container.innerHTML = '';
+        
+        if (!tasks || tasks.length === 0) {
+            const row = document.createElement('tr');
+            row.innerHTML = '<td colspan="6" class="text-center text-muted">暂无任务</td>';
+            container.appendChild(row);
+            return;
+        }
+        
+        tasks.forEach(task => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${task.id}</td>
+                <td>${task.name || '未命名'}</td>
+                <td>${task.processInstanceId}</td>
+                <td>${formatDate(task.createTime)}</td>
+                <td>${task.assignee || '未分配'}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary" onclick="assignTask('${task.id}')">分配</button>
+                </td>
+            `;
+            container.appendChild(row);
+        });
+    }
+
+    // 加载历史记录
+    function loadHistory() {
+        // 加载流程历史
+        fetch('/api/history/process-instances/finished')
+            .then(response => response.json())
+            .then(data => {
+                renderProcessHistory(data);
+            })
+            .catch(error => {
+                console.error('获取流程历史失败:', error);
+                alert('获取流程历史失败，请刷新页面重试');
+            });
+            
+        // 加载任务历史
+        fetch('/api/history/task-instances/finished')
+            .then(response => response.json())
+            .then(data => {
+                renderTaskHistory(data);
+            })
+            .catch(error => {
+                console.error('获取任务历史失败:', error);
+                alert('获取任务历史失败，请刷新页面重试');
+            });
+    }
+
+    // 渲染流程历史
+    function renderProcessHistory(processInstances) {
+        const container = document.getElementById('processHistoryContainer');
+        container.innerHTML = '';
+        
+        if (!processInstances || processInstances.length === 0) {
+            const row = document.createElement('tr');
+            row.innerHTML = '<td colspan="5" class="text-center text-muted">暂无流程历史</td>';
+            container.appendChild(row);
+            return;
+        }
+        
+        processInstances.forEach(instance => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${instance.id}</td>
+                <td>${instance.processDefinitionName || instance.processDefinitionKey}</td>
+                <td>${formatDate(instance.startTime)}</td>
+                <td>${formatDate(instance.endTime)}</td>
+                <td>${instance.durationInMillis ? formatDuration(instance.durationInMillis) : '-'}</td>
+            `;
+            container.appendChild(row);
+        });
+    }
+
+    // 渲染任务历史
+    function renderTaskHistory(tasks) {
+        const container = document.getElementById('taskHistoryContainer');
+        container.innerHTML = '';
+        
+        if (!tasks || tasks.length === 0) {
+            const row = document.createElement('tr');
+            row.innerHTML = '<td colspan="6" class="text-center text-muted">暂无任务历史</td>';
+            container.appendChild(row);
+            return;
+        }
+        
+        tasks.forEach(task => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${task.id}</td>
+                <td>${task.name || '未命名'}</td>
+                <td>${task.processInstanceId}</td>
+                <td>${formatDate(task.startTime)}</td>
+                <td>${formatDate(task.endTime)}</td>
+                <td>${task.assignee || '-'}</td>
+            `;
+            container.appendChild(row);
+        });
+    }
+
+    // 查看流程图
+    function viewProcessDiagram(id) {
+        const img = document.getElementById('processDiagramImg');
+        img.src = `/api/process-instance/${id}/diagram`;
+        
+        const modal = new bootstrap.Modal(document.getElementById('processDiagramModal'));
+        modal.show();
+    }
+
+    // 挂起流程
+    function suspendProcess(processDefinitionId) {
+        if (!confirm('确定要挂起该流程吗？')) {
+            return;
+        }
+        
+        fetch(`/api/process-definition/${processDefinitionId}/suspend`, {
+            method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('流程挂起成功');
+                loadProcessDefinitions();
+            } else {
+                alert('流程挂起失败: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('流程挂起失败:', error);
+            alert('流程挂起失败');
+        });
+    }
+
+    // 删除流程定义
+    function deleteProcess(deploymentId) {
+        if (!confirm('确定要删除该流程定义吗？这将删除所有相关数据！')) {
+            return;
+        }
+        
+        fetch(`/api/process-definition/deployment/${deploymentId}?cascade=true`, {
+            method: 'DELETE'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('流程删除成功');
+                loadProcessDefinitions();
+            } else {
+                alert('流程删除失败: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('流程删除失败:', error);
+            alert('流程删除失败');
+        });
+    }
+
+    // 删除流程实例
+    function deleteProcessInstance(processInstanceId) {
+        if (!confirm('确定要删除该流程实例吗？')) {
+            return;
+        }
+        
+        fetch(`/api/process-instance/${processInstanceId}?deleteReason=手动删除`, {
+            method: 'DELETE'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('流程实例删除成功');
+                loadProcessInstances();
+            } else {
+                alert('流程实例删除失败: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('流程实例删除失败:', error);
+            alert('流程实例删除失败');
+        });
+    }
+
+    // 分配任务
+    function assignTask(taskId) {
+        const assignee = prompt('请输入任务处理人ID:');
+        if (!assignee) {
+            return;
+        }
+        
+        fetch(`/api/task/${taskId}/assignee?assignee=${encodeURIComponent(assignee)}`, {
+            method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('任务分配成功');
+                loadTasks();
+            } else {
+                alert('任务分配失败: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('任务分配失败:', error);
+            alert('任务分配失败');
+        });
+    }
+
+    // 部署流程
+    document.getElementById('submitDeployBtn').addEventListener('click', function() {
+        const fileInput = document.getElementById('processFile');
+        const deploymentName = document.getElementById('deploymentName').value;
+        
+        if (!fileInput.files[0] || !deploymentName) {
+            alert('请填写完整信息');
+            return;
+        }
+        
+        const formData = new FormData();
+        formData.append('file', fileInput.files[0]);
+        
+        fetch(`/api/process-definition/deploy/bpmn?name=${encodeURIComponent(deploymentName)}`, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('流程部署成功');
+                // 关闭模态框
+                const modal = bootstrap.Modal.getInstance(document.getElementById('deployProcessModal'));
+                modal.hide();
+                // 重新加载流程定义
+                loadProcessDefinitions();
+            } else {
+                alert('流程部署失败: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('流程部署失败:', error);
+            alert('流程部署失败');
+        });
+    });
+
+    // 格式化日期
+    function formatDate(dateString) {
+        if (!dateString) return '-';
+        const date = new Date(dateString);
+        return date.toLocaleString('zh-CN');
+    }
+
+    // 格式化持续时间
+    function formatDuration(milliseconds) {
+        if (!milliseconds) return '-';
+        const seconds = Math.floor(milliseconds / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const hours = Math.floor(minutes / 60);
+        const days = Math.floor(hours / 24);
+        
+        if (days > 0) {
+            return `${days}天 ${hours % 24}小时 ${minutes % 60}分钟`;
+        } else if (hours > 0) {
+            return `${hours}小时 ${minutes % 60}分钟`;
+        } else if (minutes > 0) {
+            return `${minutes}分钟 ${seconds % 60}秒`;
+        } else {
+            return `${seconds}秒`;
+        }
+    }
+
+    // 退出登录
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+        fetch('/api/logout', {
+            method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                sessionStorage.removeItem('currentUser');
+                window.location.href = '/login';
+            } else {
+                alert('退出登录失败: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('退出登录请求失败:', error);
+            alert('退出登录请求失败');
+        });
+    });
+</script>
+</body>
+</html>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>任务中心</title>
     <!-- Bootstrap CSS -->
-    <script src="/js/bootstrap.bundle.min.js"></script>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             background-color: #f8f9fa;
@@ -36,6 +36,14 @@
         .nav-link {
             cursor: pointer;
         }
+        /* 添加模态框样式 */
+        .modal-content {
+            border-radius: 10px;
+        }
+        .top-nav {
+            background-color: #e9ecef;
+            padding: 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -48,6 +56,20 @@
         </div>
     </div>
 </nav>
+
+<!-- 顶部导航 -->
+<div class="top-nav">
+    <div class="container">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link active" href="/task">任务中心</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/process-management">流程管理</a>
+            </li>
+        </ul>
+    </div>
+</div>
 
 <div class="container-fluid task-container">
     <h1 class="text-center mb-4">任务中心</h1>
@@ -98,6 +120,7 @@
                     <th>创建时间</th>
                     <th>状态</th>
                     <th>描述</th>
+                    <th>操作</th>
                 </tr>
                 </thead>
                 <tbody id="pendingApprovalsContainer">
@@ -133,9 +156,110 @@
     </div>
 </div>
 
+<!-- 请假申请模态框 -->
+<div class="modal fade" id="leaveModal" tabindex="-1" aria-labelledby="leaveModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="leaveModalLabel">请假申请</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="leaveForm">
+                    <div class="mb-3">
+                        <label for="leaveDays" class="form-label">请假天数</label>
+                        <input type="number" class="form-control" id="leaveDays" min="1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="leaveReason" class="form-label">请假原因</label>
+                        <textarea class="form-control" id="leaveReason" rows="3" required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="submitLeaveBtn">提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 报销申请模态框 -->
+<div class="modal fade" id="reimbursementModal" tabindex="-1" aria-labelledby="reimbursementModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reimbursementModalLabel">报销申请</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="reimbursementForm">
+                    <div class="mb-3">
+                        <label for="reimbursementAmount" class="form-label">报销金额</label>
+                        <input type="number" class="form-control" id="reimbursementAmount" step="0.01" min="0" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="reimbursementTitle" class="form-label">报销标题</label>
+                        <input type="text" class="form-control" id="reimbursementTitle" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="reimbursementDescription" class="form-label">报销描述</label>
+                        <textarea class="form-control" id="reimbursementDescription" rows="3" required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="submitReimbursementBtn">提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 审批模态框 -->
+<div class="modal fade" id="approvalModal" tabindex="-1" aria-labelledby="approvalModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="approvalModalLabel">审批操作</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="approvalForm">
+                    <input type="hidden" id="approvalTaskId">
+                    <div class="mb-3">
+                        <label class="form-label">审批结果</label>
+                        <div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="approvalResult" id="approveRadio" value="approve" checked>
+                                <label class="form-check-label" for="approveRadio">通过</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="approvalResult" id="rejectRadio" value="reject">
+                                <label class="form-check-label" for="rejectRadio">驳回</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="approvalComment" class="form-label">审批意见</label>
+                        <textarea class="form-control" id="approvalComment" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="submitApprovalBtn">提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Bootstrap JS -->
 <script src="/js/bootstrap.bundle.min.js"></script>
 <script>
+    // 当前选中的流程Key
+    let selectedProcessKey = '';
+
     // 页面加载完成后获取任务数据
     document.addEventListener('DOMContentLoaded', function() {
         // 从sessionStorage获取用户信息
@@ -228,7 +352,7 @@
         
         if (!tasks || tasks.length === 0) {
             const row = document.createElement('tr');
-            row.innerHTML = '<td colspan="6" class="text-center text-muted">暂无待审批任务</td>';
+            row.innerHTML = '<td colspan="7" class="text-center text-muted">暂无待审批任务</td>';
             container.appendChild(row);
             return;
         }
@@ -246,6 +370,9 @@
                     </span>
                 </td>
                 <td>${task.description || '-'}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary" onclick="showApprovalModal('${task.id}')">审批</button>
+                </td>
             `;
             container.appendChild(row);
         });
@@ -285,11 +412,136 @@
         return date.toLocaleString('zh-CN');
     }
 
-    // 申请流程（示例函数）
+    // 申请流程
     function applyForProcess(processKey) {
-        alert(`申请流程: ${processKey}\n此功能需根据具体业务实现`);
-        // 实际应用中，这里会跳转到具体的流程申请页面
+        selectedProcessKey = processKey;
+        
+        if (processKey === 'employeeLeave') {
+            // 显示请假申请模态框
+            const leaveModal = new bootstrap.Modal(document.getElementById('leaveModal'));
+            leaveModal.show();
+        } else if (processKey === 'expenseReimbursement') {
+            // 显示报销申请模态框
+            const reimbursementModal = new bootstrap.Modal(document.getElementById('reimbursementModal'));
+            reimbursementModal.show();
+        } else {
+            alert(`申请流程: ${processKey}\n此功能需根据具体业务实现`);
+        }
     }
+
+    // 提交请假申请
+    document.getElementById('submitLeaveBtn').addEventListener('click', function() {
+        const days = document.getElementById('leaveDays').value;
+        const reason = document.getElementById('leaveReason').value;
+        
+        if (!days || !reason) {
+            alert('请填写完整信息');
+            return;
+        }
+        
+        fetch('/api/leave-view/apply', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `days=${encodeURIComponent(days)}&reason=${encodeURIComponent(reason)}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('请假申请提交成功');
+                // 关闭模态框
+                const leaveModal = bootstrap.Modal.getInstance(document.getElementById('leaveModal'));
+                leaveModal.hide();
+                // 重新加载数据
+                loadTaskData();
+            } else {
+                alert('请假申请提交失败: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('提交请假申请失败:', error);
+            alert('提交请假申请失败');
+        });
+    });
+
+    // 提交报销申请
+    document.getElementById('submitReimbursementBtn').addEventListener('click', function() {
+        const amount = document.getElementById('reimbursementAmount').value;
+        const title = document.getElementById('reimbursementTitle').value;
+        const description = document.getElementById('reimbursementDescription').value;
+        
+        if (!amount || !title || !description) {
+            alert('请填写完整信息');
+            return;
+        }
+        
+        const formData = new FormData();
+        formData.append('amount', amount);
+        formData.append('title', title);
+        formData.append('description', description);
+        
+        fetch('/api/reimbursement-view/apply', {
+            method: 'POST',
+            body: new URLSearchParams(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('报销申请提交成功');
+                // 关闭模态框
+                const reimbursementModal = bootstrap.Modal.getInstance(document.getElementById('reimbursementModal'));
+                reimbursementModal.hide();
+                // 重新加载数据
+                loadTaskData();
+            } else {
+                alert('报销申请提交失败: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('提交报销申请失败:', error);
+            alert('提交报销申请失败');
+        });
+    });
+
+    // 显示审批模态框
+    function showApprovalModal(taskId) {
+        document.getElementById('approvalTaskId').value = taskId;
+        const approvalModal = new bootstrap.Modal(document.getElementById('approvalModal'));
+        approvalModal.show();
+    }
+
+    // 提交审批
+    document.getElementById('submitApprovalBtn').addEventListener('click', function() {
+        const taskId = document.getElementById('approvalTaskId').value;
+        const approved = document.querySelector('input[name="approvalResult"]:checked').value === 'approve';
+        const comment = document.getElementById('approvalComment').value;
+        
+        fetch(`/api/leave-view/approve/${taskId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `approved=${approved}&comment=${encodeURIComponent(comment)}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('审批操作完成');
+                // 关闭模态框
+                const approvalModal = bootstrap.Modal.getInstance(document.getElementById('approvalModal'));
+                approvalModal.hide();
+                // 重新加载数据
+                loadTaskData();
+            } else {
+                alert('审批操作失败: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('审批操作失败:', error);
+            alert('审批操作失败');
+        });
+    });
 
     // 退出登录
     document.getElementById('logoutBtn').addEventListener('click', function() {

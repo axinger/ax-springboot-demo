@@ -29,12 +29,30 @@ public class HtmlController {
     public String task(HttpSession session) {
         A35UserEntity user = (A35UserEntity) session.getAttribute("user");
         if (user == null) {
-            // 用户已登录，重定向到任务列表页面
+            // 用户未登录，重定向到登录页面
             return "redirect:/login";
         }
         session.setAttribute("user", user);
         return "task";
     }
 
+    @GetMapping("/process-management")
+    public String processManagement(HttpSession session) {
+        A35UserEntity user = (A35UserEntity) session.getAttribute("user");
+        if (user == null) {
+            // 用户未登录，重定向到登录页面
+            return "redirect:/login";
+        }
+        return "process-management";
+    }
 
+    @GetMapping("/process-monitor")
+    public String processMonitor(HttpSession session) {
+        A35UserEntity user = (A35UserEntity) session.getAttribute("user");
+        if (user == null) {
+            // 用户未登录，重定向到登录页面
+            return "redirect:/login";
+        }
+        return "process-monitor";
+    }
 }

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>流程监控</title>
+    <!-- Bootstrap CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .monitor-container {
+            margin: 20px auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .section-title {
+            border-bottom: 2px solid #0d6efd;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            color: #0d6efd;
+        }
+        .navbar-brand {
+            font-weight: bold;
+        }
+        .nav-link {
+            cursor: pointer;
+        }
+        .stat-card {
+            border-radius: 10px;
+            transition: transform 0.2s;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .chart-container {
+            height: 400px;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Flowable 工作流系统</a>
+        <div class="navbar-nav ms-auto">
+            <span class="navbar-text me-3" id="currentUser">欢迎，<span id="username"></span></span>
+            <button class="btn btn-outline-light" id="logoutBtn">退出登录</button>
+        </div>
+    </div>
+</nav>
+
+<!-- 顶部导航 -->
+<div class="top-nav">
+    <div class="container">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link" href="/task">任务中心</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/process-management">流程管理</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/process-monitor">流程监控</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="container-fluid monitor-container">
+    <h1 class="text-center mb-4">流程监控</h1>
+    
+    <!-- 统计卡片 -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="card stat-card bg-primary text-white">
+                <div class="card-body">
+                    <h5 class="card-title">运行中流程</h5>
+                    <h2 id="runningProcessCount">0</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card stat-card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">已完成流程</h5>
+                    <h2 id="completedProcessCount">0</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card stat-card bg-warning text-white">
+                <div class="card-body">
+                    <h5 class="card-title">待处理任务</h5>
+                    <h2 id="pendingTaskCount">0</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card stat-card bg-info text-white">
+                <div class="card-body">
+                    <h5 class="card-title">流程定义</h5>
+                    <h2 id="processDefinitionCount">0</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 图表区域 -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>流程实例状态统计</h5>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="processStatusChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>任务处理时效</h5>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="taskDurationChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 详细数据表格 -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>流程执行详情</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-primary">
+                            <tr>
+                                <th>流程定义</th>
+                                <th>运行中</th>
+                                <th>已完成</th>
+                                <th>平均处理时间</th>
+                                <th>最长处理时间</th>
+                            </tr>
+                            </thead>
+                            <tbody id="processDetailsContainer">
+                                <!-- 动态加载流程详情 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="/js/bootstrap.bundle.min.js"></script>
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // 页面加载完成后初始化
+    document.addEventListener('DOMContentLoaded', function() {
+        // 从sessionStorage获取用户信息
+        const currentUser = sessionStorage.getItem('currentUser');
+        if (currentUser) {
+            document.getElementById('username').textContent = currentUser;
+        }
+        
+        // 加载监控数据
+        loadMonitorData();
+    });
+
+    // 加载监控数据
+    function loadMonitorData() {
+        // 加载统计数据
+        loadStatistics();
+        
+        // 加载图表数据
+        loadChartData();
+        
+        // 加载详细数据
+        loadProcessDetails();
+    }
+
+    // 加载统计数据
+    function loadStatistics() {
+        // 获取运行中流程数量
+        fetch('/api/process/running')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('runningProcessCount').textContent = data.length || 0;
+            })
+            .catch(error => {
+                console.error('获取运行中流程失败:', error);
+            });
+
+        // 获取历史流程实例数量
+        fetch('/api/process/history')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('completedProcessCount').textContent = data.length || 0;
+            })
+            .catch(error => {
+                console.error('获取历史流程失败:', error);
+            });
+
+        // 获取待处理任务数量
+        fetch('/api/task/all')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('pendingTaskCount').textContent = data.length || 0;
+            })
+            .catch(error => {
+                console.error('获取任务失败:', error);
+            });
+
+        // 获取流程定义数量
+        fetch('/api/process-definition/list')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('processDefinitionCount').textContent = data.length || 0;
+            })
+            .catch(error => {
+                console.error('获取流程定义失败:', error);
+            });
+    }
+
+    // 加载图表数据
+    function loadChartData() {
+        // 这里模拟图表数据，实际项目中应该从后端获取真实数据
+        setTimeout(() => {
+            // 流程状态统计图
+            const processStatusCtx = document.getElementById('processStatusChart').getContext('2d');
+            new Chart(processStatusCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['运行中', '已完成', '已挂起'],
+                    datasets: [{
+                        data: [12, 35, 2],
+                        backgroundColor: ['#0d6efd', '#198754', '#ffc107']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+
+            // 任务处理时效图
+            const taskDurationCtx = document.getElementById('taskDurationChart').getContext('2d');
+            new Chart(taskDurationCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['请假流程', '报销流程', '审批流程'],
+                    datasets: [{
+                        label: '平均处理时间(分钟)',
+                        data: [30, 45, 20],
+                        backgroundColor: '#0d6efd'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }, 500);
+    }
+
+    // 加载流程详情
+    function loadProcessDetails() {
+        const container = document.getElementById('processDetailsContainer');
+        container.innerHTML = '<tr><td colspan="5" class="text-center">加载中...</td></tr>';
+        
+        // 模拟数据，实际项目中应该从后端获取真实数据
+        setTimeout(() => {
+            container.innerHTML = '';
+            
+            const processDetails = [
+                { name: '员工请假流程', running: 5, completed: 20, avgDuration: '30分钟', maxDuration: '2小时' },
+                { name: '费用报销流程', running: 7, completed: 15, avgDuration: '45分钟', maxDuration: '3小时' }
+            ];
+            
+            processDetails.forEach(detail => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${detail.name}</td>
+                    <td>${detail.running}</td>
+                    <td>${detail.completed}</td>
+                    <td>${detail.avgDuration}</td>
+                    <td>${detail.maxDuration}</td>
+                `;
+                container.appendChild(row);
+            });
+        }, 500);
+    }
+
+    // 退出登录
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+        fetch('/api/logout', {
+            method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                sessionStorage.removeItem('currentUser');
+                window.location.href = '/login';
+            } else {
+                alert('退出登录失败: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('退出登录请求失败:', error);
+            alert('退出登录请求失败');
+        });
+    });
+</script>
+</body>
+</html>
