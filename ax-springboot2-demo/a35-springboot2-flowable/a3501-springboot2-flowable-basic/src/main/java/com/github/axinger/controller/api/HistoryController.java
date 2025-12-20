@@ -2,6 +2,7 @@ package com.github.axinger.controller.api;
 
 import com.github.axinger.service.FlowableService;
 import org.flowable.engine.history.HistoricProcessInstance;
+import org.flowable.engine.history.HistoricProcessInstanceQuery;
 import org.flowable.task.api.history.HistoricTaskInstance;
 import org.flowable.variable.api.history.HistoricVariableInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,18 @@ public class HistoryController {
      * @return 历史流程实例列表
      */
     @GetMapping("/process-instances")
-    public List<HistoricProcessInstance> getHistoricProcessInstances() {
-        return flowableService.createHistoricProcessInstanceQuery().list();
+    public List<HistoricProcessInstance> getHistoricProcessInstances(String startedBy, String applicant) {
+        HistoricProcessInstanceQuery query = flowableService.createHistoricProcessInstanceQuery();
+        if (applicant != null) {
+            query.variableValueEquals("applicant", applicant);
+        }
+        if (startedBy != null) {
+            query.startedBy(startedBy);
+        }
+        return query
+                .list();
     }
+
 
     /**
      * 根据流程实例ID获取历史流程实例
@@ -200,7 +210,7 @@ public class HistoryController {
      */
     @GetMapping("/activity-instances/process-instance/{processInstanceId}")
     public List<HistoricProcessInstance> getHistoricActivityInstancesByProcessInstanceId(@PathVariable String processInstanceId) {
-       return flowableService.createHistoricProcessInstanceQuery()
+        return flowableService.createHistoricProcessInstanceQuery()
                 .processInstanceId(processInstanceId)
                 .list();
     }

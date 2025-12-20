@@ -1,8 +1,9 @@
 package com.github.axinger.controller.api;
 
+import cn.hutool.core.lang.func.LambdaUtil;
 import com.github.axinger.domain.A35UserEntity;
+import com.github.axinger.dto.FormBaseDTO;
 import com.github.axinger.service.FlowableService;
-import com.github.axinger.service.OrgService;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
@@ -21,9 +22,6 @@ public class ProcessViewController {
 
     @Autowired
     private FlowableService flowableService;
-
-    @Autowired
-    private OrgService orgService;
 
     /**
      * 启动流程实例
@@ -48,10 +46,10 @@ public class ProcessViewController {
             if (variables == null) {
                 variables = new HashMap<>();
             }
-            variables.put("applicant", currentUser.getId());
 
-            ProcessInstance processInstance = flowableService.startProcessInstance(
-                    processDefinitionKey, variables);
+            variables.put(LambdaUtil.getFieldName(FormBaseDTO::getApplicant), currentUser.getName());
+
+            ProcessInstance processInstance = flowableService.startProcessInstance(processDefinitionKey, variables);
 
             response.put("success", true);
             response.put("message", "流程启动成功");
@@ -110,8 +108,8 @@ public class ProcessViewController {
             }
 
             // 检查任务是否属于当前用户
-            if (!currentUser.getId().equals(task.getAssignee()) &&
-                !flowableService.createTaskQuery().taskId(taskId).taskCandidateUser(currentUser.getId()).list().contains(task)) {
+            if (!currentUser.getName().equals(task.getAssignee()) &&
+                    !flowableService.createTaskQuery().taskId(taskId).taskCandidateUser(currentUser.getName()).list().contains(task)) {
                 response.put("success", false);
                 response.put("message", "您没有权限处理此任务");
                 return ResponseEntity.status(403).body(response);
@@ -158,8 +156,8 @@ public class ProcessViewController {
                 return ResponseEntity.status(404).body(response);
             }
 
-            flowableService.createTaskQuery().taskId(taskId).taskCandidateUser(currentUser.getId());
-            flowableService.setAssignee(taskId, currentUser.getId());
+            flowableService.createTaskQuery().taskId(taskId).taskCandidateUser(currentUser.getName());
+            flowableService.setAssignee(taskId, currentUser.getName());
 
             response.put("success", true);
             response.put("message", "任务认领成功");

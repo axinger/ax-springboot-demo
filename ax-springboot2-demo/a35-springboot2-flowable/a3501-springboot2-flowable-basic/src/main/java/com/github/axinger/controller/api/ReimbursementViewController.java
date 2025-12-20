@@ -40,7 +40,7 @@ public class ReimbursementViewController {
         try {
             // 准备流程变量
             Map<String, Object> variables = new HashMap<>();
-            variables.put("applicant", currentUser.getId());
+            variables.put("applicant", currentUser.getName());
             variables.put("amount", amount);
             variables.put("title", title);
             variables.put("description", description);

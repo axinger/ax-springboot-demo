@@ -45,6 +45,6 @@ public class OrgServiceImpl implements OrgService {
         return userService.lambdaQuery()
                 .eq(A35UserEntity::getPosition, "CEO")
                 .last("limit 1")
-                .one().getId();
+                .one().getName();
     }
 }

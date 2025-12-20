@@ -54,10 +54,10 @@ public class MonitorController {
             List<ProcessDefinition> processDefinitions = flowableService.getProcessDefinitions();
 
             Map<String, Object> data = new HashMap<>();
-            data.put("runningProcessCount", runningProcessInstances.size());
-            data.put("finishedProcessCount", finishedProcessInstances.size());
-            data.put("pendingTaskCount", pendingTasks.size());
-            data.put("processDefinitionCount", processDefinitions.size());
+            data.put("运行中流程", runningProcessInstances);
+            data.put("已完成流程", finishedProcessInstances);
+            data.put("待处理任务", pendingTasks);
+            data.put("流程定义", processDefinitions);
 
             response.put("success", true);
             response.put("data", data);

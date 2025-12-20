@@ -1,5 +1,7 @@
 package com.github.axinger.service;
 
+import cn.hutool.core.lang.func.LambdaUtil;
+import com.github.axinger.dto.FormBaseDTO;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.engine.*;
 import org.flowable.engine.history.HistoricProcessInstance;
@@ -13,6 +15,7 @@ import org.flowable.engine.runtime.ProcessInstanceQuery;
 import org.flowable.identitylink.api.IdentityLink;
 import org.flowable.identitylink.api.history.HistoricIdentityLink;
 import org.flowable.image.ProcessDiagramGenerator;
+import org.flowable.spring.integration.Flowable;
 import org.flowable.task.api.Task;
 import org.flowable.task.api.TaskQuery;
 import org.flowable.task.api.history.HistoricTaskInstance;
@@ -22,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,6 +51,10 @@ public class FlowableService {
     @Autowired
     private ProcessEngine processEngine;
 
+    @Autowired
+    private IdentityService identityService;
+
+
     /**
      * 部署流程定义 - 通过classpath资源
      *
@@ -64,8 +72,8 @@ public class FlowableService {
     /**
      * 部署流程定义 - 通过BPMN模型
      *
-     * @param model  BPMN模型
-     * @param name   部署名称
+     * @param model BPMN模型
+     * @param name  部署名称
      * @return 部署对象
      */
     public Deployment deployProcessFromModel(BpmnModel model, String name) {
@@ -122,7 +130,25 @@ public class FlowableService {
      * @return 流程实例
      */
     public ProcessInstance startProcessInstance(String processDefinitionKey, Map<String, Object> variables) {
-        return runtimeService.startProcessInstanceByKey(processDefinitionKey, variables);
+
+
+//        return runtimeService.startProcessInstanceByKey(processDefinitionKey, "your-biz-id", variables);
+
+        String currentUserId = variables.get(LambdaUtil.getFieldName(FormBaseDTO::getApplicant)).toString(); // 你系统的用户ID
+
+        // 设置流程变量 + 发起人
+        identityService.setAuthenticatedUserId(currentUserId);
+        try {
+            return runtimeService
+                    .createProcessInstanceBuilder()
+                    .owner("") //设置的是 流程实例的“拥有者”（OWNER_ 字段）,自定义拥有者（通常用于业务归属，如部门负责人）
+                    .processDefinitionKey(processDefinitionKey)
+                    .businessKey("your-biz-id") // 如订单ID、请假单ID
+                    .variables(variables)
+                    .start();
+        } finally {
+            identityService.setAuthenticatedUserId(null);
+        }
     }
 
     /**
@@ -331,7 +357,7 @@ public class FlowableService {
         } else {
             BpmnModel bpmnModel = repositoryService.getBpmnModel(processInstance.getProcessDefinitionId());
             ProcessDiagramGenerator diagramGenerator = processEngine.getProcessEngineConfiguration().getProcessDiagramGenerator();
-            
+
             // 获取活跃节点
             List<String> activeActivityIds = runtimeService.getActiveActivityIds(
                     runtimeService.createExecutionQuery()
@@ -339,7 +365,7 @@ public class FlowableService {
                             .singleResult()
                             .getId()
             );
-            
+
             return diagramGenerator.generateDiagram(
                     bpmnModel,
                     "png",

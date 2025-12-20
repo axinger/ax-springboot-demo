@@ -19,6 +19,7 @@
     </properties>
     <modules>
         <module>a3501-springboot2-flowable-basic</module>
+        <module>a3502-springboot2-flowable-ui</module>
     </modules>
 
 </project>

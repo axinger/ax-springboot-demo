@@ -17,7 +17,7 @@ public class ExpenseTaskAssignmentListener implements TaskListener {
 
     @Autowired
     private OrgService orgService;
-    
+
     @Autowired
     private A35UserService userService;
 
@@ -31,15 +31,15 @@ public class ExpenseTaskAssignmentListener implements TaskListener {
             // 获取流程变量
             String applicant = (String) delegateTask.getVariable("applicant");
             BigDecimal amount = (BigDecimal) delegateTask.getVariable("amount");
-            
+
             String assignee = null;
-            
+
             switch (delegateTask.getTaskDefinitionKey()) {
                 case "departmentLeaderReview":
                     log.info("分配部门领导审批");
                     assignee = orgService.getDeptLeader(applicant);
                     break;
-                    
+
                 case "financeReview":
                     log.info("分配财务审批");
                     // 查找财务人员
@@ -48,10 +48,10 @@ public class ExpenseTaskAssignmentListener implements TaskListener {
                             .last("limit 1")
                             .one();
                     if (financeUser != null) {
-                        assignee = financeUser.getId();
+                        assignee = financeUser.getName();
                     }
                     break;
-                    
+
                 case "viceManagerReview":
                     log.info("分配副总经理审批");
                     // 查找副总经理
@@ -60,10 +60,10 @@ public class ExpenseTaskAssignmentListener implements TaskListener {
                             .last("limit 1")
                             .one();
                     if (viceManager != null) {
-                        assignee = viceManager.getId();
+                        assignee = viceManager.getName();
                     }
                     break;
-                    
+
                 case "generalManagerReview":
                     log.info("分配总经理审批");
                     // 查找总经理
@@ -72,10 +72,10 @@ public class ExpenseTaskAssignmentListener implements TaskListener {
                             .last("limit 1")
                             .one();
                     if (generalManager != null) {
-                        assignee = generalManager.getId();
+                        assignee = generalManager.getName();
                     }
                     break;
-                    
+
                 default:
                     log.warn("未找到对应的任务定义: {}", delegateTask.getTaskDefinitionKey());
                     break;

@@ -41,13 +41,14 @@ public class LeaveViewController {
         }
 
         try {
+            String userName = currentUser.getName();
             Map<String, Object> variables = new HashMap<>();
-            variables.put("applicant", currentUser.getId());
+            variables.put("applicant",userName);
             variables.put("days", days);
             variables.put("reason", reason);
 
             // 启动请假流程
-            ProcessInstance processInstance = leaveProcessService.startLeaveProcess(currentUser.getId(), days, reason);
+            ProcessInstance processInstance = leaveProcessService.startLeaveProcess(currentUser.getName(), days, reason);
 
             response.put("success", true);
             response.put("message", "请假申请提交成功");
