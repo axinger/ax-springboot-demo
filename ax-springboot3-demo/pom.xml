@@ -92,11 +92,6 @@
         <module>a04-springboot3-cacheable</module>
         <module>a10-springboot3-mq</module>
         <module>a16-springboot3-security</module>
-        <module>a27-springboot3-springdoc</module>
-        <module>a27-springboot3-springdoc2</module>
-        <module>a30-springboot3-sa-token</module>
-        <module>a35-springboot3-flowable</module>
-        <module>a38-springboot3-xxl-job</module>
         <module>a21-springboot3-oauth2</module>
         <module>a41-springboot3-ai</module>
     </modules>
