@@ -100,7 +100,7 @@ public class ProcessManagementController {
         try {
             checkUserLoggedIn(session);
             List<HistoricProcessInstance> historicProcessInstances =
-                flowableService.createHistoricProcessInstanceQuery().finished().list();
+                    flowableService.createHistoricProcessInstanceQuery().finished().list();
             response.put("success", true);
             response.put("data", historicProcessInstances);
         } catch (Exception e) {

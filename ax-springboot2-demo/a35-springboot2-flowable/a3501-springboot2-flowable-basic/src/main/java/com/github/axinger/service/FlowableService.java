@@ -1,9 +1,11 @@
 package com.github.axinger.service;
 
+import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.lang.func.LambdaUtil;
 import com.github.axinger.dto.FormBaseDTO;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.engine.*;
+import org.flowable.engine.history.HistoricActivityInstance;
 import org.flowable.engine.history.HistoricProcessInstance;
 import org.flowable.engine.history.HistoricProcessInstanceQuery;
 import org.flowable.engine.repository.Deployment;
@@ -15,6 +17,7 @@ import org.flowable.engine.runtime.ProcessInstanceQuery;
 import org.flowable.identitylink.api.IdentityLink;
 import org.flowable.identitylink.api.history.HistoricIdentityLink;
 import org.flowable.image.ProcessDiagramGenerator;
+import org.flowable.image.impl.DefaultProcessDiagramGenerator;
 import org.flowable.spring.integration.Flowable;
 import org.flowable.task.api.Task;
 import org.flowable.task.api.TaskQuery;
@@ -25,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +57,9 @@ public class FlowableService {
 
     @Autowired
     private IdentityService identityService;
+
+    @Autowired
+    private ManagementService managementService;
 
 
     /**
@@ -89,7 +96,8 @@ public class FlowableService {
      * @return 流程定义列表
      */
     public List<ProcessDefinition> getProcessDefinitions() {
-        return createProcessDefinitionQuery().list();
+        List<ProcessDefinition> list = createProcessDefinitionQuery().list();
+        return list;
     }
 
     /**
@@ -319,65 +327,124 @@ public class FlowableService {
     /**
      * 获取流程图输入流
      *
-     * @param processInstanceId 流程实例ID
+     * @param processId 流程实例ID
      * @return 流程图输入流
      */
-    public InputStream getProcessDiagram(String processInstanceId) {
-        // 获取流程实例
+    public InputStream getProcessDiagram(String processId) {
+
+        String procDefId;
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
-                .processInstanceId(processInstanceId)
+                .processInstanceId(processId)
                 .singleResult();
-
-        // 如果流程已结束，则从历史中查找
         if (processInstance == null) {
-            HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery()
-                    .processInstanceId(processInstanceId)
-                    .singleResult();
-            if (historicProcessInstance == null) {
-                return null;
-            }
-            BpmnModel bpmnModel = repositoryService.getBpmnModel(historicProcessInstance.getProcessDefinitionId());
-            ProcessDiagramGenerator diagramGenerator = processEngine.getProcessEngineConfiguration().getProcessDiagramGenerator();
-            return diagramGenerator.generateDiagram(
-                    bpmnModel,
-                    "png",
-                    historyService.createHistoricActivityInstanceQuery()
-                            .processInstanceId(processInstanceId)
-                            .list()
-                            .stream()
-                            .map(activity -> activity.getActivityId())
-                            .collect(java.util.stream.Collectors.toList()),
-                    java.util.Collections.emptyList(),
-                    processEngine.getProcessEngineConfiguration().getActivityFontName(),
-                    processEngine.getProcessEngineConfiguration().getLabelFontName(),
-                    processEngine.getProcessEngineConfiguration().getAnnotationFontName(),
-                    processEngine.getProcessEngineConfiguration().getClassLoader(),
-                    1.0,
-                    true);
+            HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(processId).singleResult();
+            procDefId = historicProcessInstance.getProcessDefinitionId();
         } else {
-            BpmnModel bpmnModel = repositoryService.getBpmnModel(processInstance.getProcessDefinitionId());
-            ProcessDiagramGenerator diagramGenerator = processEngine.getProcessEngineConfiguration().getProcessDiagramGenerator();
-
-            // 获取活跃节点
-            List<String> activeActivityIds = runtimeService.getActiveActivityIds(
-                    runtimeService.createExecutionQuery()
-                            .processInstanceId(processInstanceId)
-                            .singleResult()
-                            .getId()
-            );
-
-            return diagramGenerator.generateDiagram(
-                    bpmnModel,
-                    "png",
-                    activeActivityIds,
-                    java.util.Collections.emptyList(),
-                    processEngine.getProcessEngineConfiguration().getActivityFontName(),
-                    processEngine.getProcessEngineConfiguration().getLabelFontName(),
-                    processEngine.getProcessEngineConfiguration().getAnnotationFontName(),
-                    processEngine.getProcessEngineConfiguration().getClassLoader(),
-                    1.0,
-                    true);
+            procDefId = processInstance.getProcessDefinitionId();
         }
+
+
+        BpmnModel bpmnModel = repositoryService.getBpmnModel(procDefId);
+        String imageType = "png"; // 生成图片的类型
+        List<String> highLightedActivities = new ArrayList<>(); // 高亮节点集合
+        List<String> highLightedFlows = new ArrayList<>(); // 高亮连线集合
+        List<HistoricActivityInstance> hisActInsList = historyService.createHistoricActivityInstanceQuery()
+                .processInstanceId(processId)
+                .list(); // 查询所有历史节点信息
+        hisActInsList.forEach(historicActivityInstance -> {
+            // 遍历
+            if ("sequenceFlow".equals(historicActivityInstance.getActivityType())) {
+                // 添加高亮连线
+                highLightedFlows.add(historicActivityInstance.getActivityId());
+            } else {
+                // 添加高亮节点
+                highLightedActivities.add(historicActivityInstance.getActivityId());
+            }
+        });
+        String activityFontName = "宋体"; // 节点字体
+        String labelFontName = "微软雅黑"; // 连线标签字体
+        String annotationFontName = "宋体"; // 连线标签字体
+        ClassLoader customClassLoader = null; // 类加载器
+        double scaleFactor = 1.0d; // 比例因子，默认即可
+        boolean drawSequenceFlowNameWithNoLabelDI = true; // 不设置连线标签不会画
+
+        DefaultProcessDiagramGenerator defaultProcessDiagramGenerator = new DefaultProcessDiagramGenerator(); // 创建默认的流程图生成器
+        // 生成图片
+        InputStream inputStream = defaultProcessDiagramGenerator.generateDiagram(bpmnModel, imageType, highLightedActivities
+                , highLightedFlows, activityFontName, labelFontName, annotationFontName, customClassLoader,
+                scaleFactor, drawSequenceFlowNameWithNoLabelDI); // 获取输入流
+        /* try { // 先将图片保存 FileUtils.copyInputStreamToFile(inputStream, new File("E:\", "1.png")); } catch (IOException e) { e.printStackTrace(); } */
+
+        // 直接写到页面，要先获取HttpServletResponse
+        // byte[] bytes = IoUtil.readInputStream(inputStream, "flow diagram inputStream");
+        //
+        //
+        //
+        // response.setContentType("image/png");
+        // ServletOutputStream outputStream = response.getOutputStream();
+        // response.reset();
+        // outputStream.write(bytes);
+        // outputStream.flush();
+        // outputStream.close();
+
+
+        // 将InputStream写入response
+        return inputStream;
+//        // 获取流程实例
+//        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
+//                .processInstanceId(processInstanceId)
+//                .singleResult();
+//
+//        // 如果流程已结束，则从历史中查找
+//        if (processInstance == null) {
+//            HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery()
+//                    .processInstanceId(processInstanceId)
+//                    .singleResult();
+//            if (historicProcessInstance == null) {
+//                return null;
+//            }
+//            BpmnModel bpmnModel = repositoryService.getBpmnModel(historicProcessInstance.getProcessDefinitionId());
+//            ProcessDiagramGenerator diagramGenerator = processEngine.getProcessEngineConfiguration().getProcessDiagramGenerator();
+//            return diagramGenerator.generateDiagram(
+//                    bpmnModel,
+//                    "png",
+//                    historyService.createHistoricActivityInstanceQuery()
+//                            .processInstanceId(processInstanceId)
+//                            .list()
+//                            .stream()
+//                            .map(activity -> activity.getActivityId())
+//                            .collect(java.util.stream.Collectors.toList()),
+//                    java.util.Collections.emptyList(),
+//                    processEngine.getProcessEngineConfiguration().getActivityFontName(),
+//                    processEngine.getProcessEngineConfiguration().getLabelFontName(),
+//                    processEngine.getProcessEngineConfiguration().getAnnotationFontName(),
+//                    processEngine.getProcessEngineConfiguration().getClassLoader(),
+//                    1.0,
+//                    true);
+//        } else {
+//            BpmnModel bpmnModel = repositoryService.getBpmnModel(processInstance.getProcessDefinitionId());
+//            ProcessDiagramGenerator diagramGenerator = processEngine.getProcessEngineConfiguration().getProcessDiagramGenerator();
+//
+//            // 获取活跃节点
+//            List<String> activeActivityIds = runtimeService.getActiveActivityIds(
+//                    runtimeService.createExecutionQuery()
+//                            .processInstanceId(processInstanceId)
+//                            .singleResult()
+//                            .getId()
+//            );
+//
+//            return diagramGenerator.generateDiagram(
+//                    bpmnModel,
+//                    "png",
+//                    activeActivityIds,
+//                    java.util.Collections.emptyList(),
+//                    processEngine.getProcessEngineConfiguration().getActivityFontName(),
+//                    processEngine.getProcessEngineConfiguration().getLabelFontName(),
+//                    processEngine.getProcessEngineConfiguration().getAnnotationFontName(),
+//                    processEngine.getProcessEngineConfiguration().getClassLoader(),
+//                    1.0,
+//                    true);
+//        }
     }
 
     /**

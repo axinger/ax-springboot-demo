@@ -96,6 +96,7 @@
                     <th>开始时间</th>
                     <th>状态</th>
                     <th>业务标识</th>
+                    <th>操作</th>
                 </tr>
                 </thead>
                 <tbody id="myApplicationsContainer">
@@ -344,6 +345,9 @@
                     </span>
                 </td>
                 <td>${app.businessKey || '-'}</td>
+                  <td>
+                 <button class="btn btn-primary" onclick="submitForApproval('${app.id}')">提交申请</button>
+                 </td>
             `;
             container.appendChild(row);
         });
@@ -508,20 +512,19 @@
         });
     });
 
-    // 显示审批模态框
-    function showApprovalModal(taskId) {
-        document.getElementById('approvalTaskId').value = taskId;
-        const approvalModal = new bootstrap.Modal(document.getElementById('approvalModal'));
-        approvalModal.show();
-    }
-
     // 提交审批
     document.getElementById('submitApprovalBtn').addEventListener('click', function() {
         const taskId = document.getElementById('approvalTaskId').value;
         const approved = document.querySelector('input[name="approvalResult"]:checked').value === 'approve';
         const comment = document.getElementById('approvalComment').value;
 
-        fetch(`/api/leave-view/approve/${taskId}`, {
+        // 判断是哪种类型的审批（请假还是报销）
+        let url = `/api/leave-view/approve/${taskId}`;
+        if (currentApprovalTaskType === 'reimbursement') {
+            url = `/api/reimbursement-view/approve/${taskId}`;
+        }
+
+        fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -547,6 +550,37 @@
         });
     });
 
+    // 为我申请的流程提交审批
+    function submitForApproval(processInstanceId) {
+        const currentUser = sessionStorage.getItem('currentUser');
+        if (!currentUser) {
+            alert('用户未登录');
+            return;
+        }
+
+        // 调用后端API提交审批
+        fetch('/api/tasks/submit-for-approval', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `processInstanceId=${encodeURIComponent(processInstanceId)}&userId=${encodeURIComponent(currentUser)}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('流程已提交审批');
+                loadTaskData();
+            } else {
+                alert('提交审批失败: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('提交审批失败:', error);
+            alert('提交审批失败');
+        });
+    }
+
     // 退出登录
     document.getElementById('logoutBtn').addEventListener('click', function() {
         fetch('/api/logout', {
@@ -566,6 +600,64 @@
             alert('退出登录请求失败');
         });
     });
+    
+    // 当前审批任务类型（默认为leave，也可以是reimbursement）
+    let currentApprovalTaskType = 'leave';
+    
+    // 显示审批模态框
+    function showApprovalModal(taskId, taskType = 'leave') {
+        currentApprovalTaskType = taskType;
+        document.getElementById('approvalTaskId').value = taskId;
+        const approvalModal = new bootstrap.Modal(document.getElementById('approvalModal'));
+        approvalModal.show();
+    }
+
+    // 查看任务详情
+    function viewTaskDetails(taskId) {
+        fetch(`/api/reimbursement-view/task/${taskId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // 显示任务详情模态框
+                    showTaskDetailsModal(data.task, data.processVariables);
+                } else {
+                    alert('获取任务详情失败: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('获取任务详情失败:', error);
+                alert('获取任务详情失败');
+            });
+    }
+
+    // 显示任务详情模态框
+    function showTaskDetailsModal(task, processVariables) {
+        // 更新模态框内容
+        document.getElementById('approvalModalLabel').textContent = '审批操作 - ' + task.name;
+        
+        // 显示任务信息
+        let taskInfoHtml = `
+            <div class="mb-3">
+                <h6>任务信息</h6>
+                <p><strong>任务名称:</strong> ${task.name}</p>
+                <p><strong>创建时间:</strong> ${formatDate(task.createTime)}</p>
+            </div>
+            <div class="mb-3">
+                <h6>报销信息</h6>
+                <p><strong>报销金额:</strong> ${processVariables.amount}</p>
+                <p><strong>报销标题:</strong> ${processVariables.title}</p>
+                <p><strong>报销描述:</strong> ${processVariables.description}</p>
+                <p><strong>申请人:</strong> ${processVariables.applicant}</p>
+            </div>
+        `;
+        
+        // 更新表单内容
+        document.querySelector('#approvalForm .modal-body').innerHTML = taskInfoHtml + document.querySelector('#approvalForm .modal-body').innerHTML;
+        
+        // 显示模态框
+        const approvalModal = new bootstrap.Modal(document.getElementById('approvalModal'));
+        approvalModal.show();
+    }
 </script>
 </body>
 </html>

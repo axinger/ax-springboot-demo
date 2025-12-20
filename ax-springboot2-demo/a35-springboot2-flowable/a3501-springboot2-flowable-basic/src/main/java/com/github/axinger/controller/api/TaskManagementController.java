@@ -66,8 +66,33 @@ public class TaskManagementController {
      * @return 任务列表
      */
     @GetMapping("/all")
-    public List<Task> getAllTasks() {
-        return flowableService.createTaskQuery().list();
+    public List<?> getAllTasks() {
+        List<Task> list = flowableService.createTaskQuery().list();
+        return list.stream().map(task -> {
+            Map<String, Object> variables = new HashMap<>();
+            variables.put("id", task.getId());
+            variables.put("name", task.getName());
+            variables.put("processInstanceId", task.getProcessInstanceId());
+            variables.put("assignee", task.getAssignee());
+            variables.put("taskDescription", task.getDescription());
+            variables.put("taskPriority", task.getPriority());
+            variables.put("taskOwner", task.getOwner());
+            variables.put("taskAssignee", task.getAssignee());
+            variables.put("taskDueDate", task.getDueDate());
+            variables.put("taskCategory", task.getCategory());
+            variables.put("taskProcessInstanceId", task.getProcessInstanceId());
+            variables.put("taskProcessDefinitionId", task.getProcessDefinitionId());
+//            variables.put("taskProcessDefinitionKey", task.getProcessDefinitionKey());
+            variables.put("taskTenantId", task.getTenantId());
+            variables.put("createTime", task.getCreateTime());
+            variables.put("taskFormKey", task.getFormKey());
+//            variables.put("taskIdentityLinks", task.getIdentityLinks());
+            variables.put("taskVariables", task.getTaskLocalVariables());
+            variables.put("taskProcessVariables", task.getProcessVariables());
+            variables.put("taskCaseVariables", task.getCaseVariables());
+            variables.put("taskClaimTime", task.getClaimTime());
+            return variables;
+        }).toList();
     }
 
     /**

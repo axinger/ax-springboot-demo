@@ -20,6 +20,7 @@
                 <flowable:formProperty id="amount" name="报销金额" type="decimal" required="true" />
                 <flowable:formProperty id="title" name="报销标题" type="string" required="true" />
                 <flowable:formProperty id="description" name="报销描述" type="string" required="true" />
+                <flowable:taskListener event="create" delegateExpression="${expenseTaskAssignment}" />
             </extensionElements>
         </userTask>
 

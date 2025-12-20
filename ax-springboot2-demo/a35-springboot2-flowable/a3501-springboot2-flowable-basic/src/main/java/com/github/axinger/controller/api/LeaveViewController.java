@@ -43,7 +43,7 @@ public class LeaveViewController {
         try {
             String userName = currentUser.getName();
             Map<String, Object> variables = new HashMap<>();
-            variables.put("applicant",userName);
+            variables.put("applicant", userName);
             variables.put("days", days);
             variables.put("reason", reason);
 

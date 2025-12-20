@@ -35,6 +35,12 @@ public class ExpenseTaskAssignmentListener implements TaskListener {
             String assignee = null;
 
             switch (delegateTask.getTaskDefinitionKey()) {
+                case "applyTask":
+                    log.info("分配申请人提交报销");
+                    // 申请人自己提交报销申请
+                    assignee = applicant;
+                    break;
+
                 case "departmentLeaderReview":
                     log.info("分配部门领导审批");
                     assignee = orgService.getDeptLeader(applicant);

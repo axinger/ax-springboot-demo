@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * @TableName department
  */
-@TableName(value = "a35__department")
+@TableName(value = "a35_department")
 @Data
 public class A35DepartmentEntity implements Serializable {
     @Serial

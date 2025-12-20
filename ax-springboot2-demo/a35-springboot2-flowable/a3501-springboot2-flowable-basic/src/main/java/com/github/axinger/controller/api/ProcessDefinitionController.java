@@ -1,5 +1,6 @@
 package com.github.axinger.controller.api;
 
+import com.alibaba.fastjson2.JSON;
 import com.github.axinger.service.FlowableService;
 import org.flowable.engine.repository.Deployment;
 import org.flowable.engine.repository.ProcessDefinition;
@@ -10,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 流程定义控制器
@@ -76,8 +78,23 @@ public class ProcessDefinitionController {
      * @return 流程定义列表
      */
     @GetMapping("/list")
-    public List<ProcessDefinition> getProcessDefinitions() {
-        return flowableService.getProcessDefinitions();
+    public Object getProcessDefinitions() {
+        List<ProcessDefinition> processDefinitions = flowableService.getProcessDefinitions();
+
+        // 转换为简单的 DTO 对象，避免序列化原始实体时出现问题
+        List<Map<String, Object>> dtoList = processDefinitions.stream().map(pd -> {
+            Map<String, Object> dto = new HashMap<>();
+            dto.put("id", pd.getId());
+            dto.put("name", pd.getName());
+            dto.put("key", pd.getKey());
+            dto.put("version", pd.getVersion());
+            dto.put("deploymentId", pd.getDeploymentId());
+            dto.put("description", pd.getDescription());
+            dto.put("category", pd.getCategory());
+            dto.put("tenantId", pd.getTenantId());
+            return dto;
+        }).collect(Collectors.toList());
+        return dtoList;
     }
 
     /**
@@ -157,7 +174,7 @@ public class ProcessDefinitionController {
      */
     @DeleteMapping("/deployment/{deploymentId}")
     public Map<String, Object> deleteDeployment(@PathVariable String deploymentId,
-                                               @RequestParam(defaultValue = "false") boolean cascade) {
+                                                @RequestParam(defaultValue = "false") boolean cascade) {
         Map<String, Object> result = new HashMap<>();
         try {
             flowableService.deleteDeployment(deploymentId, cascade);

@@ -45,7 +45,7 @@ public class MonitorController {
 
             // 获取已完成流程实例数量
             List<HistoricProcessInstance> finishedProcessInstances =
-                flowableService.createHistoricProcessInstanceQuery().finished().list();
+                    flowableService.createHistoricProcessInstanceQuery().finished().list();
 
             // 获取待处理任务数量
             List<Task> pendingTasks = flowableService.createTaskQuery().list();
@@ -90,11 +90,11 @@ public class MonitorController {
 
             // 获取已完成流程实例
             List<HistoricProcessInstance> finishedProcessInstances =
-                flowableService.createHistoricProcessInstanceQuery().finished().list();
+                    flowableService.createHistoricProcessInstanceQuery().finished().list();
 
             // 获取已挂起流程实例
             List<ProcessInstance> suspendedProcessInstances =
-                flowableService.createProcessInstanceQuery().suspended().list();
+                    flowableService.createProcessInstanceQuery().suspended().list();
 
             Map<String, Integer> distribution = new HashMap<>();
             distribution.put("running", runningProcessInstances.size());

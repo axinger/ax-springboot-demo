@@ -1,5 +1,6 @@
 package com.github.axinger.controller.api;
 
+import cn.hutool.core.io.IoUtil;
 import com.github.axinger.service.FlowableService;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.identitylink.api.history.HistoricIdentityLink;
@@ -67,8 +68,24 @@ public class ProcessInstanceController {
      * @return 流程实例列表
      */
     @GetMapping("/list")
-    public List<ProcessInstance> getProcessInstances() {
-        return flowableService.createProcessInstanceQuery().list();
+    public List<?> getProcessInstances() {
+        List<ProcessInstance> list = flowableService.createProcessInstanceQuery().list();
+        return list.stream().map(processInstance -> {
+            Map<String, Object> processInstanceMap = new HashMap<>();
+            processInstanceMap.put("id", processInstance.getId());
+            processInstanceMap.put("processDefinitionId", processInstance.getProcessDefinitionId());
+            processInstanceMap.put("processDefinitionName", processInstance.getProcessDefinitionName());
+            processInstanceMap.put("processDefinitionVersion", processInstance.getProcessDefinitionVersion());
+            processInstanceMap.put("processDefinitionKey", processInstance.getProcessDefinitionKey());
+            processInstanceMap.put("processInstanceId", processInstance.getProcessInstanceId());
+            processInstanceMap.put("businessKey", processInstance.getBusinessKey());
+            processInstanceMap.put("isEnded", processInstance.isEnded());
+            processInstanceMap.put("isSuspended", processInstance.isSuspended());
+            processInstanceMap.put("rootProcessInstanceId", processInstance.getRootProcessInstanceId());
+            processInstanceMap.put("deploymentId", processInstance.getDeploymentId());
+            processInstanceMap.put("tenantId", processInstance.getTenantId());
+            return processInstanceMap;
+        }).toList();
     }
 
     /**
@@ -220,15 +237,8 @@ public class ProcessInstanceController {
 
         response.setContentType("image/png");
         response.setHeader("Content-Disposition", "inline; filename=\"process-diagram.png\"");
-
-        try (OutputStream out = response.getOutputStream()) {
-            byte[] buffer = new byte[1024];
-            int len;
-            while ((len = inputStream.read(buffer)) != -1) {
-                out.write(buffer, 0, len);
-            }
-            out.flush();
-        }
+        IoUtil.copy(inputStream, response.getOutputStream());
+        response.flushBuffer();
     }
 
     /**

@@ -8,10 +8,14 @@ import org.flowable.engine.history.HistoricProcessInstance;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
+import org.flowable.task.api.TaskQuery;
 import org.flowable.task.api.history.HistoricTaskInstance;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -62,16 +66,13 @@ public class TaskController {
         }).collect(Collectors.toList());
         result.put("availableProcesses", availableProcesses);
 
+
+        List<Map<String, Object>> myApplications = new ArrayList<>();
         // 2. 我发起的流程（已申请的）
         List<ProcessInstance> myProcessInstances = runtimeService.createProcessInstanceQuery()
                 .startedBy(userId)
                 .list();
-        List<HistoricProcessInstance> myHistoricProcessInstances = historyService.createHistoricProcessInstanceQuery()
-                .startedBy(userId)
-                .finished()
-                .list();
 
-        List<Map<String, Object>> myApplications = new ArrayList<>();
         // 添加运行中的流程实例
         myProcessInstances.forEach(pi -> {
             Map<String, Object> map = new HashMap<>();
@@ -83,6 +84,11 @@ public class TaskController {
             map.put("businessKey", pi.getBusinessKey());
             myApplications.add(map);
         });
+
+        List<HistoricProcessInstance> myHistoricProcessInstances = historyService.createHistoricProcessInstanceQuery()
+                .startedBy(userId)
+                .finished()
+                .list();
         // 添加已完成的流程实例
         myHistoricProcessInstances.forEach(hpi -> {
             Map<String, Object> map = new HashMap<>();
@@ -101,10 +107,6 @@ public class TaskController {
         List<Task> assignedTasks = taskService.createTaskQuery()
                 .taskAssignee(userId)
                 .list();
-        List<Task> candidateTasks = taskService.createTaskQuery()
-                .taskCandidateUser(userId)
-                .list();
-
         List<Map<String, Object>> pendingApprovals = new ArrayList<>();
         assignedTasks.forEach(task -> {
             Map<String, Object> map = new HashMap<>();
@@ -118,6 +120,9 @@ public class TaskController {
             pendingApprovals.add(map);
         });
 
+        List<Task> candidateTasks = taskService.createTaskQuery()
+                .taskCandidateUser(userId)
+                .list();
         candidateTasks.forEach(task -> {
             Map<String, Object> map = new HashMap<>();
             map.put("id", task.getId());
@@ -150,5 +155,70 @@ public class TaskController {
         result.put("finishedTasks", finishedTasksList);
 
         return result;
+    }
+
+    /**
+     * 提交流程实例审批
+     *
+     * @param processInstanceId 流程实例ID
+     * @param userId            用户ID
+     * @return 操作结果
+     */
+    @PostMapping("/submit-for-approval")
+    public ResponseEntity<Map<String, Object>> submitForApproval(
+            @RequestParam String processInstanceId,
+            @RequestParam String userId) {
+
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            // 检查流程实例是否存在且由该用户发起
+            ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
+                    .processInstanceId(processInstanceId)
+                    .startedBy(userId)
+                    .singleResult();
+
+            if (processInstance == null) {
+                response.put("success", false);
+                response.put("message", "未找到由您发起的该流程实例");
+                return ResponseEntity.badRequest().body(response);
+            }
+
+            // 检查流程是否已经处于审批状态
+            // 这里可以根据实际业务需求进行判断
+            // 例如检查当前活动节点是否是申请人节点等
+
+            // 如果需要触发某个特定任务，可以在这里添加逻辑
+            // 比如完成某个特定的任务
+
+//            TaskQuery taskQuery = taskService.createTaskQuery();
+//            Task task = taskQuery.taskId(processInstance.get).singleResult();
+//            if (task != null && task.getAssignee() == null) {
+//                flowableService.setAssignee(taskId, currentUser.getId().toString());
+//            }
+            Map<String, Object> variables = new HashMap<>();
+//            variables.put("approved", approved);
+//            variables.put("comment", comment);
+//            variables.put("approver", currentUser.getName());
+
+//            runtimeService
+//                    .createProcessInstanceBuilder()
+//                    .owner("") //设置的是 流程实例的“拥有者”（OWNER_ 字段）,自定义拥有者（通常用于业务归属，如部门负责人）
+//                    .processDefinitionKey(processInstanceId)
+//                    .businessKey("your-biz-id") // 如订单ID、请假单ID
+//                    .variables(variables)
+//                    .start();
+//            taskService.complete(processInstanceId, variables);
+//            runtimeService.setAssignee(processInstanceId, userId);
+
+
+            response.put("success", true);
+            response.put("message", "流程已成功提交审批");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", "提交审批失败: " + e.getMessage());
+            return ResponseEntity.status(500).body(response);
+        }
     }
 }

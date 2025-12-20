@@ -34,7 +34,7 @@ public class OrgServiceImpl implements OrgService {
 
     @Override
     public String getDeptLeader(String employeeId) {
-        A35UserEntity employee = userService.getById(employeeId);
+        A35UserEntity employee = this.getUserByName(employeeId);
         A35DepartmentEntity dept = departmentRepository.getById(employee.getDepartmentId());
         return dept.getDeptLeaderId();
     }
