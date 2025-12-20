@@ -1,4 +1,4 @@
-package com.github.axinger.controller;
+package com.github.axinger.controller.api;
 
 import com.github.axinger.service.FlowableService;
 import org.flowable.engine.repository.Deployment;
@@ -7,14 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.zip.ZipInputStream;
 
 /**
  * 流程定义控制器
@@ -55,25 +50,25 @@ public class ProcessDefinitionController {
      * @param file ZIP文件（包含BPMN和PNG等）
      * @return 部署结果
      */
-    @PostMapping("/deploy/zip")
-    public Map<String, Object> deployZip(@RequestParam("file") MultipartFile file) {
-        Map<String, Object> result = new HashMap<>();
-        try {
-            ZipInputStream zipInputStream = new ZipInputStream(file.getInputStream());
-            Deployment deployment = flowableService.createDeploymentQuery()
-                    .deploy(zipInputStream)
-                    .name(file.getOriginalFilename())
-                    .deploy();
-            result.put("success", true);
-            result.put("deploymentId", deployment.getId());
-            result.put("deploymentName", deployment.getName());
-            result.put("deploymentTime", deployment.getDeploymentTime());
-        } catch (Exception e) {
-            result.put("success", false);
-            result.put("message", e.getMessage());
-        }
-        return result;
-    }
+//    @PostMapping("/deploy/zip")
+//    public Map<String, Object> deployZip(@RequestParam("file") MultipartFile file) {
+//        Map<String, Object> result = new HashMap<>();
+//        try {
+//            ZipInputStream zipInputStream = new ZipInputStream(file.getInputStream());
+////            Deployment deployment = flowableService.createDeploymentQuery()
+//                    .deploy(zipInputStream)
+//                    .name(file.getOriginalFilename())
+//                    .deploy();
+//            result.put("success", true);
+//            result.put("deploymentId", deployment.getId());
+//            result.put("deploymentName", deployment.getName());
+//            result.put("deploymentTime", deployment.getDeploymentTime());
+//        } catch (Exception e) {
+//            result.put("success", false);
+//            result.put("message", e.getMessage());
+//        }
+//        return result;
+//    }
 
     /**
      * 获取所有流程定义
@@ -175,59 +170,31 @@ public class ProcessDefinitionController {
         return result;
     }
 
-    /**
-     * 获取流程定义XML
-     *
-     * @param processDefinitionId 流程定义ID
-     * @param response            HttpServletResponse
-     * @throws IOException IO异常
-     */
-    @GetMapping("/{processDefinitionId}/xml")
-    public void getProcessDefinitionXml(@PathVariable String processDefinitionId,
-                                        HttpServletResponse response) throws IOException {
-        InputStream inputStream = flowableService.createProcessDefinitionQuery()
-                .processDefinitionId(processDefinitionId)
-                .singleResult()
-                .getResourceName();
-
-        response.setContentType("application/xml");
-        response.setHeader("Content-Disposition", "attachment; filename=\"process.xml\"");
-
-        try (OutputStream out = response.getOutputStream()) {
-            byte[] buffer = new byte[1024];
-            int len;
-            while ((len = inputStream.read(buffer)) != -1) {
-                out.write(buffer, 0, len);
-            }
-            out.flush();
-        }
-    }
-
-    /**
-     * 获取流程定义图片
-     *
-     * @param processDefinitionId 流程定义ID
-     * @param response            HttpServletResponse
-     * @throws IOException IO异常
-     */
-    @GetMapping("/{processDefinitionId}/image")
-    public void getProcessDefinitionImage(@PathVariable String processDefinitionId,
-                                          HttpServletResponse response) throws IOException {
-        InputStream inputStream = flowableService.createProcessDefinitionQuery()
-                .processDefinitionId(processDefinitionId)
-                .singleResult()
-                .getDiagramResourceName();
-
-        response.setContentType("image/png");
-        response.setHeader("Content-Disposition", "inline; filename=\"process.png\"");
-
-        try (OutputStream out = response.getOutputStream()) {
-            byte[] buffer = new byte[1024];
-            int len;
-            while ((len = inputStream.read(buffer)) != -1) {
-                out.write(buffer, 0, len);
-            }
-            out.flush();
-        }
-    }
+//    /**
+//     * 获取流程定义XML
+//     *
+//     * @param processDefinitionId 流程定义ID
+//     * @param response            HttpServletResponse
+//     * @throws IOException IO异常
+//     */
+//    @GetMapping("/{processDefinitionId}/xml")
+//    public void getProcessDefinitionXml(@PathVariable String processDefinitionId,
+//                                        HttpServletResponse response) throws IOException {
+//        InputStream inputStream = flowableService.createProcessDefinitionQuery()
+//                .processDefinitionId(processDefinitionId)
+//                .singleResult()
+//                .getResourceName();
+//
+//        response.setContentType("application/xml");
+//        response.setHeader("Content-Disposition", "attachment; filename=\"process.xml\"");
+//
+//        try (OutputStream out = response.getOutputStream()) {
+//            byte[] buffer = new byte[1024];
+//            int len;
+//            while ((len = inputStream.read(buffer)) != -1) {
+//                out.write(buffer, 0, len);
+//            }
+//            out.flush();
+//        }
+//    }
 }

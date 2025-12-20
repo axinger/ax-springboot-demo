@@ -1,4 +1,4 @@
-package com.github.axinger.controller;
+package com.github.axinger.controller.api;
 
 import com.github.axinger.domain.A35UserEntity;
 import com.github.axinger.service.FlowableService;
@@ -30,7 +30,7 @@ public class MonitorController {
     @GetMapping("/statistics")
     public ResponseEntity<Map<String, Object>> getMonitorStatistics(HttpSession session) {
         Map<String, Object> response = new HashMap<>();
-        
+
         try {
             // 检查用户登录状态
             A35UserEntity user = (A35UserEntity) session.getAttribute("user");
@@ -42,14 +42,14 @@ public class MonitorController {
 
             // 获取运行中流程实例数量
             List<ProcessInstance> runningProcessInstances = flowableService.createProcessInstanceQuery().list();
-            
+
             // 获取已完成流程实例数量
-            List<HistoricProcessInstance> finishedProcessInstances = 
+            List<HistoricProcessInstance> finishedProcessInstances =
                 flowableService.createHistoricProcessInstanceQuery().finished().list();
-            
+
             // 获取待处理任务数量
             List<Task> pendingTasks = flowableService.createTaskQuery().list();
-            
+
             // 获取流程定义数量
             List<ProcessDefinition> processDefinitions = flowableService.getProcessDefinitions();
 
@@ -75,7 +75,7 @@ public class MonitorController {
     @GetMapping("/process-status-distribution")
     public ResponseEntity<Map<String, Object>> getProcessStatusDistribution(HttpSession session) {
         Map<String, Object> response = new HashMap<>();
-        
+
         try {
             // 检查用户登录状态
             A35UserEntity user = (A35UserEntity) session.getAttribute("user");
@@ -87,13 +87,13 @@ public class MonitorController {
 
             // 获取运行中流程实例
             List<ProcessInstance> runningProcessInstances = flowableService.createProcessInstanceQuery().list();
-            
+
             // 获取已完成流程实例
-            List<HistoricProcessInstance> finishedProcessInstances = 
+            List<HistoricProcessInstance> finishedProcessInstances =
                 flowableService.createHistoricProcessInstanceQuery().finished().list();
-            
+
             // 获取已挂起流程实例
-            List<ProcessInstance> suspendedProcessInstances = 
+            List<ProcessInstance> suspendedProcessInstances =
                 flowableService.createProcessInstanceQuery().suspended().list();
 
             Map<String, Integer> distribution = new HashMap<>();
@@ -117,7 +117,7 @@ public class MonitorController {
     @GetMapping("/task-duration-statistics")
     public ResponseEntity<Map<String, Object>> getTaskDurationStatistics(HttpSession session) {
         Map<String, Object> response = new HashMap<>();
-        
+
         try {
             // 检查用户登录状态
             A35UserEntity user = (A35UserEntity) session.getAttribute("user");

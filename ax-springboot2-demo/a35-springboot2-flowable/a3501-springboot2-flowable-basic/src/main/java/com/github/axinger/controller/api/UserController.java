@@ -1,4 +1,4 @@
-package com.github.axinger.controller;
+package com.github.axinger.controller.api;
 
 import com.github.axinger.domain.A35UserEntity;
 import com.github.axinger.service.OrgService;
@@ -24,13 +24,13 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> getCurrentUser(HttpSession session) {
         A35UserEntity user = (A35UserEntity) session.getAttribute("user");
         Map<String, Object> response = new HashMap<>();
-        
+
         if (user == null) {
             response.put("success", false);
             response.put("message", "用户未登录");
             return ResponseEntity.status(401).body(response);
         }
-        
+
         response.put("success", true);
         response.put("user", user);
         return ResponseEntity.ok(response);

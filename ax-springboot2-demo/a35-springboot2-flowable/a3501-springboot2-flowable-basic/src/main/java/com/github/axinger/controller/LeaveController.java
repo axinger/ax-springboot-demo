@@ -63,8 +63,6 @@ public class LeaveController {
         map.put("getProcessVariables", instance.getProcessVariables());
         map.put("getReferenceId", instance.getReferenceId());
         map.put("getRootProcessInstanceId", instance.getRootProcessInstanceId());
-
-
         return map;
     }
 

@@ -1,4 +1,4 @@
-package com.github.axinger.controller;
+package com.github.axinger.controller.api;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.commons.lang3.StringUtils;

@@ -1,4 +1,4 @@
-package com.github.axinger.controller;
+package com.github.axinger.controller.api;
 
 import com.github.axinger.domain.A35UserEntity;
 import com.github.axinger.service.FlowableService;
@@ -99,7 +99,7 @@ public class ProcessManagementController {
         Map<String, Object> response = new HashMap<>();
         try {
             checkUserLoggedIn(session);
-            List<HistoricProcessInstance> historicProcessInstances = 
+            List<HistoricProcessInstance> historicProcessInstances =
                 flowableService.createHistoricProcessInstanceQuery().finished().list();
             response.put("success", true);
             response.put("data", historicProcessInstances);

@@ -73,7 +73,7 @@
 
 <div class="container-fluid task-container">
     <h1 class="text-center mb-4">任务中心</h1>
-    
+
     <!-- 可填写的流程 -->
     <div class="section">
         <h3 class="section-title">可申请的流程</h3>
@@ -81,9 +81,9 @@
             <!-- 动态加载可申请的流程 -->
         </div>
     </div>
-    
+
     <hr>
-    
+
     <!-- 我申请的流程 -->
     <div class="section">
         <h3 class="section-title">我申请的流程</h3>
@@ -104,9 +104,9 @@
             </table>
         </div>
     </div>
-    
+
     <hr>
-    
+
     <!-- 待我审批 -->
     <div class="section">
         <h3 class="section-title">待我审批</h3>
@@ -129,9 +129,9 @@
             </table>
         </div>
     </div>
-    
+
     <hr>
-    
+
     <!-- 已完结的任务 -->
     <div class="section">
         <h3 class="section-title">已完结的任务</h3>
@@ -267,15 +267,19 @@
         if (currentUser) {
             document.getElementById('username').textContent = currentUser;
         }
-        
+
         loadTaskData();
     });
 
     // 加载任务数据
     function loadTaskData() {
-        fetch('/api/tasks/dashboard')
+        const currentUser = sessionStorage.getItem('currentUser');
+
+        console.log('/api/tasks/dashboard任 currentUser', currentUser)
+        fetch('/api/tasks/dashboard?userId='+currentUser)
             .then(response => response.json())
             .then(data => {
+                console.log('/api/tasks/dashboard任务数据:', data)
                 renderAvailableProcesses(data.availableProcesses);
                 renderMyApplications(data.myApplications);
                 renderPendingApprovals(data.pendingApprovals);
@@ -291,12 +295,12 @@
     function renderAvailableProcesses(processes) {
         const container = document.getElementById('availableProcessesContainer');
         container.innerHTML = '';
-        
+
         if (!processes || processes.length === 0) {
             container.innerHTML = '<p class="text-muted">暂无可申请的流程</p>';
             return;
         }
-        
+
         processes.forEach(process => {
             const col = document.createElement('div');
             col.className = 'col-md-4 mb-3';
@@ -320,14 +324,14 @@
     function renderMyApplications(applications) {
         const container = document.getElementById('myApplicationsContainer');
         container.innerHTML = '';
-        
+
         if (!applications || applications.length === 0) {
             const row = document.createElement('tr');
             row.innerHTML = '<td colspan="5" class="text-center text-muted">暂无申请的流程</td>';
             container.appendChild(row);
             return;
         }
-        
+
         applications.forEach(app => {
             const row = document.createElement('tr');
             row.innerHTML = `
@@ -349,14 +353,14 @@
     function renderPendingApprovals(tasks) {
         const container = document.getElementById('pendingApprovalsContainer');
         container.innerHTML = '';
-        
+
         if (!tasks || tasks.length === 0) {
             const row = document.createElement('tr');
             row.innerHTML = '<td colspan="7" class="text-center text-muted">暂无待审批任务</td>';
             container.appendChild(row);
             return;
         }
-        
+
         tasks.forEach(task => {
             const row = document.createElement('tr');
             row.innerHTML = `
@@ -382,14 +386,14 @@
     function renderFinishedTasks(tasks) {
         const container = document.getElementById('finishedTasksContainer');
         container.innerHTML = '';
-        
+
         if (!tasks || tasks.length === 0) {
             const row = document.createElement('tr');
             row.innerHTML = '<td colspan="7" class="text-center text-muted">暂无已完结任务</td>';
             container.appendChild(row);
             return;
         }
-        
+
         tasks.forEach(task => {
             const row = document.createElement('tr');
             row.innerHTML = `
@@ -415,7 +419,7 @@
     // 申请流程
     function applyForProcess(processKey) {
         selectedProcessKey = processKey;
-        
+
         if (processKey === 'employeeLeave') {
             // 显示请假申请模态框
             const leaveModal = new bootstrap.Modal(document.getElementById('leaveModal'));
@@ -433,12 +437,12 @@
     document.getElementById('submitLeaveBtn').addEventListener('click', function() {
         const days = document.getElementById('leaveDays').value;
         const reason = document.getElementById('leaveReason').value;
-        
+
         if (!days || !reason) {
             alert('请填写完整信息');
             return;
         }
-        
+
         fetch('/api/leave-view/apply', {
             method: 'POST',
             headers: {
@@ -470,17 +474,17 @@
         const amount = document.getElementById('reimbursementAmount').value;
         const title = document.getElementById('reimbursementTitle').value;
         const description = document.getElementById('reimbursementDescription').value;
-        
+
         if (!amount || !title || !description) {
             alert('请填写完整信息');
             return;
         }
-        
+
         const formData = new FormData();
         formData.append('amount', amount);
         formData.append('title', title);
         formData.append('description', description);
-        
+
         fetch('/api/reimbursement-view/apply', {
             method: 'POST',
             body: new URLSearchParams(formData)
@@ -516,7 +520,7 @@
         const taskId = document.getElementById('approvalTaskId').value;
         const approved = document.querySelector('input[name="approvalResult"]:checked').value === 'approve';
         const comment = document.getElementById('approvalComment').value;
-        
+
         fetch(`/api/leave-view/approve/${taskId}`, {
             method: 'POST',
             headers: {

@@ -1,4 +1,4 @@
-package com.github.axinger.controller;
+package com.github.axinger.controller.api;
 
 import com.github.axinger.domain.A35UserEntity;
 import com.github.axinger.service.OrgService;
@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
@@ -14,12 +15,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/api")
 public class LoginController {
 
     @Autowired
     private OrgService orgService;
 
-    @PostMapping("/api/login")
+    @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
         try {
             // 简单验证，实际项目中应该使用更安全的验证方式
@@ -51,7 +53,7 @@ public class LoginController {
         }
     }
 
-    @PostMapping("/api/logout")
+    @PostMapping("/logout")
     public ResponseEntity<Map<String, Object>> logout(HttpSession session) {
         session.invalidate();
         Map<String, Object> response = new HashMap<>();

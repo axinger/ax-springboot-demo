@@ -1,4 +1,4 @@
-package com.github.axinger.controller;
+package com.github.axinger.controller.html;
 
 import com.github.axinger.domain.A35UserEntity;
 import org.springframework.stereotype.Controller;

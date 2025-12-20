@@ -13,7 +13,7 @@ CREATE TABLE `a35_user_info`
 (
     `id`               varchar(36)  NOT NULL COMMENT '员工ID，UUID格式的唯一标识符',
     `name`             varchar(100) NOT NULL COMMENT '员工姓名',
-    `pwassword`        varchar(100) NOT NULL COMMENT '员工密码',
+    `password`        varchar(100) NOT NULL COMMENT '员工密码',
     `position`         varchar(50)  NOT NULL COMMENT '员工职位，如"初级开发"、"技术经理"',
     `department_id`    varchar(36)  NOT NULL COMMENT '所属部门ID，关联department表的id',
     `direct_leader_id` varchar(36) DEFAULT NULL COMMENT '直属领导ID，关联本表的id(自关联)',
@@ -30,7 +30,7 @@ VALUES ('d001', '技术部', 'e002', 'e003'),
 
 
 -- 插入初始员工数据
-INSERT INTO `a35_user_info` (`id`, `name`,`pwassword`, `position`, `department_id`, `direct_leader_id`)
+INSERT INTO `a35_user_info` (`id`, `name`,`password`, `position`, `department_id`, `direct_leader_id`)
 VALUES ('e001', 'zhangsan', '123456', '初级开发', 'd001', 'e002'),
        ('e002', 'lisi', '123456', '技术经理', 'd001', 'e003'),
        ('e003', 'wangwu', '123456', 'CEO', 'd003', NULL),

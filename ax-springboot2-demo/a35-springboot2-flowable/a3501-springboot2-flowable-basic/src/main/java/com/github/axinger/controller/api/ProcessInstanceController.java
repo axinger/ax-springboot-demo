@@ -1,4 +1,4 @@
-package com.github.axinger.controller;
+package com.github.axinger.controller.api;
 
 import com.github.axinger.service.FlowableService;
 import org.flowable.engine.runtime.ProcessInstance;
@@ -252,16 +252,16 @@ public class ProcessInstanceController {
      */
     @GetMapping("/parent-process/{subProcessInstanceId}")
     public ProcessInstance getParentProcessInstance(@PathVariable String subProcessInstanceId) {
-        ProcessInstance subInstance = flowableService.createProcessInstanceQuery()
-                .processInstanceId(subProcessInstanceId)
-                .singleResult();
-        
-        if (subInstance != null && subInstance.getSuperProcessInstanceId() != null) {
-            return flowableService.createProcessInstanceQuery()
-                    .processInstanceId(subInstance.getSuperProcessInstanceId())
-                    .singleResult();
-        }
-        
+//        ProcessInstance subInstance = flowableService.createProcessInstanceQuery()
+//                .processInstanceId(subProcessInstanceId)
+//                .singleResult();
+//
+//        if (subInstance != null && subInstance.getSuperProcessInstanceId() != null) {
+//            return flowableService.createProcessInstanceQuery()
+//                    .processInstanceId(subInstance.getSuperProcessInstanceId())
+//                    .singleResult();
+//        }
+
         return null;
     }
 }

@@ -495,30 +495,6 @@ public class ExpenseController {
 * 方式1：将jdk的版本退回到jdk8，因为jdk8还支持自带javax.xml.bind.annotation包。
 * 方式2：新增依赖
 
-```xml
-
-<dependency>
-    <groupId>jakarta.xml.bind</groupId>
-    <artifactId>jaxb-api</artifactId>
-    <version>2.3.0</version>
-</dependency>
-<dependency>
-<groupId>com.sun.xml.bind</groupId>
-<artifactId>jaxb-core</artifactId>
-<version>2.3.0</version>
-</dependency>
-<dependency>
-<groupId>com.sun.xml.bind</groupId>
-<artifactId>jaxb-impl</artifactId>
-<version>2.3.0</version>
-</dependency>
-<dependency>
-<groupId>jakarta.activation</groupId>
-<artifactId>activation</artifactId>
-<version>1.1.1</version>
-</dependency>
-
-```
 
 ## 2.5 测试
 

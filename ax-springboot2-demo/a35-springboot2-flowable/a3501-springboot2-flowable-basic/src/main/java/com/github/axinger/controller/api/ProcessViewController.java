@@ -1,4 +1,4 @@
-package com.github.axinger.controller;
+package com.github.axinger.controller.api;
 
 import com.github.axinger.domain.A35UserEntity;
 import com.github.axinger.service.FlowableService;
@@ -33,10 +33,10 @@ public class ProcessViewController {
             @RequestParam String processDefinitionKey,
             @RequestBody(required = false) Map<String, Object> variables,
             HttpSession session) {
-        
+
         A35UserEntity currentUser = (A35UserEntity) session.getAttribute("user");
         Map<String, Object> response = new HashMap<>();
-        
+
         if (currentUser == null) {
             response.put("success", false);
             response.put("message", "用户未登录");
@@ -91,10 +91,10 @@ public class ProcessViewController {
             @PathVariable String taskId,
             @RequestBody(required = false) Map<String, Object> variables,
             HttpSession session) {
-        
+
         A35UserEntity currentUser = (A35UserEntity) session.getAttribute("user");
         Map<String, Object> response = new HashMap<>();
-        
+
         if (currentUser == null) {
             response.put("success", false);
             response.put("message", "用户未登录");
@@ -110,7 +110,7 @@ public class ProcessViewController {
             }
 
             // 检查任务是否属于当前用户
-            if (!currentUser.getId().equals(task.getAssignee()) && 
+            if (!currentUser.getId().equals(task.getAssignee()) &&
                 !flowableService.createTaskQuery().taskId(taskId).taskCandidateUser(currentUser.getId()).list().contains(task)) {
                 response.put("success", false);
                 response.put("message", "您没有权限处理此任务");
@@ -140,10 +140,10 @@ public class ProcessViewController {
     public ResponseEntity<Map<String, Object>> claimTask(
             @PathVariable String taskId,
             HttpSession session) {
-        
+
         A35UserEntity currentUser = (A35UserEntity) session.getAttribute("user");
         Map<String, Object> response = new HashMap<>();
-        
+
         if (currentUser == null) {
             response.put("success", false);
             response.put("message", "用户未登录");
