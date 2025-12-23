@@ -23,6 +23,7 @@
 
     <modules>
         <module>a41-springboot3-ai-ollama-mcp</module>
+        <module>b4102-springboot3-ai-langchain4j</module>
     </modules>
 
 
