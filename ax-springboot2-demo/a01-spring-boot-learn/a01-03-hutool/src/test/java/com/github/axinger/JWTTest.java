@@ -2,6 +2,7 @@ package com.github.axinger;
 
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateTime;
+import cn.hutool.core.exceptions.ValidateException;
 import cn.hutool.jwt.JWT;
 import cn.hutool.jwt.JWTPayload;
 import cn.hutool.jwt.JWTUtil;
@@ -72,13 +73,14 @@ public class JWTTest {
         DateTime signTime = DateTime.now();
         DateTime expiresAt = signTime.offsetNew(DateField.SECOND, 2);
 
+        /// jwt结果是一个base64编码的字符串,所以不要放入敏感信息,例如密码
         String token = JWT.create()
                 .setIssuedAt(signTime)
                 .setExpiresAt(expiresAt)
                 .setPayload("username", "jim")
-                .setPayload("password", "123456")
+                .setPayload("type", "1")
                 .setKey(key)
-//                .setSigner(HS256, key)
+//                .setSigner("iOS", key)
                 .sign();
 
 
@@ -117,7 +119,15 @@ public class JWTTest {
         System.out.println("是否过期 = " + (validate ? "过期" : "没有过期"));
 
         // 由于只定义了签发时间，因此只检查签发时间
-        JWTValidator jwtValidator = JWTValidator.of(token).validateDate();
+//        JWTPayload.NOT_BEFORE：被检查时间必须晚于生效时间
+//        JWTPayload.EXPIRES_AT：被检查时间必须早于失效时间
+//        JWTPayload.ISSUED_AT：签发时间必须早于失效时间
+        try {
+            JWTValidator jwtValidator = JWTValidator.of(token).validateDate();
+        } catch (ValidateException e) {
+            String message = e.getMessage();
+            System.err.println("token 校验失败" + message);
+        }
     }
 
     @Test
