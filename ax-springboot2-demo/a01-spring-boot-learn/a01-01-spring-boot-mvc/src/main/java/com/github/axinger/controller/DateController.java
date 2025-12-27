@@ -15,7 +15,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/number")
-public class DateVOController {
+public class DateController {
     /*
 {
   "date" : "2025-01-01",

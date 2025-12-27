@@ -16,7 +16,6 @@ public enum Gender {
     male(1, "男性"),
     female(2, "女性");
 
-
     private int code;
 
     private String alias;
@@ -34,8 +33,27 @@ public enum Gender {
         return EnumUtil.getBy(Gender::getCode, code, Gender.none);
     }
 
+    public static Gender convert(String source) {
+        if (source == null || source.isEmpty()) {
+            return null;
+        }
+        try {
+            int code = Integer.parseInt(source);
+            return Gender.fromCode(code);
+        } catch (NumberFormatException e) {
+            // 如果不是数字，也可以尝试按 name 匹配（可选）
+            for (Gender item : Gender.values()) {
+                if (item.name().equalsIgnoreCase(source)) {
+                    return item;
+                }
+            }
+            return null;
+        }
+    }
+
     //使用@JsonCreator和@JsonValue注解来自定义序列化和反序列化的方式。
     // 这样可以在枚举类中指定一个方法，用来将传入的字符串转换为对应的枚举值
+    // 必须放这里
     @JsonValue
     public int getCode() {
         return code;
