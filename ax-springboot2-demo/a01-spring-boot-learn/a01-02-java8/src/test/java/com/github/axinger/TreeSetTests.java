@@ -71,4 +71,20 @@ public class TreeSetTests {
         System.out.println(" set.higher(16) = " + set.higher(16));
         System.out.println(" set.higher(20) = " + set.higher(20));
     }
+
+    @Test
+    void test4() {
+        /// 向下取整, [a, b)
+        // a,b,c,d,f
+        TreeSet<String> set = new TreeSet<>(Arrays.asList("a", "d", "f"));
+
+        /// 返回 小于或等于 e 的最大元素, 向下对齐,包含
+        System.out.println(" set.floor(a) = " + set.floor("a"));
+        System.out.println(" set.floor(a) = " + set.floor("c"));
+        System.out.println(" set.floor(d) = " + set.floor("d"));
+        System.out.println(" set.floor(e) = " + set.floor("e"));
+        System.out.println(" set.floor(f) = " + set.floor("f"));
+        System.out.println("===================================================");
+
+    }
 }
