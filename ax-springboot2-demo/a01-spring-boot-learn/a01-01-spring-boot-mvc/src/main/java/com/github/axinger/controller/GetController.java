@@ -75,7 +75,8 @@ public class GetController {
 
     /*
        #{T(...)} 是 SpEL（Spring Expression Language，
-        Spring 表达式语言） 的一种语法，用于在表达式中引用 Java 类（Class），从而可以调用该类的 静态方法 或访问其 静态字段。
+        Spring
+         表达式语言） 的一种语法，用于在表达式中引用 Java 类（Class），从而可以调用该类的 静态方法 或访问其 静态字段。
 
       @Value("#{T(java.lang.Math).sqrt(16)}")
       @ConditionalOnExpression("#{T(org.apache.commons.lang3.StringUtils).isNotBlank('${my.property}')}")
