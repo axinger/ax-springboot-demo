@@ -17,6 +17,7 @@
         <module>a10-02-rabbitmq-demo</module>
         <module>a10-03-rocketmq-demo</module>
         <module>a10-04-pulsar-demo</module>
+        <module>a10-02-rabbitmq-delay</module>
     </modules>
 
 </project>

@@ -2,9 +2,11 @@ package com.github.axinger.controller;
 
 import com.github.axinger.model.dto.LoginDTO;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
@@ -68,6 +70,29 @@ public class GetController {
     public Object test10(LocalDateTime dateTime) {
         Map<String, Object> result = new HashMap<>();
         result.put("id", dateTime);
+        return result;
+    }
+
+    /*
+       #{T(...)} 是 SpEL（Spring Expression Language，
+        Spring 表达式语言） 的一种语法，用于在表达式中引用 Java 类（Class），从而可以调用该类的 静态方法 或访问其 静态字段。
+
+      @Value("#{T(java.lang.Math).sqrt(16)}")
+      @ConditionalOnExpression("#{T(org.apache.commons.lang3.StringUtils).isNotBlank('${my.property}')}")
+     */
+    @Value("#{T(com.github.axinger.config.MyValueFactory).path('/test11')}")
+    private String path;
+
+    @Value("#{T(java.lang.Integer).parseInt('${app.timeout:2}') * 1000}")
+    private int timeoutInMillis;
+
+//    @GetMapping("#{T(com.github.axinger.config.MyValueFactory).path('/test11')}")
+//    @GetMapping("/test11")
+    @GetMapping("${path.test11:/test11}")
+    public Object test11() {
+        Map<String, Object> result = new HashMap<>();
+        result.put("path", path);
+        result.put("timeoutInMillis", timeoutInMillis);
         return result;
     }
 
