@@ -18,7 +18,7 @@ package com.github.axinger.config;
 
 public interface MyValueFactory {
     static String path(String flag) {
-        return flag + ".do";
+        return flag + ".do1";
     }
 
 }

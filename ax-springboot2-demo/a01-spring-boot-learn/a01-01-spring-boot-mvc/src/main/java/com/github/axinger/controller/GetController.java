@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
@@ -84,15 +83,22 @@ public class GetController {
     @Value("#{T(com.github.axinger.config.MyValueFactory).path('/test11')}")
     private String path;
 
+    @Value("#{@myValueFactory2.path('/test11')}")
+    private String path2;
+
     @Value("#{T(java.lang.Integer).parseInt('${app.timeout:2}') * 1000}")
     private int timeoutInMillis;
 
-//    @GetMapping("#{T(com.github.axinger.config.MyValueFactory).path('/test11')}")
-//    @GetMapping("/test11")
-    @GetMapping("${path.test11:/test11}")
+    @GetMapping(value = {
+            "/test11",
+            "${path.test11:/test13}",
+            "#{T(com.github.axinger.config.MyValueFactory).path('/test11')}",
+            "#{@myValueFactory2.path('/test11')}"
+    })
     public Object test11() {
         Map<String, Object> result = new HashMap<>();
         result.put("path", path);
+        result.put("path2", path2);
         result.put("timeoutInMillis", timeoutInMillis);
         return result;
     }
