@@ -13,12 +13,29 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.github.axinger.entity.Person2;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
 
 public class ObjectMapperTests {
 
+
+    @Test
+    public void test_31() {
+        SysPerson2 sysPerson2 = new SysPerson2();
+        sysPerson2.setName("tom");
+        sysPerson2.setAge(20);
+        sysPerson2.setAdd(BigDecimal.valueOf(20.1234));
+        sysPerson2.setAdd(BigDecimal.valueOf(20.120000));
+        sysPerson2.setAdd(BigDecimal.valueOf(20.156));
+//        sysPerson2.setAdd(BigDecimal.valueOf(3E+1));
+
+        String json = JsonUtil.toJsonStr(sysPerson2);
+
+        System.out.println("json = " + json);
+
+    }
 
     @Test
     public void test_21() throws JsonProcessingException {
