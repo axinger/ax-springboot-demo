@@ -8,6 +8,7 @@ spring:
   cloud:
     nacos:
       config: #配置中心
+        enabled: false # 默认开启,kai
         server-addr: http://localhost:8848
         username: nacos
         password: nacos
@@ -18,7 +19,6 @@ spring:
         file-extension: yaml
         group: DEFAULT_GROUP
         namespace: dev
-        enabled: true
         shared-configs:
           - data-id: 'A0701NacosDemo.yaml' # 配置文件名-Data Id
             group: DEFAULT_GROUP   # 默认为DEFAULT_GROUP
@@ -35,6 +35,7 @@ spring:
             group: DEFAULT_GROUP
             refresh: true
       discovery:
+        register-enabled: false
         #        server-addr: 127.0.0.1:8848
         server-addr: http://localhost:8848
         username: nacos

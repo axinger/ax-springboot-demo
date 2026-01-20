@@ -18,6 +18,8 @@
         <module>gateway-9527</module>
         <module>getaway-payment</module>
         <module>mq-stream-api</module>
+        <module>A0611-spring-cloud-config-server</module>
+        <module>A0612-spring-cloud-client</module>
     </modules>
 
     <dependencies>

@@ -1,9 +1,6 @@
 package com.github.axinger.config;
 
-import com.github.axinger.bean.DocInfoProperties;
-import com.github.axinger.bean.FilterProperties;
-import com.github.axinger.bean.SysUser3;
-import com.github.axinger.bean.SysUser4;
+import com.github.axinger.bean.*;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +11,8 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties({
         DocInfoProperties.class,
         FilterProperties.class,
-        SysUser3.class
+        SysUser3.class,
+        SysUser5.class
 })
 public class MyAutoConfig {
 

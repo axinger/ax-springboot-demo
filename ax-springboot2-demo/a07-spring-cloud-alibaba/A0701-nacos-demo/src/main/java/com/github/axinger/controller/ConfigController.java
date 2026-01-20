@@ -46,6 +46,8 @@ public class ConfigController {
 
     @Autowired
     private SysUser4 sysUser4;
+    @Autowired
+    private SysUser5 sysUser5;
 
     @Autowired
     private Environment environment;
@@ -107,6 +109,11 @@ public class ConfigController {
         }
 
         try {
+            map.put("sysUser5", sysUser5); /// 可以
+        } catch (Exception e) {
+            log.error("sysUser5 error: 不可以");
+        }
+        try {
             String username = environment.getProperty("axinger.user.name", String.class);
             map.put("Environment方式:axinger.user.name", username);
         } catch (Exception e) {
@@ -116,6 +123,18 @@ public class ConfigController {
         System.out.println("user = " + sysUser);
         System.out.println("sysUser2 = " + sysUser2);
         System.out.println("sysUser3 = " + sysUser3);
+        return map;
+    }
+
+    @GetMapping("/5")
+    public Object test5() {
+        Map<String, Object> map = new TreeMap<>();
+
+        try {
+            map.put("sysUser5", sysUser5); /// 可以
+        } catch (Exception e) {
+            log.error("sysUser5 error: 不可以");
+        }
         return map;
     }
 }

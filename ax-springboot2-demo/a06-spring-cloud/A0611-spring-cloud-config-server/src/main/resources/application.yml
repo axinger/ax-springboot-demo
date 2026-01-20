@@ -1,0 +1,17 @@
+server:
+  port: 10611
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://gitee.com/axinger/ax-spring-cloud-config-repo.git
+          # 如果是私有仓库，添加：
+          # username: your-username
+          # password: your-token
+          default-label: main
+          clone-on-start: true
+          timeout: 10

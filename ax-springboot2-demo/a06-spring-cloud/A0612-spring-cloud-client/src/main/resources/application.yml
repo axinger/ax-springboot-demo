@@ -1,0 +1,10 @@
+server:
+  port: 10612
+
+spring:
+  application:
+    name: A0612-spring-cloud-client
+  config:
+    import:
+      - configserver:http://localhost:10611
+
