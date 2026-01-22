@@ -19,6 +19,7 @@
         <spring-ai-alibaba.version>1.1.0.0-M5</spring-ai-alibaba.version>
         <!-- Spring AI 核心依赖统一使用的版本 -->
         <spring-ai.version>1.1.2</spring-ai.version>
+        <langchain4j.version>1.9.1</langchain4j.version>
     </properties>
 
     <modules>
@@ -44,6 +45,32 @@
                 <version>${spring-ai-alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>dev.langchain4j</groupId>
+                <artifactId>langchain4j</artifactId>
+                <version>${langchain4j.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>dev.langchain4j</groupId>
+                <artifactId>langchain4j-http-client-jdk</artifactId>
+                <version>${langchain4j.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>dev.langchain4j</groupId>
+                <artifactId>langchain4j-open-ai</artifactId>
+                <version>${langchain4j.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>dev.langchain4j</groupId>
+                <artifactId>langchain4j-ollama</artifactId>
+                <version>${langchain4j.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
