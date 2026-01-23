@@ -39,7 +39,8 @@
         <!-- 覆盖SpringBoot中okhttp3的旧版本声明，解决MinIO 8.3.x的依赖冲突 -->
         <!--        <okhttp.version>4.10.0</okhttp.version>-->
         <!--        <mybatis-starter.version>2.3.2</mybatis-starter.version>-->
-        <mybatis-plus.version>3.5.9</mybatis-plus.version>
+<!--        <mybatis-plus.version>3.5.9</mybatis-plus.version>-->
+        <mybatis-plus.version>3.5.16</mybatis-plus.version>
         <guava.version>33.3.0-jre</guava.version>
         <!--        <guava.version>33.4.0-jre</guava.version>-->
         <hutool.version>5.8.42</hutool.version>

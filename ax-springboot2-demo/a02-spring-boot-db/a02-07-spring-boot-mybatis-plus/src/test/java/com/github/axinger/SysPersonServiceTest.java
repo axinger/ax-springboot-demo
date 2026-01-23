@@ -45,10 +45,8 @@ class SysPersonServiceTest {
 
     @Test
     void test_allList() {
-
         List<SysPersonEntity> list = sysPersonService.list();
         System.out.println("list = " + list);
-
     }
 
     @Test

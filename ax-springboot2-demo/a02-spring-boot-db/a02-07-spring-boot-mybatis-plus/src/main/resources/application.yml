@@ -3,8 +3,8 @@ server:
 
 spring:
   profiles:
-    #    active: mysql
-    active: pgsql
+    active: mysql
+#    active: pgsql
   datasource:
     hikari:
       # 获取连接的超时时间（毫秒）

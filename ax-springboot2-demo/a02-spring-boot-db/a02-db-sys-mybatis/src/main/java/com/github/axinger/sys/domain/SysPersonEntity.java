@@ -69,9 +69,9 @@ public class SysPersonEntity implements Serializable {
     @Builder.Default()
     private Long version = 1L;
 
-    //    @TableLogic
+    @TableLogic
     @TableField(value = "deleted")
-    @Builder.Default()
-    private int deleted = 0;
+//    @Builder.Default()
+    private Integer deleted;
 
 }
