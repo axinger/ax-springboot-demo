@@ -9,6 +9,7 @@ import feign.Logger;
 import feign.RequestInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -20,8 +21,10 @@ public class PaymentApi4Config {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    /// 会循环调用
     @Bean
-    public RequestInterceptor paymentApi4RequestInterceptor(PaymentApi4 paymentApi4) {
+    @Lazy
+    public RequestInterceptor paymentApi4RequestInterceptor(@Lazy PaymentApi4 paymentApi4) {
         return template -> {
             template.header("token", "b123");
 
