@@ -26,10 +26,11 @@ public class ObjectMapperTests {
         SysPerson2 sysPerson2 = new SysPerson2();
         sysPerson2.setName("tom");
         sysPerson2.setAge(20);
-        sysPerson2.setAdd(BigDecimal.valueOf(20.1234));
-        sysPerson2.setAdd(BigDecimal.valueOf(20.120000));
-        sysPerson2.setAdd(BigDecimal.valueOf(20.156));
-//        sysPerson2.setAdd(BigDecimal.valueOf(3E+1));
+//        sysPerson2.setAdd(BigDecimal.valueOf(20.1234));
+//        sysPerson2.setAdd(BigDecimal.valueOf(20.120000));
+        sysPerson2.setAdd(new BigDecimal("20.156"));   // → "20.156"
+        sysPerson2.setAdd2(new BigDecimal(3E+1));    // → "30.0"
+        sysPerson2.setAdd3(new BigDecimal("40.000"));  // → "40.000"
 
         String json = JsonUtil.toJsonStr(sysPerson2);
 

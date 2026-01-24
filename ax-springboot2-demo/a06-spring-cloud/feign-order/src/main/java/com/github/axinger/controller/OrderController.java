@@ -2,6 +2,8 @@ package com.github.axinger.controller;
 
 import com.github.axinger.api.PaymentApi;
 import com.github.axinger.api.PaymentApi2;
+import com.github.axinger.api.PaymentApi4;
+import com.github.axinger.dto.PaymentApiDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ public class OrderController {
     private PaymentApi paymentApi;
     @Autowired
     private PaymentApi2 paymentApi2;
+    @Autowired
+    private PaymentApi4 paymentApi4;
 
     @Operation(summary = "直接调用请求支付系统")
     @GetMapping(value = "/test")
@@ -47,4 +51,15 @@ public class OrderController {
         return abc123;
     }
 
+
+    @GetMapping(value = "/test4")
+    public Object test4() {
+
+        PaymentApiDTO.PaymentDTO paymentDTO = new PaymentApiDTO.PaymentDTO();
+        paymentDTO.setOrderId("1");
+
+        PaymentApiDTO.PaymentVO vo = paymentApi4.payment(paymentDTO);
+
+        return vo;
+    }
 }
