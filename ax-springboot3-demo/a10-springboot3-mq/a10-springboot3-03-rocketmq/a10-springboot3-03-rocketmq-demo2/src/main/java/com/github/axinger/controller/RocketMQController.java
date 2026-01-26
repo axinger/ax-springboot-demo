@@ -1,9 +1,13 @@
 package com.github.axinger.controller;
 
+import com.alibaba.fastjson2.JSON;
 import com.github.axinger.config.Topic;
 import com.github.axinger.model.MessageWrapper;
 import com.github.axinger.model.User;
 import com.github.axinger.service.MQProducerService;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.client.producer.TransactionSendResult;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.stream.IntStream;
 
+@Slf4j
 @RestController
 @RequestMapping("/rocketmq")
 public class RocketMQController {
@@ -131,6 +136,41 @@ public class RocketMQController {
                 .build();
         TransactionSendResult transactionSendResult = rocketMQTemplate.sendMessageInTransaction("transaction", message, null);
         return "事务消息";
+    }
+
+    @SneakyThrows
+    public void sendDelayMQ() {
+
+        org.apache.rocketmq.common.message.Message message = new org.apache.rocketmq.common.message.Message();
+        long delayTimestamp = System.currentTimeMillis() + 11_000;
+// 指定发送的时间：11秒后
+        message.setDeliverTimeMs(delayTimestamp);
+        message.setTopic("delay_topic_test3");
+        message.setBody("Hello, Delay RocketMQ!".getBytes());
+        rocketMQTemplate.getProducer().send(message);
+        log.info("开始发送延迟消息：{}", new String(message.getBody()));
+
+    }
+
+    @SneakyThrows
+    public void sendDelayMQ1() {
+        org.apache.rocketmq.common.message.Message message = new org.apache.rocketmq.common.message.Message();
+// 指定延迟的时间：毫秒
+        message.setDelayTimeMs(10_000);
+        message.setTopic("delay_topic_test3");
+        message.setBody("Hello, Delay RocketMQ!".getBytes());
+        rocketMQTemplate.getProducer().send(message);
+        log.info("开始发送延迟消息：{}", new String(message.getBody()));
+
+    }
+
+    @SneakyThrows
+    public void sendDelayMQ2() {
+        Message<String> msg = MessageBuilder.withPayload("测试精确的延时消息").build();
+        log.info("开始发送延迟消息--1：{}", msg.getPayload());
+        SendResult sendResult = rocketMQTemplate.syncSendDelayTimeSeconds("delay_topic_test3", msg, 8);
+        log.info("消息发送结果：{}", JSON.toJSONString(sendResult));
+
     }
 
 }
