@@ -1,5 +1,6 @@
 package com.github.axinger.controller;
 
+import cn.hutool.core.util.URLUtil;
 import cn.hutool.http.HttpUtil;
 import com.github.axinger.api.PaymentApi;
 import com.github.axinger.api.PaymentApi2;
@@ -96,7 +97,12 @@ public class OrderController {
         String url3 = HttpUtil.urlWithForm("http://localhost:10707/order/test4", paramMap, StandardCharsets.UTF_8, true);
         System.out.println("url3 = " + url3);
 
-        String result3 = HttpUtil.get("http://localhost:10707/order/test4", paramMap);
+
+        String encode2 = URLUtil.encodeAll(HttpUtil.toParams(paramMap), StandardCharsets.UTF_8);
+        System.out.println("encode2 = " + encode2);
+
+        String url4 = HttpUtil.urlWithForm("http://localhost:10707/order/test4", encode2, StandardCharsets.UTF_8, true);
+        String result3 = HttpUtil.get(url4);
         return result3;
     }
 }

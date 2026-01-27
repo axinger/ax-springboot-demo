@@ -13,6 +13,7 @@ public class HttpUtilTest {
     @SneakyThrows
     @Test
     public void test() {
+        String str = "http://localhost:10707/order/test4?orderId=123%2B456";
         //可以单独传入http参数，这样参数会自动做URL编码，拼接在URL中
         //根据RFC3986规范，URL参数值中+是安全字符，无需转义
         HashMap<String, Object> paramMap = new HashMap<>();
@@ -44,7 +45,11 @@ public class HttpUtilTest {
         String encode2 = URLUtil.encodeAll(params1, StandardCharsets.UTF_8);
         System.out.println("encode2 = " + encode2);
 
-        String fullUrl2 = HttpUtil.urlWithForm("http://localhost:10707/#/order/test4", encode2, StandardCharsets.UTF_8, false);
+        String fullUrl2 = HttpUtil.urlWithForm("http://localhost:10707/order/test4", encode2, StandardCharsets.UTF_8, false);
         System.out.println("fullUrl2 = " + fullUrl2);
+
+
+        String encode3 = URLUtil.encodeAll(HttpUtil.toParams(paramMap), StandardCharsets.UTF_8);
+        System.out.println("encode3 = " + encode3);
     }
 }
