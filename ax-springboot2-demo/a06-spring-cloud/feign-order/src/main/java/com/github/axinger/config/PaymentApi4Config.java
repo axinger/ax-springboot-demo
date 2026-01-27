@@ -28,9 +28,9 @@ public class PaymentApi4Config {
         return template -> {
             template.header("token", "b123");
 
-            PaymentApiDTO.LoginVO loginVO = paymentApi4.login(new PaymentApiDTO.LoginDTO());
-            String token = loginVO.getToken();
-            template.header("Authorization", "Bearer " + token);
+//            PaymentApiDTO.LoginVO loginVO = paymentApi4.login(new PaymentApiDTO.LoginDTO());
+//            String token = loginVO.getToken();
+//            template.header("Authorization", "Bearer " + token);
 
 //            template.target("动态设置url");
             {
