@@ -13,11 +13,14 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
@@ -122,12 +125,9 @@ public class GlobalException {
 
     /**
      * get 请求参数校验
-     *
-     * @param e
-     * @return
      */
     @ExceptionHandler(ConstraintViolationException.class)
-    public Object handlerConstraintViolationException(ConstraintViolationException e) {
+    public Result<?> handlerConstraintViolationException(ConstraintViolationException e) {
         Set<ConstraintViolation<?>> set = e.getConstraintViolations();
         Map<String, Object> map = set.stream()
                 .collect(Collectors.toMap(val -> {
@@ -140,5 +140,28 @@ public class GlobalException {
         Result<Object> result = Result.fail(map.toString());
         log.error("请求参数校验异常 result =  {}", result);
         return result;
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public Result<?> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+        String requestInfo = getCurrentRequestInfo();
+        String errorMessage = StrUtil.format("请求路径{},不支持{}方法", requestInfo, e.getMethod());
+        log.warn(errorMessage);
+        return Result.fail(405, errorMessage);
+    }
+
+    /**
+     * 获取当前请求信息
+     */
+    private String getCurrentRequestInfo() {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        String requestUri = "";
+        String queryString = "";
+        if (attributes != null) {
+            HttpServletRequest request = attributes.getRequest();
+            requestUri = request.getRequestURI();
+            queryString = request.getQueryString() != null ? "?" + request.getQueryString() : "";
+        }
+        return requestUri + queryString;
     }
 }
