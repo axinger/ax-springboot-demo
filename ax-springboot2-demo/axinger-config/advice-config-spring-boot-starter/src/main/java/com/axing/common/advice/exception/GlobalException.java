@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.validation.BindException;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -25,7 +24,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -88,39 +90,30 @@ public class GlobalException {
     /**
      * 对方法参数校验异常处理方法
      */
-    @ExceptionHandler(value = {MethodArgumentNotValidException.class, BindException.class})
-    public Result<Object> handlerMethodArgumentNotValidException(Exception e) {
-//        if (adviceProperties.isPrintStackTrace()) {
-//            e.printStackTrace();
-//        }
-        List<ObjectError> list = new ArrayList<>();
-
-        if (e instanceof MethodArgumentNotValidException validException) {
-            list = Optional.of(validException)
-                    .map(MethodArgumentNotValidException::getBindingResult)
-                    .map(BindingResult::getAllErrors)
-                    .orElse(new ArrayList<>());
-        } else if (e instanceof BindException bindException) {
-            list = Optional.of(bindException)
-                    .map(BindingResult::getAllErrors)
-                    .orElse(new ArrayList<>());
-        }
-
-        Map<String, Object> map = list.stream().collect(Collectors.toMap(error -> {
-            if (error instanceof FieldError error1) {
-                // 获取错误验证字段名
-                return error1.getField();
-            } else {
-                // 非字段错误
-                // 获取验证对象名称
-                return error.getObjectName();
-            }
-        }, error -> Optional.of(error).map(ObjectError::getDefaultMessage).orElse(""), (key1, key2) -> key2));
-
-        // final Result<Map<String, Object>> result = Result.build(201, map, "参数校验异常");
-        Result<Object> result = Result.fail(map.toString());
-        log.error("方法参数校验异常 result =  {}", result);
+    @ExceptionHandler({MethodArgumentNotValidException.class})
+    public Result<Object> handlerMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        String requestInfo = getCurrentRequestInfo();
+        Result<Object> result = Result.fail(getObjectError(e.getBindingResult().getAllErrors()).toString());
+        log.debug("方法参数校验异常, 请求路径: {}, MethodArgumentNotValidException={}", requestInfo, result);
         return result;
+    }
+
+    @ExceptionHandler({BindException.class})
+    public Result<?> handlerBindException(BindException e) {
+        String requestInfo = getCurrentRequestInfo();
+        Result<Object> result = Result.fail(getObjectError(e.getAllErrors()).toString());
+        log.debug("方法参数校验异常, 请求路径: {}, BindException={}", requestInfo, result);
+        return result;
+    }
+
+    public Map<String, List<String>> getObjectError(List<ObjectError> list) {
+        return list.stream()
+                .collect(Collectors.groupingBy(
+                        error -> error instanceof FieldError
+                                ? ((FieldError) error).getField()
+                                : error.getObjectName(),
+                        Collectors.mapping(ObjectError::getDefaultMessage, Collectors.toList())
+                ));
     }
 
     /**
