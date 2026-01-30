@@ -6,7 +6,7 @@
     <parent>
         <artifactId>a30-sa-token</artifactId>
         <groupId>com.github.axinger</groupId>
-        <version>2025.12.01-2.7</version>
+        <version>2026.01.01-2.7</version>
     </parent>
 
     <artifactId>a3002-gateway</artifactId>

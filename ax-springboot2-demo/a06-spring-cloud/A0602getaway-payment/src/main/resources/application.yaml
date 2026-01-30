@@ -1,0 +1,8 @@
+server:
+  servlet:
+    context-path: /
+  port: 10602
+
+spring:
+  application:
+    name: cloud-service-payment

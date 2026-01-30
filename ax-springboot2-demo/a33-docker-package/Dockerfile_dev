@@ -6,15 +6,15 @@
 
 
 # 通用推荐 (平衡)
-FROM eclipse-temurin:17-jdk-slim
+FROM eclipse-temurin:21-jdk-slim
 
 ## 极致精简 (云原生微服务)
-#FROM eclipse-temurin:17-jdk-alpine
+#FROM eclipse-temurin:21-jdk-alpine
 #
 ## 复杂依赖/开发环境
 #FROM eclipse-temurin:17-jdk
 
-#FROM eclipse-temurin:17-jdk-jammy
+#FROM eclipse-temurin:21-jdk-jammy
 #FROM eclipse-temurin:17-jdk-centos7
 #FROM eclipse-temurin:17-jdk-focal
 #FROM eclipse-temurin:17-jdk-alpine

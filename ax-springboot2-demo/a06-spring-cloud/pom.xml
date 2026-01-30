@@ -5,7 +5,7 @@
     <parent>
         <artifactId>ax-springboot2-demo</artifactId>
         <groupId>com.github.axinger</groupId>
-        <version>2025.12.01-2.7</version>
+        <version>2026.01.01-2.7</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
@@ -15,8 +15,8 @@
         <module>consul-order</module>
         <module>consul-payment</module>
         <module>feign-order</module>
-        <module>gateway-9527</module>
-        <module>getaway-payment</module>
+        <module>A0601-gateway-9527</module>
+        <module>A0602getaway-payment</module>
         <module>mq-stream-api</module>
         <module>A0611-spring-cloud-config-server</module>
         <module>A0612-spring-cloud-client</module>

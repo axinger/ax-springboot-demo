@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.github.axinger</groupId>
         <artifactId>a07-spring-cloud-alibaba</artifactId>
-        <version>2025.12.01-2.7</version>
+        <version>2026.01.01-2.7</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>alibaba-sentinel</artifactId>

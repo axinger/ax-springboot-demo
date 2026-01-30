@@ -81,7 +81,7 @@ public class BookEntity implements Serializable {
      */
     @Column(name = "update_count")
     @Comment("更新次数")
-    @TableField(value = "update_count", updateStrategy = FieldStrategy.IGNORED, update = "%s+1")
+    @TableField(value = "update_count", updateStrategy = FieldStrategy.NOT_NULL, update = "%s+1")
     private int updateCount;
     /**
      * 分组求和
