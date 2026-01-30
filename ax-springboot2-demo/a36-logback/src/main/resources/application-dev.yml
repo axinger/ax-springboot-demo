@@ -12,8 +12,9 @@ logging:
   #  config: classpath:logback-spring-test011.xml # 通用归档
   #  config: classpath:logback-spring-test03.xml # 自定义业务场景
   #  config: classpath:logback-spring-test06.xml
-  #  file:
-  #    name: ./logs/${spring.application.name}
+  file:
+    name: ./logs/${spring.application.name}
+    path: ./logs/${spring.application.name}
   level:
     org.springframework: info
     org.apache: error

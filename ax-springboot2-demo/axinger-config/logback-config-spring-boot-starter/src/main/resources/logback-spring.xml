@@ -5,8 +5,7 @@
     <!--    <springProperty name="log.dir" scope="context" source="logging.file.name" defaultValue="./logs"/>-->
 
     <springProperty scope="context" name="app.name" source="spring.application.name" defaultValue="dir_IS_UNDEFINED"/>
-    <springProperty scope="context" name="log.dir" source="logging.file.name"
-                    defaultValue="./logs/${app.name}"/>
+    <springProperty scope="context" name="log.dir" source="logging.file.path" defaultValue="./logs/${app.name}"/>
 
     <!--文件保留时间-->
     <!--    <property name="log.maxHistory" value="7"/>-->
