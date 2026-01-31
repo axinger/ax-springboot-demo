@@ -1,7 +1,7 @@
 server:
   servlet:
     context-path: /
-  port: 9527
+  port: 10601
 
 spring:
   main:
@@ -23,53 +23,56 @@ spring:
     #网关
     gateway: #routes:#路由配置:参数为一个List
       # 全局CORS配置
-#      globalcors:
-#        cors-configurations:
-#          '[/**]':
-#            allowed-origin-patterns: "*"
-#            allowed-methods: "*"
-#            allowed-headers: "*"
-#            allow-credentials: true
+      #      globalcors:
+      #        cors-configurations:
+      #          '[/**]':
+      #            allowed-origin-patterns: "*"
+      #            allowed-methods: "*"
+      #            allowed-headers: "*"
+      #            allow-credentials: true
       # 默认过滤器配置
       default-filters:
-#        # 全局限流配置
+        #        # 全局限流配置
         - name: RequestRateLimiter
           args:
             #                key-resolver: "#{@ipKeyResolver}"
             #                key-resolver: "#{@pathKeyResolver}"
             key-resolver: "#{@ipAndPathKeyResolver}"
-            # ⚠️ 删除下面两行！
+            # 每秒补充的令牌数（稳定速率）
             redis-rate-limiter.replenishRate: 1
-            redis-rate-limiter.burstCapacity: 1
-#        # 重试配置
-#        - name: Retry
-#          args:
-#            retries: 3
-#            statuses: BAD_GATEWAY
+            #令牌桶容量（最大突发流量）
+            redis-rate-limiter.burstCapacity: 5
+            # 👇 关键配置：每个请求消耗 5 个令牌 👇
+            redis-rate-limiter.requestedTokens: 5
+      #        # 重试配置
+      #        - name: Retry
+      #          args:
+      #            retries: 3
+      #            statuses: BAD_GATEWAY
       routes:
         - id: payment_rout_1 #唯一标识
           uri: http://localhost:10602/ #转发的地址,写服务名称
-#          uri: lb://cloud-service-payment #转发的地址,写服务名称
+          #          uri: lb://cloud-service-payment #转发的地址,写服务名称
           predicates:
             - Path=/payment/** #判断匹配条件,即地址带有/ribbon/**的请求,会转发至lb:RIBBON-CONSUMER
-#          filters:
-#            - name: RequestRateLimiter
-#              args:
-##                key-resolver: "#{@ipKeyResolver}"
-#                key-resolver: "#{@pathKeyResolver}"
-#                redis-rate-limiter.replenishRate: 1
-#                redis-rate-limiter.burstCapacity: 2
-#          filters:
-#            - name: RequestRateLimiter
-#              args:
-##                key-resolver: "#{@ipKeyResolver}"
-##                key-resolver: "#{@pathKeyResolver}"
-#                key-resolver: "#{@ipAndPathKeyResolver}"
-#                # ⚠️ 删除下面两行！
-#                redis-rate-limiter.replenishRate: 1
-#                redis-rate-limiter.burstCapacity: 1
-#                # ✅ 改为引用 Bean
-##                rate-limiter: "#{@defaultRateLimiter}"
+        #          filters:
+        #            - name: RequestRateLimiter
+        #              args:
+        ##                key-resolver: "#{@ipKeyResolver}"
+        #                key-resolver: "#{@pathKeyResolver}"
+        #                redis-rate-limiter.replenishRate: 1
+        #                redis-rate-limiter.burstCapacity: 2
+        #          filters:
+        #            - name: RequestRateLimiter
+        #              args:
+        ##                key-resolver: "#{@ipKeyResolver}"
+        ##                key-resolver: "#{@pathKeyResolver}"
+        #                key-resolver: "#{@ipAndPathKeyResolver}"
+        #                # ⚠️ 删除下面两行！
+        #                redis-rate-limiter.replenishRate: 1
+        #                redis-rate-limiter.burstCapacity: 1
+        #                # ✅ 改为引用 Bean
+        ##                rate-limiter: "#{@defaultRateLimiter}"
 
         - id: payment_rout_2
           uri: http://localhost:8090/
