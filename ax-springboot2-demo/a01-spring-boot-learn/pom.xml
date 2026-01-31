@@ -47,6 +47,7 @@
         <module>a01-19-okhttp</module>
         <module>a01-02-apache-commons</module>
         <module>a01-27-script</module>
+        <module>a01-28-jdk21</module>
     </modules>
 
 

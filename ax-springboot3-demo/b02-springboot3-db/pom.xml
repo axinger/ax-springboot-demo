@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.github.axinger</groupId>
+        <artifactId>ax-springboot3-demo</artifactId>
+        <version>2025.12.01-3.5</version>
+    </parent>
+
+    <packaging>pom</packaging>
+    <artifactId>b02-springboot3-db</artifactId>
+
+    <modules>
+        <module>a02-springboot3-mybatis-plus</module>
+        <module>a02-springboot3-mybatis-plus-dynamic</module>
+        <module>a02-springboot3-data-jpa</module>
+        <module>a02-springboot3-db-mysql-starter</module>
+        <module>a02-springboot3-data-mongodb</module>
+        <module>a02-springboot3-data-es</module>
+        <module>a02-springboot3-data-es2</module>
+    </modules>
+
+</project>

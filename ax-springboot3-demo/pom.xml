@@ -86,14 +86,14 @@
     <modules>
         <module>axinger-spring-boot3-cloud</module>
         <module>axinger-spring-boot3-common</module>
-        <module>a01-springboot3-learn</module>
-        <module>a02-springboot3-db</module>
-        <module>a07-springboot3-cloud-alibaba</module>
-        <module>a04-springboot3-cacheable</module>
-        <module>a10-springboot3-mq</module>
-        <module>a16-springboot3-security</module>
-        <module>a21-springboot3-oauth2</module>
-        <module>a41-springboot3-ai</module>
+        <module>b01-springboot3-learn</module>
+        <module>b02-springboot3-db</module>
+        <module>b07-springboot3-cloud-alibaba</module>
+        <module>b04-springboot3-cacheable</module>
+        <module>b10-springboot3-mq</module>
+        <module>b16-springboot3-security</module>
+        <module>b21-springboot3-oauth2</module>
+        <module>b41-springboot3-ai</module>
     </modules>
 
     <dependencies>
