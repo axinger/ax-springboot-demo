@@ -68,7 +68,9 @@ public class GlobalRateLimiterConfig {
         // burstCapacity: 令牌桶最大容量
 //        return new RedisRateLimiter(20, 50);
         return new RedisRateLimiter(1, 1);
+        // 每5秒1个，桶容量=1
     }
+
 
     /**
      * 严格限流器 - 适用于敏感接口

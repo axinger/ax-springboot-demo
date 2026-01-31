@@ -16,5 +16,14 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
+
+        <!-- com.fasterxml.jackson.datatype:jackson-datatype-guava 是 Jackson 库的一个扩展模块，
+        用于支持 Google Guava 库中的数据类型在 JSON 序列化（serialize）和反序列化（deserialize）过程中的处理。 -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-guava</artifactId>
+            <version>2.21.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>

@@ -31,12 +31,16 @@ spring:
 #            allowed-headers: "*"
 #            allow-credentials: true
       # 默认过滤器配置
-#      default-filters:
+      default-filters:
 #        # 全局限流配置
-#        - name: RequestRateLimiter
-#          args:
-#            key-resolver: '#{@ipKeyResolver}'
-#            rate-limiter: '#{@defaultRateLimiter}'
+        - name: RequestRateLimiter
+          args:
+            #                key-resolver: "#{@ipKeyResolver}"
+            #                key-resolver: "#{@pathKeyResolver}"
+            key-resolver: "#{@ipAndPathKeyResolver}"
+            # ⚠️ 删除下面两行！
+            redis-rate-limiter.replenishRate: 1
+            redis-rate-limiter.burstCapacity: 1
 #        # 重试配置
 #        - name: Retry
 #          args:
@@ -55,17 +59,17 @@ spring:
 #                key-resolver: "#{@pathKeyResolver}"
 #                redis-rate-limiter.replenishRate: 1
 #                redis-rate-limiter.burstCapacity: 2
-          filters:
-            - name: RequestRateLimiter
-              args:
-#                key-resolver: "#{@ipKeyResolver}"
-#                key-resolver: "#{@pathKeyResolver}"
-                key-resolver: "#{@ipAndPathKeyResolver}"
-                # ⚠️ 删除下面两行！
-                redis-rate-limiter.replenishRate: 1
-                redis-rate-limiter.burstCapacity: 1
-                # ✅ 改为引用 Bean
-#                rate-limiter: "#{@defaultRateLimiter}"
+#          filters:
+#            - name: RequestRateLimiter
+#              args:
+##                key-resolver: "#{@ipKeyResolver}"
+##                key-resolver: "#{@pathKeyResolver}"
+#                key-resolver: "#{@ipAndPathKeyResolver}"
+#                # ⚠️ 删除下面两行！
+#                redis-rate-limiter.replenishRate: 1
+#                redis-rate-limiter.burstCapacity: 1
+#                # ✅ 改为引用 Bean
+##                rate-limiter: "#{@defaultRateLimiter}"
 
         - id: payment_rout_2
           uri: http://localhost:8090/

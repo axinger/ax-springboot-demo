@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.github.axinger</groupId>
         <artifactId>b04-springboot3-cacheable</artifactId>
-        <version>2025.12.01-3.5</version>
+        <version>2026.01.01-3.5</version>
     </parent>
 
     <artifactId>a04-springboot3-cacheable-redisson</artifactId>

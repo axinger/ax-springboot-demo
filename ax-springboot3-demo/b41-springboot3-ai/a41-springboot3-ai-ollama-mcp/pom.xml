@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.github.axinger</groupId>
         <artifactId>b41-springboot3-ai</artifactId>
-        <version>2025.12.01-3.5</version>
+        <version>2026.01.01-3.5</version>
     </parent>
 
     <artifactId>a41-springboot3-ai-ollama-mcp</artifactId>

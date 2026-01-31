@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.github.axinger</groupId>
         <artifactId>ax-springboot3-demo</artifactId>
-        <version>2025.12.01-3.5</version>
+        <version>2026.01.01-3.5</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
