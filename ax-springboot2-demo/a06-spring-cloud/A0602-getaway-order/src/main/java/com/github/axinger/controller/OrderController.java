@@ -2,7 +2,6 @@ package com.github.axinger.controller;
 
 import cn.hutool.core.util.URLUtil;
 import cn.hutool.http.HttpUtil;
-import com.github.axinger.api.PaymentApi;
 import com.github.axinger.api.PaymentApi2;
 import com.github.axinger.api.PaymentApi4;
 import com.github.axinger.dto.PaymentApiDTO;
@@ -27,8 +26,8 @@ import java.util.Map;
 public class OrderController {
 
 
-    @Autowired
-    private PaymentApi paymentApi;
+    //    @Autowired
+//    private PaymentApi1 paymentApi1;
     @Autowired
     private PaymentApi2 paymentApi2;
     @Autowired
@@ -40,9 +39,9 @@ public class OrderController {
         Map<String, String> map = new HashMap<>();
         map.put("orderId", "1");
 
-        Map<String, Object> abc123 = paymentApi.test1("abc123", map);
+//        Map<String, Object> abc123 = paymentApi1.test1("abc123", map);
 
-        return abc123;
+        return map;
     }
 
     @GetMapping(value = "/test2")
@@ -74,13 +73,13 @@ public class OrderController {
 
 //        String urlWithForm = HttpUtil.urlWithForm("http://localhost:8080/order/test4", queryString);
 //        Map<String, List<String>> map = HttpUtil.decodeParams(queryString, StandardCharsets.UTF_8);
-        Map<String, String> map = HttpUtil.decodeParamMap(queryString, StandardCharsets.UTF_8);
+//        Map<String, String> map = HttpUtil.decodeParamMap(queryString, StandardCharsets.UTF_8);
 
 
         // 手动解析，且不做 + → 空格 的转换
         // 注意：这需要自己实现解析逻辑，或使用 URLEncodedUtils 并禁用空格转换（较复杂）
 
-        return map;
+        return null;
     }
 
     @GetMapping("/test6")
@@ -92,7 +91,7 @@ public class OrderController {
         paramMap.put("orderId", "123+456");
 
 
-        String url2 = HttpUtil.urlWithFormUrlEncoded("http://localhost:10707/order/test4",paramMap, StandardCharsets.UTF_8);
+        String url2 = HttpUtil.urlWithFormUrlEncoded("http://localhost:10707/order/test4", paramMap, StandardCharsets.UTF_8);
         System.out.println("url2 = " + url2);
         String url3 = HttpUtil.urlWithForm("http://localhost:10707/order/test4", paramMap, StandardCharsets.UTF_8, true);
         System.out.println("url3 = " + url3);

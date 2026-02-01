@@ -39,7 +39,7 @@
         <!-- 覆盖SpringBoot中okhttp3的旧版本声明，解决MinIO 8.3.x的依赖冲突 -->
         <!--        <okhttp.version>4.10.0</okhttp.version>-->
         <!--        <mybatis-starter.version>2.3.2</mybatis-starter.version>-->
-<!--        <mybatis-plus.version>3.5.9</mybatis-plus.version>-->
+        <!--        <mybatis-plus.version>3.5.9</mybatis-plus.version>-->
         <mybatis-plus.version>3.5.16</mybatis-plus.version>
         <guava.version>33.5.0-jre</guava.version>
         <!--        <guava.version>33.4.0-jre</guava.version>-->
@@ -555,6 +555,12 @@
             <!--            provided范围表示依赖在编译和测试时需要，但不会打包到您的JAR中-->
             <!--            最终用户需要自己提供Hutool依赖-->
             <!--            避免了版本冲突，用户可以使用他们喜欢的Hutool版本-->
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
         </dependency>
 
         <dependency>

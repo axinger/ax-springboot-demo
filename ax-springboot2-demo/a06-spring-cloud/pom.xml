@@ -14,12 +14,13 @@
     <modules>
         <module>consul-order</module>
         <module>consul-payment</module>
-        <module>feign-order</module>
         <module>A0601-gateway-9527</module>
-        <module>A0602getaway-payment</module>
+        <module>A0602-getaway-order</module>
+        <module>A0603-getaway-payment</module>
         <module>mq-stream-api</module>
         <module>A0611-spring-cloud-config-server</module>
         <module>A0612-spring-cloud-client</module>
+        <module>A0604-all-in-one</module>
     </modules>
 
     <dependencies>
@@ -38,6 +39,16 @@
             <dependency>
                 <groupId>com.github.axinger</groupId>
                 <artifactId>mq-stream-api</artifactId>
+                <version>${axinger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.axinger</groupId>
+                <artifactId>A0602-getaway-order</artifactId>
+                <version>${axinger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.axinger</groupId>
+                <artifactId>A0603-getaway-payment</artifactId>
                 <version>${axinger.version}</version>
             </dependency>
         </dependencies>

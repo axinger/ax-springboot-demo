@@ -9,7 +9,7 @@
         <version>2026.01.01-2.7</version>
     </parent>
 
-    <artifactId>feign-order</artifactId>
+    <artifactId>A0602-getaway-order</artifactId>
 
     <dependencies>
 
@@ -47,18 +47,5 @@
             <artifactId>cors-config-spring-boot-starter</artifactId>
         </dependency>
 
-        <!--        这个目前只能用1.7.0-->
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
-        </dependency>
-
-
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-            <version>${hutool.version}</version>
-
-        </dependency>
     </dependencies>
 </project>

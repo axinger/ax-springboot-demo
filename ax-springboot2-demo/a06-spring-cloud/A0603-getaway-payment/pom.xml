@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>A0602getaway-payment</artifactId>
+    <artifactId>A0603-getaway-payment</artifactId>
     <dependencies>
 
         <dependency>
