@@ -42,7 +42,7 @@
         <druid.version>1.2.22</druid.version>
         <netty-all.version>4.1.113.Final</netty-all.version>
         <redisson.version>3.36.0</redisson.version>
-        <minio.version>8.5.9</minio.version>
+        <minio.version>8.6.0</minio.version>
         <poi-version>5.2.3</poi-version>
         <itextpdf.version>5.5.13.3</itextpdf.version>
     </properties>
