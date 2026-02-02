@@ -1,6 +1,7 @@
 package com.github.axinger.controller;
 
 import com.github.axinger.model.dto.LoginDTO;
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -53,6 +55,35 @@ public class GetController {
         Map<String, Object> map = new HashMap<>(16);
         map.put("id", id);
         return map;
+    }
+
+
+    @GetMapping("/test3")
+    public Object test3(
+            @RequestParam(required = false, defaultValue = "false") Boolean hit,
+            @RequestParam(required = false) Integer age,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) LocalDate localDate
+    ) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("hit", hit);
+        result.put("age", age);
+        result.put("name", name);
+        result.put("localDate", localDate);
+        return result;
+    }
+
+    @Data
+    public static class Test4DTO {
+        Boolean hit;
+        Integer age;
+        String name;
+        private LocalDate localDate;
+    }
+
+    @GetMapping("/test4")
+    public Object test3(Test4DTO dto) {
+        return dto;
     }
 
     /**
