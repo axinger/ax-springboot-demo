@@ -7,10 +7,10 @@ spring:
   main:
     web-application-type: reactive
   application:
-    name: cloud-service-gateway
+    name: mall-gateway-app #网关作
   redis:
     host: localhost
-    port: 16379
+    port: 6379
     database: 1
     timeout: 2000ms
     lettuce:
@@ -41,9 +41,9 @@ spring:
             # 每秒补充的令牌数（稳定速率）
             redis-rate-limiter.replenishRate: 1
             #令牌桶容量（最大突发流量）
-            redis-rate-limiter.burstCapacity: 5
-            # 👇 关键配置：每个请求消耗 5 个令牌 👇
-            redis-rate-limiter.requestedTokens: 5
+            redis-rate-limiter.burstCapacity: 1
+            # 👇 关键配置：每个请求消耗 1 个令牌 👇
+            redis-rate-limiter.requestedTokens: 1
       #        # 重试配置
       #        - name: Retry
       #          args:
@@ -51,42 +51,24 @@ spring:
       #            statuses: BAD_GATEWAY
       routes:
         - id: payment_rout_1 #唯一标识
-          uri: http://localhost:10602/ #转发的地址,写服务名称
-          #          uri: lb://cloud-service-payment #转发的地址,写服务名称
+          
           predicates:
             - Path=/payment/** #判断匹配条件,即地址带有/ribbon/**的请求,会转发至lb:RIBBON-CONSUMER
-        #          filters:
-        #            - name: RequestRateLimiter
-        #              args:
-        ##                key-resolver: "#{@ipKeyResolver}"
-        #                key-resolver: "#{@pathKeyResolver}"
-        #                redis-rate-limiter.replenishRate: 1
-        #                redis-rate-limiter.burstCapacity: 2
-        #          filters:
-        #            - name: RequestRateLimiter
-        #              args:
-        ##                key-resolver: "#{@ipKeyResolver}"
-        ##                key-resolver: "#{@pathKeyResolver}"
-        #                key-resolver: "#{@ipAndPathKeyResolver}"
-        #                # ⚠️ 删除下面两行！
-        #                redis-rate-limiter.replenishRate: 1
-        #                redis-rate-limiter.burstCapacity: 1
-        #                # ✅ 改为引用 Bean
-        ##                rate-limiter: "#{@defaultRateLimiter}"
-
-        - id: payment_rout_2
-          uri: http://localhost:8090/
-          predicates:
-            - Path=/payment/lb/**
-#          filters:
-#            - name: RequestRateLimiter
-#              args:
-#                # 从配置类中获取 KeyResolver Bean 名称
-#                key-resolver: '#{@ipKeyResolver}'
-#                # Redis 限流的阈值（令牌桶容量/请求次数）
-#                redis-rate-limiter.replenishRate: 10
-#                redis-rate-limiter.burstCapacity: 20
-#                # 这里的配置取决于你自定义的 RateLimiter 实现，也可以直接使用官方的
+          filters:
+            - name: RequestRateLimiter
+              args:
+                #                key-resolver: "#{@ipKeyResolver}"
+                #                key-resolver: "#{@pathKeyResolver}"
+                key-resolver: "#{@ipAndPathKeyResolver}"
+                # 每秒补充的令牌数（稳定速率）
+                redis-rate-limiter.replenishRate: 1
+                #令牌桶容量（最大突发流量）
+                redis-rate-limiter.burstCapacity: 5
+                # 👇 关键配置：每个请求消耗 5 个令牌 👇
+                redis-rate-limiter.requestedTokens: 5
+          uri: http://localhost:10603/ #转发的地址,写服务名称
+          #          uri: lb://cloud-service-payment #转发的地址,写服务名称
+          order: 0
 logging:
   level:
     org.springframework.cloud.gateway.filter.ratelimit: DEBUG
