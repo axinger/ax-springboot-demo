@@ -103,4 +103,81 @@ public class MyDefaultExecutor implements AsyncConfigurer {
 
 
 }
-
+//
+//import lombok.extern.slf4j.Slf4j;
+//import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
+//import org.springframework.context.annotation.Bean;
+//import org.springframework.context.annotation.Configuration;
+//import org.springframework.context.annotation.Primary;
+//import org.springframework.scheduling.annotation.AsyncConfigurer;
+//import org.springframework.scheduling.annotation.EnableAsync;
+//import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+//
+//import java.lang.reflect.Method;
+//import java.util.concurrent.Executor;
+//import java.util.concurrent.ThreadPoolExecutor;
+//
+///**
+// * 通过实现AsyncConfigurer自定义异常线程池，包含异常处理
+// *
+// * @author hry
+// */
+//@Configuration
+//@EnableAsync
+//@Slf4j
+//public class MyDefaultExecutor implements AsyncConfigurer {
+//    
+//    
+//    @Primary
+//    @Bean
+//    @Override
+//    public Executor getAsyncExecutor() {
+//        int cpuCore = Runtime.getRuntime().availableProcessors();
+//        
+//        // IO密集型线程池配置
+//        // IO密集型任务公式：核心线程数 = CPU核心数 * 2
+//        // 最大线程数可以设置得更高，因为IO操作会阻塞
+//        int corePoolSize = cpuCore * 2;
+//        int maxPoolSize = Math.max(corePoolSize * 2, 100); // 最大线程数为核芯数的2倍或至少100
+//        int queueCapacity = maxPoolSize * 10; // 队列容量为最大线程数的10倍
+//        
+//        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+//        // 核心线程数目 - IO密集型设为CPU核心数的2倍
+//        executor.setCorePoolSize(corePoolSize);
+//        // 指定最大线程数 - 可以设置得较高以应对IO阻塞
+//        executor.setMaxPoolSize(maxPoolSize);
+//        // 队列中最大的数目 - 较大的队列缓冲突发流量
+//        executor.setQueueCapacity(queueCapacity);
+//        // 线程名称前缀
+//        executor.setThreadNamePrefix("IO密集型线程池-");
+//        // rejection-policy：当pool已经达到max size的时候，如何处理新任务
+//        // CALLER_RUNS：不在新线程中执行任务，而是由调用者所在的线程来执行
+//        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+//        // 线程空闲后的最大存活时间 - IO密集型可适当延长
+//        executor.setKeepAliveSeconds(300); // 5分钟
+//        // 允许核心线程超时
+//        executor.setAllowCoreThreadTimeOut(true);
+//        // 加载
+//        executor.initialize();
+//        
+//        log.info("IO密集型线程池初始化完成: 核心线程数={}, 最大线程数={}, 队列容量={}, CPU核心数={}", corePoolSize, maxPoolSize, queueCapacity, cpuCore);
+//        
+//        return executor;
+//    }
+//
+//
+//    /**
+//     * 自定义异常处理类
+//     *
+//     * @author hry
+//     */
+//    @Override
+//    public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+//        return (Throwable throwable, Method method, Object... obj) -> {
+//            log.error("多线程,异常处理类name{},obj={},msg={}",method.getName(),obj,throwable.getMessage());
+//        };
+//    }
+//
+//
+//}
+//
