@@ -31,9 +31,9 @@ class A28WordToPdfApplicationTest {
     @Test
     void test2() {
         /// 负责的效果好
-        Word2PdfUtil.doc2Pdf(wordPath,
-                pdfPath);
-        TimeUnit.SECONDS.sleep(5);
+//        Word2PdfUtil.doc2Pdf(wordPath,
+//                pdfPath);
+//        TimeUnit.SECONDS.sleep(5);
     }
 
     @SneakyThrows

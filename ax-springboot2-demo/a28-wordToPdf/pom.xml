@@ -66,14 +66,14 @@
         </dependency>
 
 
-        <dependency>
-            <groupId>com.aspose</groupId>
-            <artifactId>aspose-words</artifactId>
-            <version>15.8.0</version>
-            <scope>system</scope>
-            <classifier>jdk17</classifier>
-            <systemPath>${pom.basedir}/lib/aspose-words-15.8.0-jdk16.jar</systemPath>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.aspose</groupId>-->
+<!--            <artifactId>aspose-words</artifactId>-->
+<!--            <version>15.8.0</version>-->
+<!--            <scope>system</scope>-->
+<!--            <classifier>jdk17</classifier>-->
+<!--            <systemPath>${pom.basedir}/lib/aspose-words-15.8.0-jdk16.jar</systemPath>-->
+<!--        </dependency>-->
 
         <!--转换工具-->
         <dependency>
