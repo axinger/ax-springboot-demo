@@ -1,14 +1,15 @@
 server:
   port: 10801
   servlet:
-    context-path: /A0701NacosDemo
+    context-path: /a0701-nacos-demo
 spring:
   application:
-    name: A0701NacosDemo
+    name: a0701-nacos-demo
   cloud:
     nacos:
-      config: #配置中心
-        enabled: false # 默认开启,kai
+      #配置中心
+      config:
+        enabled: true # 默认开启,kai
         server-addr: http://localhost:8848
         username: nacos
         password: nacos
@@ -16,22 +17,25 @@ spring:
         prefix: ${spring.application.name}
         #        prefix: all
         refresh-enabled: true
-        file-extension: yaml
+        file-extension: yml
         group: DEFAULT_GROUP
         namespace: dev
         shared-configs:
-          - data-id: 'A0701NacosDemo.yaml' # 配置文件名-Data Id
-            group: DEFAULT_GROUP   # 默认为DEFAULT_GROUP
-            refresh: true   # 是否动态刷新，默认为false
+          - # 配置文件名-Data Id
+          - data-id: 'a0701-nacos-demo.yaml'
+            # 默认为DEFAULT_GROUP
+            group: DEFAULT_GROUP
+            # 是否动态刷新，默认为false
+            refresh: true
         # 默认加载,通用格式的,再加载其他配置,用以下语法
         extension-configs:
-          - data-id: axinger-doc.yml
+          - data-id: axinger-user1.yml
             group: DEFAULT_GROUP
             refresh: true
-          - data-id: axinger-filter.yml
+          - data-id: axinger-user2.yml
             group: DEFAULT_GROUP
             refresh: true
-          - data-id: axinger-user.yml
+          - data-id: axinger-user3.yml
             group: DEFAULT_GROUP
             refresh: true
       discovery:
@@ -55,6 +59,3 @@ axinger:
   filter:
     blacklist: /order/**
     whitelist: /order/1,/order/2,/test/**
-  user:
-    name: axinger
-    age: 18

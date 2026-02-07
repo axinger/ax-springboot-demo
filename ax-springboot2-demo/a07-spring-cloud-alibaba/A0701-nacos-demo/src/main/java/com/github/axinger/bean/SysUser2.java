@@ -22,11 +22,11 @@ import javax.annotation.PostConstruct;
 @Order(12)
 public class SysUser2 {
 
-    @Value("${axinger.user.name}")
+    @Value("${axinger.user2.name}")
     private String name;
 
 
-    @Value("${axinger.user.age}")
+    @Value("${axinger.user2.age}")
     private Integer age;
 
 

@@ -20,7 +20,7 @@ import javax.annotation.PostConstruct;
 @RefreshScope
 @NoArgsConstructor
 @AllArgsConstructor
-@ConfigurationProperties(prefix = "axinger.user")
+@ConfigurationProperties(prefix = "axinger.user1")
 @Order(11)
 public class SysUser {
     private String name;

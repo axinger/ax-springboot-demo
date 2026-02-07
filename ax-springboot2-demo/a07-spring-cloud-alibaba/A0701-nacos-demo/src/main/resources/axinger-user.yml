@@ -1,5 +1,8 @@
 axinger:
-  user:
+  user1:
+    name: axinger
+    age: 1221
+  user2:
     name: axinger
     age: 1221
   user3:
