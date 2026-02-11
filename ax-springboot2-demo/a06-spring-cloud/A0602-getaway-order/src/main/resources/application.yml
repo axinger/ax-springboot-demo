@@ -12,6 +12,21 @@ spring:
     sampler:
       #抽样百分比，默认10%的数据发到zipkin，1为100%
       probability: 1
+  redis:
+    host: 127.0.0.1 # Redis服务器地址
+    #    host: hadoop135 # Redis服务器地址
+    #    password: 123456a
+    database: 12 # Redis数据库索引（默认为0）
+    port: 16379 # Redis服务器连接端口
+    timeout: 5000 # 连接超时时间（毫秒）\
+    lettuce:
+      pool:
+        max-active: 8 # 连接池最大连接数（使用负值表示没有限制）
+        min-idle: 0  # 连接池中的最小空闲连接
+        max-idle: 8 # 连接池中的最大空闲连接
+        max-wait: -1 # 连接池最大阻塞等待时间（使用负值表示没有限制）
+    redisson:
+      file: classpath:redisson.yml
 server-url:
   nacos-payment-service: http://mall-payment-app
   gateway-service: http://mall-gateway-app
@@ -21,3 +36,10 @@ server-url:
 server-name:
   payment-service: mall-payment-app
 
+app:
+  rate-limit:
+    enabled: true
+    rules:
+      - path: /**
+        rate: 1
+        interval: 5

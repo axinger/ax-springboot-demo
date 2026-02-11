@@ -46,6 +46,11 @@
             <groupId>com.github.axinger</groupId>
             <artifactId>cors-config-spring-boot-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-boot-starter</artifactId>
+<!--            <version>3.17.7</version>-->
+        </dependency>
 
     </dependencies>
 </project>
