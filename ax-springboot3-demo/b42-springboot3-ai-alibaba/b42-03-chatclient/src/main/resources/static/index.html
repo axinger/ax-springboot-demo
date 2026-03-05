@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI 智能问答</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 800px;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 24px 32px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 32px;
+        }
+
+        .input-area {
+            margin-bottom: 24px;
+        }
+
+        #msgInput {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #e1e5eb;
+            border-radius: 12px;
+            font-size: 16px;
+            resize: vertical;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        #msgInput:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        #send {
+            width: 100%;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        #send:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        #send:active {
+            transform: translateY(0);
+        }
+
+        #msgList {
+            margin-top: 24px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            min-height: 100px;
+            max-height: 500px;
+            overflow-y: auto;
+            width: 100%;
+        }
+
+        #msgList:empty::before {
+            content: '暂无消息，请输入您的问题...';
+            color: #9ca3af;
+            font-style: italic;
+        }
+
+        .message {
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            animation: slideIn 0.3s ease;
+        }
+
+        .message:last-child {
+            margin-bottom: 0;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>🤖 AI 智能问答</h1>
+        <p>输入您的问题，获取智能回复</p>
+    </div>
+
+    <div class="content">
+        <div class="input-area">
+            <textarea id="msgInput" rows="4" placeholder="请输入你的问题..." autofocus></textarea>
+        </div>
+
+        <button id="send" onclick="sendMsg()">发送消息</button>
+
+        <div id="msgList"></div>
+    </div>
+</div>
+
+<script>
+    function sendMsg() {
+        const msgInput = document.getElementById('msgInput');
+        const msg = msgInput.value.trim();
+
+        if (msg) {
+            const msgList = document.getElementById('msgList');
+
+            // 添加用户消息
+            addUserMessage(msg);
+
+            // 清空输入框
+            msgInput.value = '';
+
+            // 创建加载提示
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'message';
+            loadingDiv.innerHTML = '<span class="loading"></span> 正在思考中...';
+            loadingDiv.id = 'loading';
+            msgList.appendChild(loadingDiv);
+
+            // 滚动到底部
+            msgList.scrollTop = msgList.scrollHeight;
+
+            const eventSource = new EventSource('/test21?msg=' + encodeURIComponent(msg));
+
+            eventSource.onmessage = function (event) {
+                // 移除加载提示
+                const loading = document.getElementById('loading');
+                if (loading) {
+                    loading.remove();
+                }
+
+                // 添加 AI 回复
+                addAiMessage(event.data);
+            };
+
+            eventSource.onerror = function () {
+                eventSource.close();
+                const loading = document.getElementById('loading');
+                if (loading) {
+                    loading.remove();
+                }
+            };
+        }
+    }
+
+    function addUserMessage(msg) {
+        const msgList = document.getElementById('msgList');
+        const userDiv = document.createElement('div');
+        userDiv.className = 'message';
+        userDiv.style.borderLeftColor = '#10b981';
+        userDiv.innerHTML = '<strong>👤 我:</strong><br>' + escapeHtml(msg);
+        msgList.appendChild(userDiv);
+        msgList.scrollTop = msgList.scrollHeight;
+    }
+
+    function addAiMessage(msg) {
+        const msgList = document.getElementById('msgList');
+        msgList.innerHTML += escapeHtml(msg) + '<br>';
+        msgList.scrollTop = msgList.scrollHeight;
+    }
+
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML.replace(/\n/g, '<br>');
+    }
+
+    // 支持按 Enter 键发送（Shift+Enter 换行）
+    document.getElementById('msgInput').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendMsg();
+        }
+    });
+</script>
+
+</body>
+</html>
