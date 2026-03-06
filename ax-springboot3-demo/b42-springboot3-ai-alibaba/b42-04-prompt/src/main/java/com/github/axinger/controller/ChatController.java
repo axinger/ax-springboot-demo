@@ -1,5 +1,6 @@
 package com.github.axinger.controller;
 
+import com.github.axinger.model.Story;
 import jakarta.annotation.Resource;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.messages.*;
@@ -17,6 +18,7 @@ import reactor.core.publisher.Flux;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 @RestController
 public class ChatController {
@@ -148,15 +150,55 @@ public class ChatController {
         ));
 
         PromptTemplate promptTemplate = PromptTemplate.builder()
-                .resource(resource)
+                .template("""
+                        讲一个关于{topic}的故事,
+                        并以{output_format}格式输出,
+                        字数控制在{wordCount}左右
+                        """)
                 .build();
+
         Message message2 = promptTemplate.createMessage(Map.of(
                 "topic", "葫芦娃",
                 "output_format", "html",
                 "wordCount", 300
         ));
 
+        /// 多个提示词
         Prompt prompt = new Prompt(List.of(message1, message2));
         return dashScopeChatClient.prompt(prompt).call().content();
+    }
+
+    @GetMapping("/test61")
+    public Story test61() {
+
+
+        PromptTemplate promptTemplate = PromptTemplate.builder()
+                .resource(resource)
+                .build();
+        Prompt prompt = promptTemplate.create(Map.of(
+                "topic", "葫芦娃",
+                "output_format", "html",
+                "wordCount", 300
+        ));
+
+        Story entity = dashScopeChatClient.prompt()
+                .user(new Consumer<ChatClient.PromptUserSpec>() {
+                    @Override
+                    public void accept(ChatClient.PromptUserSpec promptUserSpec) {
+
+                        promptUserSpec.text("""
+                                                讲一个关于{topic}的故事,
+                                                并以{output_format}格式输出,
+                                                字数控制在{wordCount}左右
+                                        """)
+                                .params(Map.of(
+                                        "topic", "葫芦娃",
+                                        "output_format", "html",
+                                        "wordCount", 300
+                                ));
+                    }
+                }).call().entity(Story.class);
+
+        return entity;
     }
 }
