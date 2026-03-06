@@ -30,6 +30,8 @@ public class ChatController {
     @Resource
     @Qualifier("dashScopeChatClient")
     private ChatClient dashScopeChatClient;
+    @Value("classpath:/prompt/123.txt")
+    private org.springframework.core.io.Resource resource;
 
     /// 样板代码
     @GetMapping("/test1")
@@ -96,7 +98,6 @@ public class ChatController {
         return answer + responseMessageText;
     }
 
-
     @GetMapping("/test51")
     public Flux<String> test51() {
 
@@ -115,10 +116,6 @@ public class ChatController {
 
         return dashScopeChatClient.prompt(prompt).stream().content();
     }
-
-
-    @Value("classpath:/prompt/123.txt")
-    private org.springframework.core.io.Resource resource;
 
     @GetMapping("/test52")
     public Flux<String> test52() {
@@ -168,19 +165,16 @@ public class ChatController {
         return dashScopeChatClient.prompt(prompt).call().content();
     }
 
+    /*
+    {
+id: "huluwa-story-001",
+topic: "葫芦娃",
+outputFormat: "html",
+wordCount: 298
+}
+     */
     @GetMapping("/test61")
     public Story test61() {
-
-
-        PromptTemplate promptTemplate = PromptTemplate.builder()
-                .resource(resource)
-                .build();
-        Prompt prompt = promptTemplate.create(Map.of(
-                "topic", "葫芦娃",
-                "output_format", "html",
-                "wordCount", 300
-        ));
-
         Story entity = dashScopeChatClient.prompt()
                 .user(new Consumer<ChatClient.PromptUserSpec>() {
                     @Override
@@ -201,4 +195,6 @@ public class ChatController {
 
         return entity;
     }
+
+    /// 对话记忆,持久化
 }

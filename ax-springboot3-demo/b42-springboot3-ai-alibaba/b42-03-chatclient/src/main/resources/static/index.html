@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
     <title>AI 智能问答</title>
     <style>
         * {
@@ -149,8 +149,12 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
@@ -164,7 +168,7 @@
 
     <div class="content">
         <div class="input-area">
-            <textarea id="msgInput" rows="4" placeholder="请输入你的问题..." autofocus></textarea>
+            <textarea autofocus id="msgInput" placeholder="请输入你的问题..." rows="4"></textarea>
         </div>
 
         <button id="send" onclick="sendMsg()">发送消息</button>
@@ -243,7 +247,7 @@
     }
 
     // 支持按 Enter 键发送（Shift+Enter 换行）
-    document.getElementById('msgInput').addEventListener('keydown', function(e) {
+    document.getElementById('msgInput').addEventListener('keydown', function (e) {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             sendMsg();

@@ -9,7 +9,7 @@
         <version>2026.01.01-3.5</version>
     </parent>
 
-    <artifactId>b42-04-prompt</artifactId>
+    <artifactId>b42-06-image</artifactId>
 
     <dependencies>
         <dependency>
@@ -18,19 +18,11 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-freemarker</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
         <dependency>
             <groupId>com.alibaba.cloud.ai</groupId>
             <artifactId>spring-ai-alibaba-starter-dashscope</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-starter-model-ollama</artifactId>
         </dependency>
     </dependencies>
 

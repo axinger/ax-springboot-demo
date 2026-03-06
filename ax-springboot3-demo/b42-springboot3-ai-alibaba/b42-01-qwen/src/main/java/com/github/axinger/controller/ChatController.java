@@ -1,5 +1,6 @@
 package com.github.axinger.controller;
 
+import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.image.ImageModel;
@@ -12,9 +13,12 @@ import reactor.core.publisher.Flux;
 @RequiredArgsConstructor
 public class ChatController {
 
-    private final ChatModel chatModel;
-    private final ImageModel imageModel;
 
+    private final ImageModel imageModel;
+    @Resource(name = "dashScopeChatModel")
+    private ChatModel chatModel;
+    @Resource(name = "qwenChatModel")
+    private ChatModel qwenChatModel;
 
     @GetMapping("/test1")
     public String test1(@RequestParam(name = "msg", defaultValue = "你是谁?") String msg) {
@@ -26,4 +30,8 @@ public class ChatController {
         return chatModel.stream(msg);
     }
 
+    @GetMapping("/test3")
+    public String test3(@RequestParam(name = "msg", defaultValue = "你是谁?") String msg) {
+        return qwenChatModel.call(msg);
+    }
 }

@@ -16,6 +16,9 @@
         <module>b42-02-ollama</module>
         <module>b42-03-chatclient</module>
         <module>b42-04-prompt</module>
+        <module>b42-05-memory</module>
+        <module>b42-06-image</module>
+        <module>b42-07-tts</module>
     </modules>
 
     <dependencyManagement>
