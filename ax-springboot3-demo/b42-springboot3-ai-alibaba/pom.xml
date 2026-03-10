@@ -19,6 +19,8 @@
         <module>b42-05-memory</module>
         <module>b42-06-image</module>
         <module>b42-07-tts</module>
+        <module>b42-08-vector</module>
+        <module>b42-09-rag</module>
     </modules>
 
     <dependencyManagement>

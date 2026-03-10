@@ -4,19 +4,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>com.github.axinger</groupId>
-        <artifactId>ax-springboot3-demo</artifactId>
+        <artifactId>a10-springboot3-01-kafka</artifactId>
         <version>2026.01.01-3.5</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <packaging>pom</packaging>
 
-    <artifactId>b10-springboot3-mq</artifactId>
+    <artifactId>b10-01-kafka-api</artifactId>
 
-    <modules>
-        <module>a10-springboot3-01-kafka</module>
-        <module>a10-springboot3-02-rabbitmq</module>
-        <module>a10-springboot3-03-rocketmq</module>
-        <module>b10-04-pulsar</module>
-    </modules>
-
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
 </project>

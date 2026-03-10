@@ -127,7 +127,6 @@
         <module>a42-queue-disruptor</module>
         <module>a43-camel</module>
         <module>a36-logback2</module>
-        <module>a35-flowable1</module>
         <module>a16-spring-security2</module>
         <module>a44-IoT</module>
         <module>axinger-common-bom</module>
