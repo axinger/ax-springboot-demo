@@ -1,5 +1,5 @@
 server:
-  port: 24208
+  port: 24209
   servlet:
     encoding:
       enabled: true
@@ -16,8 +16,8 @@ spring:
     vectorstore:
       redis:
         initialize-schema: true
-        index-name: ax-index
-        prefix: 'ax-index:'
+        index-name: ax-index09
+        prefix: 'ax-index09:'
     dashscope:
       #      base-url: https://dashscope.aliyuncs.com/api/v1
       #      base-url: https://dashscope.aliyuncs.com/compatible-mode/v1
