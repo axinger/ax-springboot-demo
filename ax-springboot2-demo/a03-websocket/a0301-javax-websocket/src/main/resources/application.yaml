@@ -27,8 +27,3 @@ spring:
     restart:
       enabled: true
 
-
-logging:
-  level:
-    com.ax.shop.mapper: debug
-

@@ -45,7 +45,7 @@ spring:
 
 mybatis-plus:
   #枚举包,必须有
-  type-enums-package: com.ax.a16.enums
+  type-enums-package: com.github.axinger.a16.enums
   #  mapper-locations: classpath*:/mybatis/*.xml
   #实体扫描，多个package用逗号或者分号分隔
   #  typeAliasesPackage: com.example.demo.model
@@ -65,6 +65,6 @@ logging:
   #    name: log/myspringboot.log
   #    path: log
   level:
-    com.ax.demo.mapper: debug
+    com.github.axinger.demo.mapper: debug
 #  pattern:
 #    console: '%clr(%d{HH:mm:ss}){yellow} [%clr(%thread){red}] %-5level --- %clr(%logger){green} | %msg%n'

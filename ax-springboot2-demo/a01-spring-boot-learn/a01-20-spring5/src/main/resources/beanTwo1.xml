@@ -17,7 +17,7 @@
     <!--    &lt;!&ndash;-->
     <!--    use-default-filters="false" 不使用默认的,来扫描-->
     <!--    &ndash;&gt;-->
-    <!--    <context:component-scan base-package="com.ax.annotations" use-default-filters="false">-->
+    <!--    <context:component-scan base-package="com.github.axinger.annotations" use-default-filters="false">-->
 
     <!--        &lt;!&ndash;只扫描 Controller 这个注解的&ndash;&gt;-->
     <!--        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>-->
@@ -26,7 +26,7 @@
     <!--    &lt;!&ndash;-->
     <!--    没有  use-default-filters="false"-->
     <!--    &ndash;&gt;-->
-    <!--    <context:component-scan base-package="com.ax.annotations">-->
+    <!--    <context:component-scan base-package="com.github.axinger.annotations">-->
     <!--        &lt;!&ndash;不扫描 Controller 这个注解的,其他的扫描&ndash;&gt;-->
     <!--        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>-->
     <!--    </context:component-scan>-->

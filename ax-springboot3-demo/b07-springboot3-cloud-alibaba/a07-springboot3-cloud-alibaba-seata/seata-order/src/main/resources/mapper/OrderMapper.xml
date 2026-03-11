@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ax.seata.mapper.OrderMapper">
+<mapper namespace="com.github.axinger.seata.mapper.OrderMapper">
 
-    <resultMap id="BaseResultMap" type="com.ax.seata.domain.Order">
+    <resultMap id="BaseResultMap" type="com.github.axinger.seata.domain.Order">
         <id property="id" column="id" jdbcType="BIGINT"/>
         <result property="userId" column="user_id" jdbcType="BIGINT"/>
         <result property="productId" column="product_id" jdbcType="BIGINT"/>

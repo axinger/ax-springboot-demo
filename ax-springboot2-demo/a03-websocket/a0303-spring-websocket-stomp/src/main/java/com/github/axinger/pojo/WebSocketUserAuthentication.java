@@ -1,4 +1,4 @@
-package com.github.axinger.pojo;//package com.ax.pojo;
+//package com.github.axinger.pojo;
 //
 //import java.security.Principal;
 //

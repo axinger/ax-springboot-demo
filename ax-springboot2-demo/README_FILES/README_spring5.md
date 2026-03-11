@@ -94,7 +94,7 @@ execution(* dao.aop.com.github.axinger.UserDaoImpl.add(..))
 execution(* dao.aop.com.github.axinger.UserDaoImpl.*(..))
 
 // 所有类,所有方法
-execution(* com.ax.aop.dao.*.*(..))
+execution(* com.github.axinger.aop.dao.*.*(..))
 ```
 
 # 事务

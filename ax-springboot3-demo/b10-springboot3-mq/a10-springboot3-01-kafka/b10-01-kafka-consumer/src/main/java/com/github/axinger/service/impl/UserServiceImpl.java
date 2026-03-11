@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
      * groupId 不同, 同一个主题都能收到
      * groupId 相同,只能有一个收到主题消息
      */
-//    @KafkaListener(topics = {com.ax.kafka.api.Topic.SIMPLE})
+//    @KafkaListener(topics = {com.github.axinger.kafka.api.Topic.SIMPLE})
 //    public void consumer(ConsumerRecord<?,?> consumerRecord){
 //        //判断是否为null
 //        Optional<?> kafkaMessage = Optional.ofNullable(consumerRecord.value());

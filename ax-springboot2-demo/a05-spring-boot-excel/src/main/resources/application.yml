@@ -25,5 +25,5 @@ spring:
 
 logging:
   level:
-    com.ax.shop.mapper: debug
+    com.github.axinger.shop.mapper: debug
 

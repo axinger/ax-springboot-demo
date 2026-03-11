@@ -1,6 +1,6 @@
 dubbo:
   #  scan:
-  #    base-packages: com.ax.dubbo.consumer
+  #    base-packages: com.github.axinger.dubbo.consumer
   application:
     name: dubbo-test-provider
   protocol:

@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ax.seata.mapper.StorageMapper">
+<mapper namespace="com.github.axinger.seata.mapper.StorageMapper">
 
-    <resultMap id="BaseResultMap" type="com.ax.seata.domain.Storage">
+    <resultMap id="BaseResultMap" type="com.github.axinger.seata.domain.Storage">
         <id property="id" column="id" jdbcType="BIGINT"/>
         <result property="productId" column="product_id" jdbcType="BIGINT"/>
         <result property="total" column="total" jdbcType="INTEGER"/>

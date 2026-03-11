@@ -17,7 +17,7 @@ public class UserProxy {
 
 
     }
-//    @Before(value = "execution(* com.ax.aop.model.AopUser.*(..))")
+//    @Before(value = "execution(* com.github.axinger.aop.model.AopUser.*(..))")
 //    public void before(){
 //        System.out.println("UserProxy.before");
 //    }

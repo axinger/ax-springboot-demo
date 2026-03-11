@@ -1,4 +1,4 @@
-// package com.ax.service.gateway.config;
+// package com.github.axinger.service.gateway.config;
 //
 // import org.springframework.context.annotation.Bean;
 // import org.springframework.context.annotation.Configuration;

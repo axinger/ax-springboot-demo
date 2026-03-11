@@ -1,0 +1,27 @@
+server:
+  port: 24211
+  servlet:
+    encoding:
+      enabled: true
+      force: true
+      charset: utf-8
+
+spring:
+  ai:
+    mcp:
+      server:
+        type: async
+        name: b42-11-mcp-server
+        version: 1.0.0
+    dashscope:
+      #      base-url: https://dashscope.aliyuncs.com/api/v1
+      #      base-url: https://dashscope.aliyuncs.com/compatible-mode/v1
+      api-key: ${aliQwen-api}
+      chat:
+        options:
+          model: qwen-plus
+      # 推理模型
+      embedding:
+        options:
+          model: text-embedding-v3
+

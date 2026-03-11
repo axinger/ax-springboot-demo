@@ -26,7 +26,7 @@ spring:
 
 #mybatis-plus:
 #  #枚举包,必须有 3.5.1 取消了
-#  #  type-enums-package: com.ax.a16.enums
+#  #  type-enums-package: com.github.axinger.a16.enums
 #  #  mapper-locations: classpath*:/mybatis/*.xml
 #  #实体扫描，多个package用逗号或者分号分隔
 #  #  typeAliasesPackage: com.example.demo.model
