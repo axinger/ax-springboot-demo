@@ -1,0 +1,32 @@
+server:
+  port: 24211
+  servlet:
+    encoding:
+      enabled: true
+      force: true
+      charset: utf-8
+
+spring:
+  ai:
+    mcp:
+      client:
+        type: async
+        name: b42-13-mcp-client
+        version: 1.0.0
+        request-timeout: 20s
+        toolcallback:
+          enabled: true
+        stdio:
+          servers-configuration: classpath:/mcp-gaode-servers.json5
+    dashscope:
+      #      base-url: https://dashscope.aliyuncs.com/api/v1
+      #      base-url: https://dashscope.aliyuncs.com/compatible-mode/v1
+      api-key: ${aliQwen-api}
+      chat:
+        options:
+          model: qwen-plus
+      # 推理模型
+      embedding:
+        options:
+          model: text-embedding-v3
+

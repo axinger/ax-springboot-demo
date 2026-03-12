@@ -24,6 +24,7 @@
         <module>b42-10-tool-calling</module>
         <module>b42-11-mcp-server</module>
         <module>b42-12-mcp-client</module>
+        <module>b42-13-mcp-client-gaode</module>
     </modules>
 
     <dependencyManagement>
