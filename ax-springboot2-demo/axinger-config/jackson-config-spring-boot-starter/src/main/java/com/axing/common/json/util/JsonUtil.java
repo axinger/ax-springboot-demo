@@ -1,15 +1,20 @@
 package com.axing.common.json.util;
 
-import com.axing.common.json.model.Java8CommonTimeModule;
+import com.axing.common.json.model.DateTimeFormatterUtil;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.SneakyThrows;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -58,7 +63,14 @@ public class JsonUtil extends ObjectMapper {
         mapper.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true);
 
 //        mapper.registerModule(new JavaTimeModule());
-        mapper.registerModule(new Java8CommonTimeModule());
+//        mapper.registerModule(new Java8CommonTimeModule());
+
+        JavaTimeModule javaTimeModule = new JavaTimeModule();
+
+        // 替换默认的序列化器/反序列化器
+        javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DateTimeFormatterUtil.dateFormat)));
+        javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(DateTimeFormatterUtil.dateFormat)));
+        mapper.registerModule(javaTimeModule);
     }
 
     /**

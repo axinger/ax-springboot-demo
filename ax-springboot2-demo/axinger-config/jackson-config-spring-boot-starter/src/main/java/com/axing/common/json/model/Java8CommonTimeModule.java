@@ -1,13 +1,16 @@
 package com.axing.common.json.model;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.datatype.jsr310.deser.InstantDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.InstantSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -31,6 +34,12 @@ public class Java8CommonTimeModule extends SimpleModule {
         // HH:mm:ss
         this.addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern(DateTimeFormatterUtil.localTimeFormat)));
         this.addDeserializer(LocalTime.class, new LocalTimeDeserializer(DateTimeFormatter.ofPattern(DateTimeFormatterUtil.localTimeFormat)));
+
+        // Instant 类型支持 - 转换为时间戳或者 ISO-8601 格式
+
+        // Instant 类型支持 - 转换为时间戳或者 ISO-8601 格式
+        this.addSerializer(Instant.class, InstantSerializer.INSTANCE);
+        this.addDeserializer(Instant.class, InstantDeserializer.INSTANT);
     }
 
 }
