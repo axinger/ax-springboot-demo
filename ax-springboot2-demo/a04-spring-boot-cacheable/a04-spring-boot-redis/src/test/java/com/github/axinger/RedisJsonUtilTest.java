@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -32,6 +33,15 @@ public class RedisJsonUtilTest {
 
     // ==================== 类型转换器测试 ====================
 
+    @Test
+    @DisplayName("测试删除所有key")
+    public void testDelALl() {
+
+        Long result = redisJsonUtil.delPattern("test:*");
+        System.out.println("result = " + result);
+//        assertEquals(true, result > 0,"没有删除的key");
+        Assert.isTrue(result > 0,"没有删除的key");
+    }
     @Test
     @DisplayName("测试基本类型转换 - Boolean")
     public void testBooleanConverter() {
