@@ -1,5 +1,6 @@
 package com.github.axinger.config;
 
+import com.alibaba.ttl.TtlRunnable;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -47,6 +48,10 @@ public class ThreadPoolConfig {
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         // 执行初始化
         executor.initialize();
+
+        // 【核心】设置 TaskDecorator，让线程池任务自动继承 TTL 上下文
+//        executor.setTaskDecorator(TtlRunnable::get);
+//        executor.setTaskDecorator(new TtlTaskDecorator());
         return executor;
 
     }
