@@ -113,7 +113,6 @@
         <module>a33-docker-jar</module>
         <module>a33-docker-package</module>
         <module>a34-keycloak</module>
-        <module>a36-logback</module>
         <module>a37-data-rest</module>
         <module>a38-xxl-job</module>
 
@@ -126,7 +125,6 @@
         <module>a41-ocr</module>
         <module>a42-queue-disruptor</module>
         <module>a43-camel</module>
-        <module>a36-logback2</module>
         <module>a16-spring-security2</module>
         <module>a44-IoT</module>
         <module>axinger-common-bom</module>

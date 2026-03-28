@@ -1,4 +1,4 @@
-//package com.github.axinger.config;
+package com.github.axinger.config;//package com.github.axinger.config;
 //
 //import org.springframework.boot.actuate.health.Health;
 //import org.springframework.boot.actuate.health.HealthIndicator;

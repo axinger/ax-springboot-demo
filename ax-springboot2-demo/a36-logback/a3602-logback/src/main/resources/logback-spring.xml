@@ -25,8 +25,9 @@
     <!--    <property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{100} - %msg%n"/>-->
 
     <!--   2025-05-10 19:17:19.686  ERROR  2152 -&#45;&#45; [main] com.github.axinger.event.Start1 : error = error 日志 -->
+    <!--   带 traceId 和 userId 的格式：2025-05-10 19:17:19.686  ERROR  2152  [main] [abc123] [user01] com.github.axinger.event.Start1 : error = error 日志 -->
     <property name="log.pattern"
-              value="%d{yyyy-MM-dd HH:mm:ss.SSS}  %-5level  ${PID:- } --- [%t] %logger{100} : %msg%n"/>
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS}  %-5level  ${PID:- } --- [%t] [%X{traceId:-}] [%X{userId:-}] %logger{100} : %msg%n"/>
 
 
     <!--输出到控制台 ConsoleAppender-->

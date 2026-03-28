@@ -1,6 +1,9 @@
+server:
+  port: 13602
+
 spring:
   application:
-    name: a36-logback2
+    name: a3602-logback2
 
 
 #2025-05-20 22:52:44.793 ERROR 1608 --- [main] com.github.axinger.Start1                : error = error 日志
