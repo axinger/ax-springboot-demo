@@ -33,15 +33,8 @@
         </dependency>
 
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <groupId>com.github.axinger</groupId>
+            <artifactId>executor-config-spring-boot-starter</artifactId>
         </dependency>
-
-        <!-- 添加Micrometer指标 -->
-        <!--        <dependency>-->
-        <!--            <groupId>io.micrometer</groupId>-->
-        <!--            <artifactId>micrometer-core</artifactId>-->
-        <!--        </dependency>-->
     </dependencies>
 </project>

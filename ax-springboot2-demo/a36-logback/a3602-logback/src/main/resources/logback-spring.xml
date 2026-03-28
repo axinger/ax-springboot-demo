@@ -30,11 +30,16 @@
               value="%d{yyyy-MM-dd HH:mm:ss.SSS}  %-5level  ${PID:- } --- [%t] [%X{traceId:-}] [%X{userId:-}] %logger{100} : %msg%n"/>
 
 
+    <!-- 带颜色的日志格式 -->
+    <property name="log.pattern.console"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS}  %highlight(%-5level)  ${PID:- } --- [%cyan(%t)] [%X{traceId:-}] [%X{userId:-}] %yellow(%logger{100}) : %msg%n"/>
+
     <!--输出到控制台 ConsoleAppender-->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <!--展示格式 layout-->
-        <encoder>
-            <pattern>${log.pattern}</pattern>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${log.pattern.console}</pattern>
+            <charset>UTF-8</charset>
         </encoder>
     </appender>
 

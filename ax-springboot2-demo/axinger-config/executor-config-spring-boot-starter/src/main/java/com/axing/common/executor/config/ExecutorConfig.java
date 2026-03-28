@@ -1,6 +1,7 @@
 package com.axing.common.executor.config;
 
 import com.axing.common.executor.bea.ExecutorProperties;
+import com.axing.common.executor.decorator.MdcTaskDecorator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -77,9 +78,11 @@ public class ExecutorConfig implements AsyncConfigurer {
         // rejection-policy：当pool已经达到max size的时候，如何处理新任务
         // CALLER_RUNS：不在新线程中执行任务，而是有调用者所在的线程来执行
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        /// 配置 TaskDecorator 传递 MDC 上下文到子线程
+        executor.setTaskDecorator(new MdcTaskDecorator());
         // 执行初始化
         executor.initialize();
-        log.info("🤡🤡🤡🤡🤡 cpu核心线程数={}", executor.getCorePoolSize());
+        log.info("🎁🎁🎁🎁🎁 cpu核心线程数={}", executor.getCorePoolSize());
         return executor;
     }
 }
