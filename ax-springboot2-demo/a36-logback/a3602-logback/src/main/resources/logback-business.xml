@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    业务日志配置
+    包含：订单业务日志、支付业务日志等独立业务日志配置
+-->
+<included>
+
+    <!-- ==================== 订单业务日志 ==================== -->
+
+    <!-- 订单 ERROR 日志 -->
+    <appender name="ORDER_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.dir}/order_error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log.dir}/order_error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>${log.maxFileSize}</maxFileSize>
+            <maxHistory>${log.maxHistory}</maxHistory>
+            <totalSizeCap>${log.totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>error</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 订单 INFO 日志 -->
+    <appender name="ORDER_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.dir}/order_info.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log.dir}/order_info.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>${log.maxFileSize}</maxFileSize>
+            <maxHistory>${log.maxHistory}</maxHistory>
+            <totalSizeCap>${log.totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>info</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 订单业务 Logger -->
+    <logger name="ORDER_LOG" level="info" additivity="false">
+        <appender-ref ref="ORDER_ERROR"/>
+        <appender-ref ref="ORDER_INFO"/>
+    </logger>
+
+
+    <!-- ==================== 支付业务日志 ==================== -->
+
+    <!-- 支付 ERROR 日志 -->
+    <appender name="PAYMENT_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.dir}/payment_error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log.dir}/payment_error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>${log.maxFileSize}</maxFileSize>
+            <maxHistory>${log.maxHistory}</maxHistory>
+            <totalSizeCap>${log.totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>error</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 支付 INFO 日志 -->
+    <appender name="PAYMENT_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.dir}/payment_info.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log.dir}/payment_info.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>${log.maxFileSize}</maxFileSize>
+            <maxHistory>${log.maxHistory}</maxHistory>
+            <totalSizeCap>${log.totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>info</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 支付业务 Logger -->
+    <logger name="PAYMENT_LOG" level="info" additivity="false">
+        <appender-ref ref="PAYMENT_ERROR"/>
+        <appender-ref ref="PAYMENT_INFO"/>
+    </logger>
+
+
+    <!-- ==================== 更多业务日志可在此添加 ==================== -->
+    <!--
+    示例：用户业务日志
+
+    <appender name="USER_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        ...
+    </appender>
+
+    <appender name="USER_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        ...
+    </appender>
+
+    <logger name="USER_LOG" level="info" additivity="false">
+        <appender-ref ref="USER_ERROR"/>
+        <appender-ref ref="USER_INFO"/>
+    </logger>
+    -->
+
+</included>
