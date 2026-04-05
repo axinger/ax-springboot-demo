@@ -1,7 +1,11 @@
 axinger:
   user:
-    username: jim,tom
-    password: 1234
+    username: |- #没有最后的换行符
+      jim,
+      tom
+    password: |  #每个都有换行符
+      123
+      456
     dog: # 必须缩进两格
       min: 1 # 必须缩进四格
       max: 100
