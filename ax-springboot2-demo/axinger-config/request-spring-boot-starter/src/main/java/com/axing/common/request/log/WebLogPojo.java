@@ -51,7 +51,7 @@ public class WebLogPojo {
     /**
      * 请求返回的结果
      */
-    @JsonProperty(value = "返回结果")
+    @JsonProperty(value = "返回体")
     private Object result;
 
     private Map<String, Object> otherProperties = new HashMap<>();

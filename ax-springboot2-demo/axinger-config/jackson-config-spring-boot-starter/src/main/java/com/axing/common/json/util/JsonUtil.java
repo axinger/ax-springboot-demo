@@ -86,6 +86,12 @@ public class JsonUtil extends ObjectMapper {
         return mapper.writeValueAsString(value);
     }
 
+    @SneakyThrows
+    public static String toPrettyPrinterJson(Object value) {
+        // 使用 writerWithDefaultPrettyPrinter 进行转换
+        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(value);
+    }
+
     /**
      * string转对象,返回对象或者null
      */
