@@ -1,0 +1,9 @@
+server:
+  port: 14501
+  
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    enabled-by-default: on

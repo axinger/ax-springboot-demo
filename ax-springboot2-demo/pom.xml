@@ -132,6 +132,7 @@
         <module>axinger-cloud-bom</module>
         <module>a23-integration</module>
         <module>a35-springboot2-flowable</module>
+        <module>a45-hertzbeat</module>
     </modules>
 
     <dependencyManagement>
