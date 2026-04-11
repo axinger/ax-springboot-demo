@@ -20,8 +20,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.lang.NonNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -47,17 +47,17 @@ public class BatchJobConfig3 {
     public StepExecutionListener stepExecutionListener() {
         return new StepExecutionListener() {
             @Override
-            public void beforeStep(@Nonnull StepExecution stepExecution) {
+            public void beforeStep(@NonNull StepExecution stepExecution) {
                 // 获取作业参数
                 String selectDate = stepExecution.getJobExecution().getJobParameters().getString("selectDate");
-                log.info("监听步骤获取参数: {}", selectDate);
+                log.info("监听步骤获取参数11 : {}", selectDate);
 
                 // 将参数存储到 ExecutionContext 中，供后续步骤使用
 //                stepExecution.getExecutionContext().putLong("time", timeParam);
             }
 
             @Override
-            public ExitStatus afterStep(@Nonnull StepExecution stepExecution) {
+            public ExitStatus afterStep(@NonNull StepExecution stepExecution) {
                 return null; // 可根据需求返回 exitStatus
             }
         };

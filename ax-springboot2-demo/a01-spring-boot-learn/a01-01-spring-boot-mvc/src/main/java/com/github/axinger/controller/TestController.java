@@ -36,8 +36,15 @@ public class TestController {
         count++;
         System.out.println("count = " + count);
 //        return List.of(count);
+        Map<String,Object> map = new HashMap<>();
+        map.put("count",count);
+        map.put("a1",count);
+        map.put("b1",count);
+        map.put("c1",count);
+        map.put("d1",count);
+        map.put("e2",count);
 
-        ResponseEntity<Integer> response = ResponseEntity.ok(count);
+        ResponseEntity<?> response = ResponseEntity.ok(map);
 
         System.out.println("response = " + response);
         return response;

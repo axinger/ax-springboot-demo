@@ -49,7 +49,7 @@ public class Start1 {
                     "系统启动成功\n\t" +
                     "Local: \t\thttp://localhost:" + port + path + "/\n\t" +
                     "External: \thttp://" + ip + ":" + port + path + "/\n\t" +
-                    "Swagger文档: \thttp://" + ip + ":" + port + path + "/doc.html\n" +
+                    "Swagger文档: \thttp://" + ip + ":" + port+"/" + path + "/doc.html\n" +
                     "----------------------------------------------------------");
         }
 
