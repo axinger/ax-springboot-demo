@@ -50,7 +50,7 @@ public class BatchJobConfig3 {
             public void beforeStep(@NonNull StepExecution stepExecution) {
                 // 获取作业参数
                 String selectDate = stepExecution.getJobExecution().getJobParameters().getString("selectDate");
-                log.info("监听步骤获取参数11 : {}", selectDate);
+                log.info("监听步骤获取参数1122 : {}", selectDate);
 
                 // 将参数存储到 ExecutionContext 中，供后续步骤使用
 //                stepExecution.getExecutionContext().putLong("time", timeParam);
