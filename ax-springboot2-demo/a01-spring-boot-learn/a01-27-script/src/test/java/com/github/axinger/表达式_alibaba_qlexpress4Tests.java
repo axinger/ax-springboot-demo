@@ -12,6 +12,7 @@ import com.alibaba.qlexpress4.runtime.QContext;
 import com.alibaba.qlexpress4.runtime.function.CustomFunction;
 import com.alibaba.qlexpress4.runtime.trace.ExpressionTrace;
 import com.alibaba.qlexpress4.security.QLSecurityStrategy;
+import com.github.axinger.model.ProductDTO;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -41,6 +42,66 @@ public class 表达式_alibaba_qlexpress4Tests {
         context.put("c", 3);
         Object result = express4Runner.execute("a + b * c", context, QLOptions.DEFAULT_OPTIONS).getResult();
         assertEquals(7, result);
+    }
+
+    @SneakyThrows
+    @Test
+    public void test101() {
+        Express4Runner express4Runner = new Express4Runner(InitOptions.DEFAULT_OPTIONS);
+        Map<String, Object> context = new HashMap<>();
+        context.put("a", 1);
+        context.put("b", 2);
+        context.put("c", 3);
+        context.put("d", "111");
+        context.put("e", "222");
+
+        // 方式1: 返回数组
+        Object result = express4Runner.execute("""
+            return [a, b];
+            """, context, QLOptions.DEFAULT_OPTIONS).getResult();
+        System.out.println("返回数组 = " + result); // 输出: [1, 2]
+        System.out.println("返回数组类型 = " + result.getClass()); // class java.util.ArrayList
+
+
+        // 返回Map，可以带字段名
+        Object result2 = express4Runner.execute("""
+            return {'value1': a, 'value2': b};
+            """, context, QLOptions.DEFAULT_OPTIONS).getResult();
+        System.out.println("返回map = " + result2); // 输出: {value1=1, value2=2}
+        System.out.println("返回map类型 = " + result2.getClass()); // 返回map类型 = class java.util.LinkedHashMap
+
+
+
+//        InitOptions options = new InitOptions();
+//        options.addAllowClass("com.github.axinger.model.ProductDTO"); // 允许 new 该类
+//        Express4Runner runner = new Express4Runner(options);
+//        // 返回Map，可以带字段名
+//        Object result3 = runner.execute("""
+//            return  new com.github.axinger.model.ProductDTO(d,a);
+//            """, context, QLOptions.DEFAULT_OPTIONS).getResult();
+//        System.out.println("返回map = " + result3); 
+//        System.out.println("返回map类型 = " + result3.getClass());
+
+
+        
+    }
+    
+    /*
+    因此在 QLExpress4 中，全局变量默认不会写入到 context 中。
+
+如果想要兼容 3 的特性，需要将 polluteUserContext 选项设置为 true，参考代码如下
+     */
+    @Test
+    public void test102() {
+
+        Express4Runner express4Runner = new Express4Runner(InitOptions.DEFAULT_OPTIONS);
+        QLOptions populateOption = QLOptions.builder().polluteUserContext(true).build();
+        Map<String, Object> populatedMap = new HashMap<>();
+        populatedMap.put("b", 10);
+        express4Runner.execute("a = 11;b = 12", populatedMap, populateOption);
+
+        System.out.println("populatedMap = " + populatedMap);
+//        assertEquals(11, populatedMap.get("b"));
     }
     
     /*
@@ -143,13 +204,26 @@ QLExpress 内部会用 BigDecimal 表示所有无法用 double 精确表示数�
 
     @Test
     public void test5() {
+        
+        System.out.println("java缺少精度 = " + (0.1 + 0.2));
+        
         Express4Runner express4Runner = new Express4Runner(InitOptions.DEFAULT_OPTIONS);
         Object result = express4Runner.execute("0.1", Collections.emptyMap(), QLOptions.DEFAULT_OPTIONS).getResult();
         assertTrue(result instanceof BigDecimal);
-
-
-        System.out.println("result = " + (0.1 + 0.2));
+        System.out.println("自动转换类型"+result.getClass());
         assertNotEquals(0.3, 0.1 + 0.2, 0.0);
+        assertTrue((Boolean) express4Runner.execute("0.3==0.1+0.2", Collections.emptyMap(), QLOptions.DEFAULT_OPTIONS)
+                .getResult());
+
+        Object result1 = express4Runner.execute("0.1+0.2", Collections.emptyMap(), QLOptions.DEFAULT_OPTIONS)
+                .getResult();
+        System.out.println("result1 = " + result1);
+    }
+
+    @Test
+    public void test51() {
+        Express4Runner express4Runner = new Express4Runner(InitOptions.DEFAULT_OPTIONS);
+
         assertTrue((Boolean) express4Runner.execute("0.3==0.1+0.2", Collections.emptyMap(), QLOptions.DEFAULT_OPTIONS)
                 .getResult());
 
