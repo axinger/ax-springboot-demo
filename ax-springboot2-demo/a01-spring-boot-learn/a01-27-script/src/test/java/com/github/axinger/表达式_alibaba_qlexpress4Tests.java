@@ -1,16 +1,15 @@
 package com.github.axinger;
 
 import cn.hutool.core.lang.Assert;
+import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.qlexpress4.Express4Runner;
 import com.alibaba.qlexpress4.InitOptions;
 import com.alibaba.qlexpress4.QLOptions;
-import com.alibaba.qlexpress4.QLResult;
 import com.alibaba.qlexpress4.exception.QLException;
 import com.alibaba.qlexpress4.exception.QLSyntaxException;
 import com.alibaba.qlexpress4.runtime.Parameters;
 import com.alibaba.qlexpress4.runtime.QContext;
 import com.alibaba.qlexpress4.runtime.function.CustomFunction;
-import com.alibaba.qlexpress4.runtime.trace.ExpressionTrace;
 import com.alibaba.qlexpress4.security.QLSecurityStrategy;
 import com.github.axinger.model.ProductDTO;
 import lombok.SneakyThrows;
@@ -57,19 +56,18 @@ public class 表达式_alibaba_qlexpress4Tests {
 
         // 方式1: 返回数组
         Object result = express4Runner.execute("""
-            return [a, b];
-            """, context, QLOptions.DEFAULT_OPTIONS).getResult();
+                return [a, b];
+                """, context, QLOptions.DEFAULT_OPTIONS).getResult();
         System.out.println("返回数组 = " + result); // 输出: [1, 2]
         System.out.println("返回数组类型 = " + result.getClass()); // class java.util.ArrayList
 
 
         // 返回Map，可以带字段名
         Object result2 = express4Runner.execute("""
-            return {'value1': a, 'value2': b};
-            """, context, QLOptions.DEFAULT_OPTIONS).getResult();
+                return {'value1': a, 'value2': b};
+                """, context, QLOptions.DEFAULT_OPTIONS).getResult();
         System.out.println("返回map = " + result2); // 输出: {value1=1, value2=2}
         System.out.println("返回map类型 = " + result2.getClass()); // 返回map类型 = class java.util.LinkedHashMap
-
 
 
 //        InitOptions options = new InitOptions();
@@ -81,11 +79,9 @@ public class 表达式_alibaba_qlexpress4Tests {
 //            """, context, QLOptions.DEFAULT_OPTIONS).getResult();
 //        System.out.println("返回map = " + result3); 
 //        System.out.println("返回map类型 = " + result3.getClass());
-
-
-        
     }
-    
+
+
     /*
     因此在 QLExpress4 中，全局变量默认不会写入到 context 中。
 
@@ -97,12 +93,41 @@ public class 表达式_alibaba_qlexpress4Tests {
         Express4Runner express4Runner = new Express4Runner(InitOptions.DEFAULT_OPTIONS);
         QLOptions populateOption = QLOptions.builder().polluteUserContext(true).build();
         Map<String, Object> populatedMap = new HashMap<>();
-        populatedMap.put("b", 10);
-        express4Runner.execute("a = 11;b = 12", populatedMap, populateOption);
+        populatedMap.put("a", 0.1);
+        populatedMap.put("b", 0.2);
+        express4Runner.execute("c = a+b;d = 12", populatedMap, populateOption);
 
         System.out.println("populatedMap = " + populatedMap);
 //        assertEquals(11, populatedMap.get("b"));
     }
+
+    @SneakyThrows
+    @Test
+    public void test104() {
+
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setA(0.1);
+        productDTO.setB(0.2);
+        productDTO.setProductPrice(1);
+        productDTO.setNumber(2);
+        
+        JSONObject context = JSONObject.from(productDTO);
+        System.out.println("context = " + context);
+
+        Express4Runner express4Runner = new Express4Runner(InitOptions.DEFAULT_OPTIONS);
+        QLOptions populateOption = QLOptions.builder()
+                .precise(true) /// 精确计算
+                .polluteUserContext(true) ///全局变量默认不会写入到 context 中。
+                .build();
+
+        express4Runner.execute("""
+                 c = a+b;d = 12;
+                totalPrice= number*productPrice;
+                """, context, populateOption);
+
+        System.out.println("context = " + context);
+    }
+    
     
     /*
     添加自定义函数与操作符
@@ -204,13 +229,13 @@ QLExpress 内部会用 BigDecimal 表示所有无法用 double 精确表示数�
 
     @Test
     public void test5() {
-        
+
         System.out.println("java缺少精度 = " + (0.1 + 0.2));
-        
+
         Express4Runner express4Runner = new Express4Runner(InitOptions.DEFAULT_OPTIONS);
         Object result = express4Runner.execute("0.1", Collections.emptyMap(), QLOptions.DEFAULT_OPTIONS).getResult();
         assertTrue(result instanceof BigDecimal);
-        System.out.println("自动转换类型"+result.getClass());
+        System.out.println("自动转换类型" + result.getClass());
         assertNotEquals(0.3, 0.1 + 0.2, 0.0);
         assertTrue((Boolean) express4Runner.execute("0.3==0.1+0.2", Collections.emptyMap(), QLOptions.DEFAULT_OPTIONS)
                 .getResult());
