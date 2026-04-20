@@ -95,7 +95,7 @@ public class 表达式_alibaba_qlexpress4Tests {
         Map<String, Object> populatedMap = new HashMap<>();
         populatedMap.put("a", 0.1);
         populatedMap.put("b", 0.2);
-        express4Runner.execute("c = a+b;d = 12", populatedMap, populateOption);
+        express4Runner.execute("c = a+b;d = 12;f=g*q", populatedMap, populateOption);
 
         System.out.println("populatedMap = " + populatedMap);
 //        assertEquals(11, populatedMap.get("b"));
@@ -110,7 +110,7 @@ public class 表达式_alibaba_qlexpress4Tests {
         productDTO.setB(0.2);
         productDTO.setProductPrice(1);
         productDTO.setNumber(2);
-        
+
         JSONObject context = JSONObject.from(productDTO);
         System.out.println("context = " + context);
 
@@ -122,10 +122,18 @@ public class 表达式_alibaba_qlexpress4Tests {
 
         express4Runner.execute("""
                  c = a+b;d = 12;
+                 f=10/3;
                 totalPrice= number*productPrice;
                 """, context, populateOption);
 
         System.out.println("context = " + context);
+
+
+        ProductDTO productDTO1 = context.toJavaObject(ProductDTO.class);
+        System.out.println("productDTO1 = " + productDTO1);
+
+        ProductDTO productDTO2 = JSONObject.parseObject(context.toJSONString(), ProductDTO.class);
+        System.out.println("productDTO2 = " + productDTO2);
     }
     
     
