@@ -1,7 +1,7 @@
 package com.github.axinger;
 
 import com.alibaba.fastjson2.JSON;
-import com.axing.common.util.json.JsonUtil;
+import com.axing.common.json.util.JsonUtil;
 import com.github.axinger.model.Person;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;

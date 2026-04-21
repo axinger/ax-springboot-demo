@@ -1,6 +1,6 @@
 package com.github.axinger.bean;
 
-import com.axing.common.util.json.JsonUtil;
+import com.axing.common.json.util.JsonUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

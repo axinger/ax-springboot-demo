@@ -72,6 +72,11 @@
             <artifactId>util-spring-boot-starter</artifactId>
         </dependency>
 
+        <!-- 全局JSON工具类 -->
+        <dependency>
+            <groupId>com.github.axinger</groupId>
+            <artifactId>jackson-config-spring-boot-starter</artifactId>
+        </dependency>
 
     </dependencies>
 

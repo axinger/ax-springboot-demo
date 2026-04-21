@@ -1,6 +1,6 @@
 package com.github.axinger.jackson;
 
-import com.axing.common.util.json.JsonUtil;
+import com.axing.common.json.util.JsonUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;

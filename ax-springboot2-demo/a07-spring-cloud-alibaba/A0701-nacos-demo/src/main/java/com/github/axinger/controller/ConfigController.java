@@ -1,6 +1,6 @@
 package com.github.axinger.controller;
 
-import com.axing.common.util.json.JsonUtil;
+import com.axing.common.json.util.JsonUtil;
 import com.github.axinger.bean.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

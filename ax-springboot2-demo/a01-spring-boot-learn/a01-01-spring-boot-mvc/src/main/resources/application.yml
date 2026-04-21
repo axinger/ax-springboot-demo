@@ -3,6 +3,10 @@ server:
   shutdown: graceful # 优雅
 
 spring:
+  mvc:
+    format:
+      date: yyyy-MM-dd
+      date-time: yyyy-MM-dd HH:mm:ss
   lifecycle:
     # 设置关闭阶段的超时时间，默认为30秒
     timeout-per-shutdown-phase: 30s
