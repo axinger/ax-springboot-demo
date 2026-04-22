@@ -26,6 +26,19 @@ public class ScriptUtilTests {
 
     }
 
+    /// groovy 脚本
+    @Test
+    void test1_1() throws ScriptException {
+
+        ScriptEngine script = ScriptUtil.getGroovyEngine();
+        // 设置变量
+        script.put("a", 10);
+        script.put("b", 20);
+        script.put("c", 20);
+        Object eval = script.eval("a + b * c");
+        System.out.println("eval = " + eval);
+    }
+
     @Test
     void test2() {
 
