@@ -20,7 +20,7 @@
     <!-- 聚合所有模块 -->
     <modules>
         <!-- BOM must be first to provide dependency management -->
-        <module>axinger-bom</module>
+        <module>axinger-all</module>
         <!-- 主要功能模块 -->
         <module>axinger-common</module>
         <module>axinger-config</module>

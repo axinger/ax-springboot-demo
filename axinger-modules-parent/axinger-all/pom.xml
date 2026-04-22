@@ -6,11 +6,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.axinger</groupId>
-    <artifactId>axinger-bom</artifactId>
+    <artifactId>axinger-all</artifactId>
     <version>2026.01.01-2.7</version>
     <packaging>pom</packaging>
-    <name>Axinger Bill of Materials</name>
-    <description>Axinger 统一依赖管理 BOM</description>
+    <name>axinger-all统一依赖管理 BOM</name>
 
     <properties>
         <java.version>21</java.version>

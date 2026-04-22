@@ -77,7 +77,7 @@ axinger-modules/
     <dependencies>
         <dependency>
             <groupId>com.github.axinger</groupId>
-            <artifactId>axinger-bom</artifactId>
+            <artifactId>axinger-all</artifactId>
             <version>2026.01.01-2.7</version>
             <type>pom</type>
             <scope>import</scope>

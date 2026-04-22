@@ -10,7 +10,7 @@
 <!-- 总 BOM - 包含所有 axinger starters -->
 <dependency>
     <groupId>com.github.axinger</groupId>
-    <artifactId>axinger-bom</artifactId>
+    <artifactId>axinger-all</artifactId>
     <version>${axinger.version}</version>
     <type>pom</type>
     <scope>import</scope>

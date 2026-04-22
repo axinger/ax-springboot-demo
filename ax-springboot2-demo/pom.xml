@@ -135,7 +135,7 @@
             <!-- 引入统一的 Axinger BOM - 包含所有 axinger starters 和第三方依赖版本管理 -->
             <dependency>
                 <groupId>com.github.axinger</groupId>
-                <artifactId>axinger-bom</artifactId>
+                <artifactId>axinger-all</artifactId>
                 <version>2026.01.01-2.7</version>
                 <type>pom</type>
                 <scope>import</scope>

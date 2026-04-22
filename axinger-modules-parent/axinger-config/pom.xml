@@ -32,7 +32,7 @@
             <!-- Axinger BOM - 管理所有 axinger 模块版本 -->
             <dependency>
                 <groupId>com.github.axinger</groupId>
-                <artifactId>axinger-bom</artifactId>
+                <artifactId>axinger-all</artifactId>
                 <version>${project.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
