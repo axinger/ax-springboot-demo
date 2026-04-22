@@ -4,7 +4,6 @@ import com.axing.common.response.dto.Result;
 import com.github.axinger.api.call.payment.config.PaymentOrderConfig;
 import com.github.axinger.api.dto.PaymentDTO;
 import com.github.axinger.api.dto.PaymentVO;
-import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.context.annotation.Import;
@@ -22,13 +21,13 @@ import org.springframework.web.bind.annotation.RequestHeader;
 @Import(PaymentOrderConfig.class)
 public interface PaymentCall {
 
-    @Operation(summary = "支付系统,订单,payment1")
+   // @Operation(summary = "支付系统,订单,payment1")
     /// get请求分组dto参数
     @GetMapping(value = "/payment1")
     Result<PaymentVO> payment1(@RequestHeader("Authorization") String token, @SpringQueryMap PaymentDTO dto);
 
 
-    @Operation(summary = "支付系统,订单,payment2")
+   // @Operation(summary = "支付系统,订单,payment2")
     @GetMapping(value = "/payment2")
     Result<PaymentVO> payment2(@RequestHeader("Authorization") String token, @RequestBody PaymentDTO dto);
 }

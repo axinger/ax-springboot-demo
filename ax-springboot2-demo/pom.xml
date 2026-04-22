@@ -76,8 +76,6 @@
     </profiles>
 
     <modules>
-        <module>axinger-cloud</module>
-        <module>axinger-common</module>
         <module>a01-spring-boot-learn</module>
         <module>a02-spring-boot-db</module>
         <module>a03-websocket</module>
@@ -120,16 +118,12 @@
         <module>a19-scheduled</module>
         <module>a21-grpc</module>
         <module>a39-liteflow</module>
-        <module>axinger-config</module>
         <module>a22-cors</module>
         <module>a41-ocr</module>
         <module>a42-queue-disruptor</module>
         <module>a43-camel</module>
         <module>a16-spring-security2</module>
         <module>a44-IoT</module>
-        <module>axinger-common-bom</module>
-        <module>axinger-config-bom</module>
-        <module>axinger-cloud-bom</module>
         <module>a23-integration</module>
         <module>a35-springboot2-flowable</module>
         <module>a45-hertzbeat</module>
@@ -138,26 +132,11 @@
     <dependencyManagement>
         <dependencies>
 
+            <!-- 引入统一的 Axinger BOM - 包含所有 axinger starters 和第三方依赖版本管理 -->
             <dependency>
                 <groupId>com.github.axinger</groupId>
-                <artifactId>axinger-common-bom</artifactId>
-                <version>${axinger.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>com.github.axinger</groupId>
-                <artifactId>axinger-config-bom</artifactId>
-                <version>${axinger.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>com.github.axinger</groupId>
-                <artifactId>axinger-cloud-bom</artifactId>
-                <version>${axinger.version}</version>
+                <artifactId>axinger-bom</artifactId>
+                <version>2026.01.01-2.7</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

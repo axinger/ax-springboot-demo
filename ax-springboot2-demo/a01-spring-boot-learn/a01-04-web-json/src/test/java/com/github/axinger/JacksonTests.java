@@ -1,6 +1,6 @@
 package com.github.axinger;
 
-import com.alibaba.fastjson2.JSON;
+import com.axing.common.json.util.JsonUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.axinger.jackson.MorePerson;
 import lombok.SneakyThrows;
@@ -46,13 +46,18 @@ public class JacksonTests {
                     "age": 30
                 }
                 """;
-        MorePerson morePerson = JSON.parseObject(json, MorePerson.class);
+        MorePerson morePerson = com.axing.common.json.util.JsonUtil.toBean(json, MorePerson.class);
+
+
         System.out.println(morePerson); // 输出: MorePerson(id=1, name=Alice, otherProperties={age=30, city=New York})
 
         // 序列化：Java对象 -> JSON
 
-        String jsonString = JSON.toJSONString(morePerson);
+        String jsonString = com.axing.common.json.util.JsonUtil.toJsonStr(morePerson);
         System.out.println(jsonString); // 输出: {"id":"1","name":"Alice","age":30,"city":"New York","gender":"female"}
+
+        String prettyPrinterJson = JsonUtil.toPrettyPrinterJson(morePerson);
+        System.out.println(prettyPrinterJson);
     }
 
 
