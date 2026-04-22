@@ -8,8 +8,7 @@
     <artifactId>axinger-modules-parent</artifactId>
     <version>2026.01.01-2.7</version>
     <packaging>pom</packaging>
-    <name>Axinger 模块聚合构建器</name>
-    <description>Axinger 模块聚合构建器</description>
+    <name>Axinger 模块聚合构建器${project.version}</name>
 
     <properties>
         <java.version>21</java.version>
@@ -27,7 +26,6 @@
         <module>axinger-config</module>
         <module>axinger-cloud</module>
     </modules>
-    
 
     <build>
         <plugins>
