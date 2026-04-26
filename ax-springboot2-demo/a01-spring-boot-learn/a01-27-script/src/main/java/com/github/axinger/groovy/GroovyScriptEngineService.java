@@ -7,6 +7,7 @@ import org.codehaus.groovy.control.CompilerConfiguration;
 import org.codehaus.groovy.control.customizers.SecureASTCustomizer;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,8 +18,6 @@ import java.util.Map;
  */
 @Component
 public class GroovyScriptEngineService {
-
-
 
     /**
      * 执行 Groovy 脚本
@@ -32,7 +31,15 @@ public class GroovyScriptEngineService {
         try {
             // 1. 准备上下文 Binding
             // 注意：Groovy 的 Binding 会持有变量的引用，脚本内修改会直接影响传入的 Map
-            Binding binding = new Binding(context != null ? context : new HashMap<>());
+            Map<String, Object> processedContext = context != null ? context : new HashMap<>();
+
+            // --- 精度配置 ---
+            // 当开启精确模式时，将 Double/Float 自动转换为 BigDecimal
+            if (options.isPrecise()) {
+                processedContext = convertToBigDecimal(processedContext);
+            }
+
+            Binding binding = new Binding(processedContext);
 
             // 2. 配置编译器
             CompilerConfiguration config = new CompilerConfiguration();
@@ -42,22 +49,14 @@ public class GroovyScriptEngineService {
                 SecureASTCustomizer secure = new SecureASTCustomizer();
                 secure.setClosuresAllowed(true); // 允许闭包
                 secure.setMethodDefinitionAllowed(false); // 禁止在脚本中定义新方法
-                secure.setImportsWhitelist(Collections.emptyList()); // 默认禁止导入
-                secure.setStarImportsWhitelist(Collections.emptyList());
+                secure.setAllowedImports(Collections.emptyList()); // 默认禁止导入
+                secure.setAllowedStarImports(Collections.emptyList());
 
                 if (options.getSecurityStrategy() == SecurityStrategy.WHITE_LIST) {
                     // 白名单模式：仅允许 java.lang 和 java.math 等基础包
-                    secure.setImportsWhitelist(Collections.singletonList("java.math.BigDecimal"));
+                    secure.setAllowedImports(Collections.singletonList("java.math.BigDecimal"));
                 }
                 config.addCompilationCustomizers(secure);
-            }
-
-            // --- 精度配置 ---
-            // Groovy 默认对字面量小数使用 BigDecimal，但对 Double 类型运算会使用 double
-            // 如果需要强制高精度，建议在传入 context 前将数字转为 BigDecimal
-            if (options.isPrecise()) {
-                // 这里可以添加 AST 转换，强制将所有数字运算转为 BigDecimal 调用
-                // 为简化演示，此处依赖 Groovy 默认行为 + 用户传入 BigDecimal 类型
             }
 
             // 3. 执行脚本
@@ -70,6 +69,28 @@ public class GroovyScriptEngineService {
         } catch (Exception e) {
             throw new RuntimeException("Groovy 执行异常: " + e.getMessage(), e);
         }
+    }
+
+    /**
+     * 将 Map 中的 Double/Float 转换为 BigDecimal，确保精确计算
+     *
+     * @param context 原始上下文
+     * @return 转换后的上下文
+     */
+    private Map<String, Object> convertToBigDecimal(Map<String, Object> context) {
+        Map<String, Object> result = new HashMap<>();
+        for (Map.Entry<String, Object> entry : context.entrySet()) {
+            Object value = entry.getValue();
+            if (value instanceof Double) {
+                // 使用字符串构造避免精度丢失
+                result.put(entry.getKey(), new BigDecimal(value.toString()));
+            } else if (value instanceof Float) {
+                result.put(entry.getKey(), new BigDecimal(value.toString()));
+            } else {
+                result.put(entry.getKey(), value);
+            }
+        }
+        return result;
     }
 
 }
