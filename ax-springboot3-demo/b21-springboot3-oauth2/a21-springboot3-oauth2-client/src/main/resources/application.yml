@@ -1,0 +1,46 @@
+server:
+  port: 9002
+
+spring:
+  application:
+    name: oauth2-client
+
+  security:
+    oauth2:
+      client:
+        registration:
+          messaging-client-oidc:
+            provider: spring
+            client-id: messaging-client
+            client-secret: 123456
+            client-authentication-method: client_secret_basic
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://127.0.0.1:9002/login/oauth2/code/{registrationId}"
+            scope:
+              - openid
+              - profile
+              - message.read
+              - message.write
+            client-name: messaging-client-oidc
+        provider:
+          spring:
+            issuer-uri: http://localhost:9000
+            authorization-uri: http://localhost:9000/oauth2/authorize
+            token-uri: http://localhost:9000/oauth2/token
+            user-info-uri: http://localhost:9000/userinfo
+            jwk-set-uri: http://localhost:9000/oauth2/jwks
+            user-name-attribute: sub
+
+  thymeleaf:
+    cache: false
+
+logging:
+  level:
+    com.github.axinger: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.web.client: DEBUG
+
+# 资源服务器地址
+resource:
+  server:
+    base-url: http://localhost:9001

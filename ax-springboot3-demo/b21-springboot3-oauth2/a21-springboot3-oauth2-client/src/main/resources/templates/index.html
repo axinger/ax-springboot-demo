@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OAuth2 客户端 - 首页</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar h1 { font-size: 20px; }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        .nav-links a:hover { text-decoration: underline; }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .hero {
+            background: white;
+            padding: 48px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .hero h2 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 16px;
+        }
+        .hero p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.2s;
+        }
+        .btn:hover { transform: translateY(-1px); }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+            margin-left: 12px;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 32px;
+        }
+        .feature-card {
+            background: white;
+            padding: 28px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .feature-card h3 {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .feature-card p {
+            font-size: 13px;
+            color: #888;
+            line-height: 1.5;
+        }
+        .user-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>OAuth2 客户端演示</h1>
+        <div class="nav-links">
+            <a href="/">首页</a>
+            <a href="/messages">消息管理</a>
+            <a href="/user">用户信息</a>
+            <span th:if="${loggedIn}" class="user-badge" th:text="'用户: ' + ${username}">用户</span>
+            <a th:if="${loggedIn}" href="/logout">退出登录</a>
+            <a th:if="${!loggedIn}" href="/oauth2/authorization/messaging-client-oidc">登录</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="hero">
+            <h2>Spring Boot 3 OAuth2 演示系统</h2>
+            <p>
+                这是一个基于 Spring Authorization Server 的 OAuth2 企业级演示项目。<br>
+                包含授权服务器、资源服务器和客户端三个模块，支持微服务架构和单体应用两种部署模式。
+            </p>
+            <div th:if="${!loggedIn}">
+                <a href="/oauth2/authorization/messaging-client-oidc" class="btn btn-primary">OAuth2 登录</a>
+            </div>
+            <div th:if="${loggedIn}">
+                <p style="color: #667eea; font-weight: 600;">欢迎回来，<span th:text="${username}">用户</span>！</p>
+                <a href="/messages" class="btn btn-primary">查看消息</a>
+                <a href="/user" class="btn btn-secondary">用户信息</a>
+            </div>
+        </div>
+
+        <div class="features">
+            <div class="feature-card">
+                <h3>授权服务器</h3>
+                <p>基于 Spring Authorization Server，支持授权码模式、客户端凭证模式、设备码模式和刷新令牌。</p>
+            </div>
+            <div class="feature-card">
+                <h3>资源服务器</h3>
+                <p>提供受OAuth2保护的REST API，支持JWT令牌验证和方法级权限控制。</p>
+            </div>
+            <div class="feature-card">
+                <h3>客户端应用</h3>
+                <p>集成OAuth2登录，管理访问令牌，调用受保护的资源API并展示数据。</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

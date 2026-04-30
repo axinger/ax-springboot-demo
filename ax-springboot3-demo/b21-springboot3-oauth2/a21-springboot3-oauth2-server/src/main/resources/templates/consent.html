@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>授权确认 - OAuth2</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .consent-container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            width: 480px;
+        }
+        .consent-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .consent-header h1 {
+            color: #333;
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        .consent-header p {
+            color: #666;
+            font-size: 14px;
+        }
+        .client-info {
+            background: #f0f4ff;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+        }
+        .client-info strong {
+            color: #4a5568;
+        }
+        .scope-list {
+            margin-bottom: 24px;
+        }
+        .scope-list h3 {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 12px;
+        }
+        .scope-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        .scope-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-right: 12px;
+            accent-color: #667eea;
+        }
+        .scope-item label {
+            flex: 1;
+            font-size: 14px;
+            color: #333;
+        }
+        .scope-desc {
+            font-size: 12px;
+            color: #888;
+            margin-top: 4px;
+        }
+        .btn-group {
+            display: flex;
+            gap: 12px;
+        }
+        .btn {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+        .btn-allow {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .btn-deny {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+    </style>
+</head>
+<body>
+    <div class="consent-container">
+        <div class="consent-header">
+            <h1>授权确认</h1>
+            <p>应用正在请求访问您的以下信息</p>
+        </div>
+        <div class="client-info">
+            <strong>客户端:</strong> <span th:text="${clientId} ?: '未知客户端'"></span>
+        </div>
+        <form th:action="@{/oauth2/consent}" method="post">
+            <input type="hidden" name="client_id" th:value="${clientId}">
+            <input type="hidden" name="state" th:value="${state}">
+            <div class="scope-list">
+                <h3>请求权限范围</h3>
+                <div class="scope-item" th:each="scope : ${scopes}">
+                    <input type="checkbox" th:id="'scope-' + ${scope}" th:name="scope" th:value="${scope}" checked>
+                    <label th:for="'scope-' + ${scope}">
+                        <span th:text="${scope}"></span>
+                        <div class="scope-desc" th:switch="${scope}">
+                            <span th:case="'openid'">获取您的OpenID标识</span>
+                            <span th:case="'profile'">获取您的基本资料</span>
+                            <span th:case="'message.read'">读取您的消息</span>
+                            <span th:case="'message.write'">创建和修改您的消息</span>
+                            <span th:case="*">访问范围: <span th:text="${scope}"></span></span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            <div class="btn-group">
+                <button type="submit" name="consent" value="deny" class="btn btn-deny">拒绝</button>
+                <button type="submit" name="consent" value="allow" class="btn btn-allow">同意授权</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

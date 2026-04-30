@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户信息 - OAuth2 客户端</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar h1 { font-size: 20px; }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 32px auto;
+            padding: 0 20px;
+        }
+        .card {
+            background: white;
+            padding: 28px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            margin-bottom: 20px;
+        }
+        .card h2 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        .info-row {
+            display: flex;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .info-row:last-child { border-bottom: none; }
+        .info-label {
+            width: 160px;
+            color: #888;
+            font-size: 14px;
+        }
+        .info-value {
+            flex: 1;
+            color: #333;
+            font-size: 14px;
+            font-family: monospace;
+            word-break: break-all;
+        }
+        .error-msg {
+            color: #e74c3c;
+            padding: 12px;
+            background: #fdf2f2;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>OAuth2 客户端演示</h1>
+        <div class="nav-links">
+            <a href="/">首页</a>
+            <a href="/messages">消息管理</a>
+            <a href="/user">用户信息</a>
+            <a href="/logout">退出登录</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h2>OAuth2 用户属性</h2>
+            <div th:each="entry : ${oauth2User}" class="info-row">
+                <div class="info-label" th:text="${entry.key}">Key</div>
+                <div class="info-value" th:text="${entry.value}">Value</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>资源服务器用户信息</h2>
+            <div th:if="${resourceError}" class="error-msg" th:text="${resourceError}"></div>
+            <div th:unless="${resourceError}">
+                <div th:each="entry : ${resourceUserInfo}" class="info-row">
+                    <div class="info-label" th:text="${entry.key}">Key</div>
+                    <div class="info-value" th:text="${entry.value}">Value</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

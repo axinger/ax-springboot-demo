@@ -15,6 +15,7 @@
         <module>a21-springboot3-oauth2-server</module>
         <module>a21-springboot3-oauth2-resource</module>
         <module>a21-springboot3-oauth2-client</module>
+        <module>a21-springboot3-oauth2-allinone</module>
     </modules>
 
 </project>
