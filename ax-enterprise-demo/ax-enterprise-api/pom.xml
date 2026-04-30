@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.github.axinger</groupId>
+        <artifactId>ax-enterprise-parent</artifactId>
+        <version>1.0.0</version>
+        <relativePath>../ax-enterprise-parent/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>ax-enterprise-api</artifactId>
+    <packaging>pom</packaging>
+    <name>ax-enterprise-api API模块聚合</name>
+    <description>聚合所有 API 定义模块（DTO、Feign接口、枚举等）</description>
+
+    <modules>
+        <module>api-user</module>
+        <module>api-order</module>
+    </modules>
+
+</project>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.github.axinger</groupId>
+        <artifactId>ax-enterprise-parent</artifactId>
+        <version>1.0.0</version>
+        <relativePath>../../ax-enterprise-parent/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>project-c</artifactId>
+    <packaging>jar</packaging>
+    <name>project-c All-in-One聚合服务</name>
+    <description>聚合 project-a 和 project-b 的 all-in-one 服务入口</description>
+
+    <dependencies>
+        <!-- 引入项目A（用户服务业务模块） -->
+        <dependency>
+            <groupId>com.github.axinger</groupId>
+            <artifactId>project-a</artifactId>
+        </dependency>
+
+        <!-- 引入项目B（订单服务业务模块） -->
+        <dependency>
+            <groupId>com.github.axinger</groupId>
+            <artifactId>project-b</artifactId>
+        </dependency>
+
+        <!-- Spring Boot Web -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- 生成可执行 fat-jar，显式指定 mainClass -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!--
+                        显式指定主类：
+                        project-c 依赖了 project-a 和 project-b，
+                        三者都有自己的 @SpringBootApplication 启动类。
+                        如果不指定 mainClass，打包时会因存在多个候选主类而报错。
+                    -->
+                    <mainClass>com.github.axinger.projectc.ProjectCApplication</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

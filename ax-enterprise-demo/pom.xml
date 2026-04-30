@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.github.axinger</groupId>
+    <artifactId>ax-enterprise-demo</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    <name>ax-enterprise-demo 企业级多模块架构示例</name>
+    <description>展示 Maven 多模块结构：API 模块、公共模块、独立业务项目、all-in-one 聚合</description>
+
+    <!-- 聚合所有模块，只做聚合不做继承 -->
+    <modules>
+        <module>ax-enterprise-parent</module>
+        <module>ax-enterprise-api</module>
+        <module>ax-enterprise-common</module>
+        <module>ax-enterprise-project</module>
+    </modules>
+
+</project>

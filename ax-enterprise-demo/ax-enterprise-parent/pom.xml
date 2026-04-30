@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.12</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>com.github.axinger</groupId>
+    <artifactId>ax-enterprise-parent</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    <name>ax-enterprise-parent 统一依赖管理</name>
+    <description>统一定义版本号、依赖管理、插件管理、构建配置</description>
+
+    <properties>
+        <java.version>21</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- 内部模块版本 -->
+        <ax-enterprise.version>1.0.0</ax-enterprise.version>
+
+        <!-- 常用第三方版本 -->
+        <lombok.version>1.18.36</lombok.version>
+        <hutool.version>5.8.35</hutool.version>
+        <fastjson2.version>2.0.54</fastjson2.version>
+        <guava.version>33.4.0-jre</guava.version>
+    </properties>
+
+    <!-- 所有子模块都会继承这些依赖 -->
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+    <!-- 依赖版本统一管理，子模块引入时不需要写版本号 -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- 内部 API 模块 -->
+            <dependency>
+                <groupId>com.github.axinger</groupId>
+                <artifactId>api-user</artifactId>
+                <version>${ax-enterprise.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.axinger</groupId>
+                <artifactId>api-order</artifactId>
+                <version>${ax-enterprise.version}</version>
+            </dependency>
+
+            <!-- 内部公共模块 -->
+            <dependency>
+                <groupId>com.github.axinger</groupId>
+                <artifactId>common-core</artifactId>
+                <version>${ax-enterprise.version}</version>
+            </dependency>
+
+            <!-- 内部业务项目（project-c 引入 a、b 时使用） -->
+            <dependency>
+                <groupId>com.github.axinger</groupId>
+                <artifactId>project-a</artifactId>
+                <version>${ax-enterprise.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.axinger</groupId>
+                <artifactId>project-b</artifactId>
+                <version>${ax-enterprise.version}</version>
+            </dependency>
+
+            <!-- 常用工具 -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2</artifactId>
+                <version>${fastjson2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${project.parent.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>
