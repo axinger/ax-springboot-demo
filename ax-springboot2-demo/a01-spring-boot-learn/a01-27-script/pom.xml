@@ -19,19 +19,19 @@
         <graalvm.version>24.1.2</graalvm.version>
     </properties>
     
-    <dependencyManagement>
-        <dependencies>
-            <!-- Source: https://mvnrepository.com/artifact/org.apache.groovy/groovy-all -->
-            <dependency>
-                <groupId>org.apache.groovy</groupId>
-                <artifactId>groovy-all</artifactId>
-                <version>5.0.5</version>
-                <type>pom</type>
-                <scope>compile</scope>
-            </dependency>
-        </dependencies>
-      
-    </dependencyManagement>
+<!--    <dependencyManagement>-->
+<!--        <dependencies>-->
+<!--            &lt;!&ndash; Source: https://mvnrepository.com/artifact/org.apache.groovy/groovy-all &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>org.apache.groovy</groupId>-->
+<!--                <artifactId>groovy-all</artifactId>-->
+<!--                <version>5.0.5</version>-->
+<!--                <type>pom</type>-->
+<!--                <scope>compile</scope>-->
+<!--            </dependency>-->
+<!--        </dependencies>-->
+<!--      -->
+<!--    </dependencyManagement>-->
 
     <dependencies>
         <dependency>
@@ -96,13 +96,6 @@
             <version>3.3.4</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.groovy</groupId>
-            <artifactId>groovy-all</artifactId>
-            <version>5.0.5</version>
-            <scope>compile</scope>
-        </dependency>
-
         <!-- Apache Groovy 核心库 (新坐标) -->
         <dependency>
             <groupId>org.apache.groovy</groupId>
@@ -128,6 +121,14 @@
             <version>5.0.5</version>
             <scope>compile</scope>
         </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>org.apache.groovy</groupId>-->
+<!--            <artifactId>groovy-all</artifactId>-->
+<!--            <version>5.0.5</version>-->
+<!--            <type>pom</type>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
 
     </dependencies>
 
