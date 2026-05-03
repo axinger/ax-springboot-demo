@@ -1,7 +1,7 @@
 spring:
   config:
     import:
-      - optional:nacos:axinger-user.yml  # 这个方式在nacos中不适配
+      - optional:axinger-user.yml
       - optional:axinger-doc.yml
       - optional:axinger-filter.yml
 #      - axinger-user.yml

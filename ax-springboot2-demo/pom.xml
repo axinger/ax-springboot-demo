@@ -127,6 +127,7 @@
         <module>a23-integration</module>
         <module>a35-springboot2-flowable</module>
         <module>a45-hertzbeat</module>
+        <module>a24-arthas</module>
     </modules>
 
     <dependencyManagement>

@@ -1,0 +1,48 @@
+// 这是修复后的 calculateOrderTotal 方法
+// 用于 Arthas 热更新演示
+// 
+// 使用步骤:
+// 1. 在 Arthas 中执行: jad com.github.axinger.service.DemoService > /tmp/DemoService.java
+// 2. 编辑文件，将下面的方法替换原有方法
+// 3. 编译: mc -c <classloader-hash> /tmp/DemoService.java
+// 4. 加载: retransform /tmp/com/github/axinger/service/DemoService.class
+
+    /**
+     * 【已修复】计算订单总价
+     * 修复内容:
+     * 1. 添加了空指针检查
+     * 2. 修正了折扣计算公式
+     * 3. 添加了参数验证
+     */
+    public double calculateOrderTotal(List<Double> prices, double discount) {
+        log.info("计算订单总价，商品数量: {}, 折扣: {}", 
+                prices != null ? prices.size() : 0, discount);
+        
+        // 修复 1: 添加空指针检查
+        if (prices == null || prices.isEmpty()) {
+            log.warn("商品价格列表为空，返回 0");
+            return 0.0;
+        }
+        
+        // 修复 2: 验证折扣范围（0-1之间）
+        if (discount < 0 || discount > 1) {
+            log.warn("折扣范围无效: {}，应在 0-1 之间", discount);
+            throw new IllegalArgumentException("折扣必须在 0-1 之间");
+        }
+        
+        double total = 0;
+        for (Double price : prices) {
+            if (price != null && price > 0) {
+                total += price;
+            }
+        }
+        
+        // 修复 3: 正确的折扣计算 - 乘以 (1 - discount)
+        total = total * (1 - discount);
+        
+        // 确保价格不为负数
+        total = Math.max(0, total);
+        
+        log.info("订单总价: {}", total);
+        return total;
+    }

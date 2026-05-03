@@ -1,0 +1,79 @@
+### Arthas Demo API 测试文件
+### 可以在 IDE 中直接运行这些请求
+
+### 1. 获取系统信息
+GET http://localhost:15024/api/demo/system-info
+
+### 2. 获取用户列表（默认5个）
+GET http://localhost:15024/api/demo/users
+
+### 3. 获取用户列表（指定数量）
+GET http://localhost:15024/api/demo/users?count=10
+
+### 4. 执行计算
+GET http://localhost:15024/api/demo/calculate?a=10&b=20
+
+### 5. 处理数据（正常情况）
+POST http://localhost:15024/api/demo/process
+Content-Type: application/json
+
+{
+  "input": "hello world"
+}
+
+### 6. 处理数据（空输入 - 会抛出异常）
+POST http://localhost:15024/api/demo/process
+Content-Type: application/json
+
+{
+  "input": ""
+}
+
+### 7. 慢操作演示
+GET http://localhost:15024/api/demo/slow
+
+### 8. Fibonacci 计算（小数值）
+GET http://localhost:15024/api/demo/fibonacci?n=10
+
+### 9. Fibonacci 计算（较大值）
+GET http://localhost:15024/api/demo/fibonacci?n=20
+
+### 10. 批量调用示例 - 用于性能测试
+# 这个请求需要在命令行中使用循环执行
+# while true; do curl http://localhost:15024/api/demo/users?count=50 > /dev/null; done
+
+### 11. 【有Bug的接口】计算订单总价 - 正常调用（但结果错误）
+POST http://localhost:15024/api/demo/order-total
+Content-Type: application/json
+
+{
+  "prices": [100, 200, 300],
+  "discount": 0.2
+}
+
+### 12. 【有Bug的接口】传入 null 值 - 触发空指针异常
+POST http://localhost:15024/api/demo/order-total
+Content-Type: application/json
+
+{
+  "prices": null,
+  "discount": 0.2
+}
+
+### 13. 【有Bug的接口】传入空列表
+POST http://localhost:15024/api/demo/order-total
+Content-Type: application/json
+
+{
+  "prices": [],
+  "discount": 0.2
+}
+
+### 14. 【有Bug的接口】折扣超出范围
+POST http://localhost:15024/api/demo/order-total
+Content-Type: application/json
+
+{
+  "prices": [100, 200],
+  "discount": 1.5
+}

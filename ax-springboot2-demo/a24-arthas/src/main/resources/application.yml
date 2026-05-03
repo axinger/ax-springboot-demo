@@ -1,0 +1,11 @@
+server:
+  port: 15024
+
+
+arthas:
+  # Telnet 连接端口，用于命令行连接
+  telnet-port: 3658
+  # HTTP 端口，用于浏览器访问 Web Console
+  http-port: 8563
+  # 本地调试可设为 127.0.0.1，远程访问设为 0.0.0.0（注意安全风险）
+  ip: 127.0.0.1
