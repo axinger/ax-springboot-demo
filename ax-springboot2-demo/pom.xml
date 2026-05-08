@@ -111,9 +111,9 @@
         <module>a33-docker-jar</module>
         <module>a33-docker-package</module>
         <module>a34-keycloak</module>
+        <module>a36-logback</module>
         <module>a37-data-rest</module>
         <module>a38-xxl-job</module>
-
         <module>a40-ai-ollama</module>
         <module>a19-scheduled</module>
         <module>a21-grpc</module>

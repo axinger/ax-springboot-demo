@@ -32,7 +32,7 @@ public class ObjectMapperConfig {
     private final String dateFormat = "yyyy-MM-dd";
     private final String timeFormat = "HH:mm:ss";
 
-    @Bean
+    @Bean("webJsonJackson2ObjectMapperBuilderCustomizer")
     public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
         return builder -> {
             builder.locale(Locale.CHINA);
