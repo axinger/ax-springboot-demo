@@ -19,5 +19,23 @@
         ]
       }
     ]
+  },
+  "mcpServers": {
+    "本地数据库-demo1": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@benborla29/mcp-server-mysql"
+      ],
+      "env": {
+        "MYSQL_HOST": "localhost",
+        "MYSQL_PORT": "3306",
+        "MYSQL_USER": "root",
+        "MYSQL_PASS": "root",
+        "MYSQL_DB": "demo1",
+        "MYSQL_SSL": "false"
+      },
+      "type": "stdio"
+    }
   }
 }
