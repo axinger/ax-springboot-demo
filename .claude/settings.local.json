@@ -36,6 +36,19 @@
         "MYSQL_SSL": "false"
       },
       "type": "stdio"
+    },
+    "本地数据库-demo2": {
+      "command": "uvx",
+      "args": ["--from", "mysql-mcp-server", "mysql_mcp_server"],
+      "env": {
+        "MYSQL_HOST": "localhost",
+        "MYSQL_PORT": "3306",
+        "MYSQL_USER": "root",
+        "MYSQL_PASSWORD": "root",
+        "MYSQL_DB": "demo2",
+        "MYSQL_ENABLE_SSL": "false"
+      },
+      "type": "stdio"
     }
   }
 }
