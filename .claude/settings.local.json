@@ -22,7 +22,7 @@
   },
   "mcpServers": {
     "本地数据库-demo1": {
-      "command": "npx",
+      "command": "C:\\Users\\xing\\AppData\\Local\\Volta\\tools\\image\\node\\18.20.8\\npx.cmd",
       "args": [
         "-y",
         "@benborla29/mcp-server-mysql"

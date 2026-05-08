@@ -1,0 +1,18 @@
+  "mcpServers": {
+    "本地数据库-demo1": {
+//      "command": "npx",
+      "command": "C:\\Users\\xing\\AppData\\Local\\Volta\\tools\\image\\node\\18.20.8\\npx.cmd", // 为了解决 Volta 来管理 Node.js 环境
+      "args": [
+        "-y",
+        "@benborla29/mcp-server-mysql"
+      ],
+      "env": {
+        "MYSQL_HOST": "localhost",
+        "MYSQL_PORT": "3306",
+        "MYSQL_USER": "root",
+        "MYSQL_PASS": "root",
+        "MYSQL_DB": "demo1",
+        "MYSQL_SSL": "false"
+      },
+      "type": "stdio"
+    }
