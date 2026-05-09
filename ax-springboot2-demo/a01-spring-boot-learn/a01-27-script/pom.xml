@@ -18,20 +18,20 @@
 
         <graalvm.version>24.1.2</graalvm.version>
     </properties>
-    
-<!--    <dependencyManagement>-->
-<!--        <dependencies>-->
-<!--            &lt;!&ndash; Source: https://mvnrepository.com/artifact/org.apache.groovy/groovy-all &ndash;&gt;-->
-<!--            <dependency>-->
-<!--                <groupId>org.apache.groovy</groupId>-->
-<!--                <artifactId>groovy-all</artifactId>-->
-<!--                <version>5.0.5</version>-->
-<!--                <type>pom</type>-->
-<!--                <scope>compile</scope>-->
-<!--            </dependency>-->
-<!--        </dependencies>-->
-<!--      -->
-<!--    </dependencyManagement>-->
+
+    <!--    <dependencyManagement>-->
+    <!--        <dependencies>-->
+    <!--            &lt;!&ndash; Source: https://mvnrepository.com/artifact/org.apache.groovy/groovy-all &ndash;&gt;-->
+    <!--            <dependency>-->
+    <!--                <groupId>org.apache.groovy</groupId>-->
+    <!--                <artifactId>groovy-all</artifactId>-->
+    <!--                <version>5.0.5</version>-->
+    <!--                <type>pom</type>-->
+    <!--                <scope>compile</scope>-->
+    <!--            </dependency>-->
+    <!--        </dependencies>-->
+    <!--      -->
+    <!--    </dependencyManagement>-->
 
     <dependencies>
         <dependency>
@@ -85,7 +85,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>qlexpress4</artifactId>
-<!--            <version>4.0.6</version>-->
+            <!--            <version>4.0.6</version>-->
             <version>4.1.0</version>
         </dependency>
 
@@ -96,39 +96,48 @@
             <version>3.3.4</version>
         </dependency>
 
+
+        <!-- Source: https://mvnrepository.com/artifact/org.apache.groovy/groovy-all -->
+        <dependency>
+            <groupId>org.apache.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>5.0.5</version>
+            <type>pom</type>
+            <scope>compile</scope>
+        </dependency>
+
         <!-- Apache Groovy 核心库 (新坐标) -->
-        <dependency>
-            <groupId>org.apache.groovy</groupId>
-            <artifactId>groovy</artifactId>
-            <version>5.0.5</version>
-            <scope>compile</scope>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.groovy</groupId>-->
+        <!--            <artifactId>groovy</artifactId>-->
+        <!--            <version>5.0.5</version>-->
+        <!--            <scope>compile</scope>-->
+        <!--        </dependency>-->
 
-     
 
-        <!-- Groovy JSR223 支持 (用于 ScriptEngine 兼容性) -->
-        <dependency>
-            <groupId>org.apache.groovy</groupId>
-            <artifactId>groovy-jsr223</artifactId>
-            <version>5.0.5</version>
-            <scope>compile</scope>
-        </dependency>
+        <!--        &lt;!&ndash; Groovy JSR223 支持 (用于 ScriptEngine 兼容性) &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.groovy</groupId>-->
+        <!--            <artifactId>groovy-jsr223</artifactId>-->
+        <!--            <version>5.0.5</version>-->
+        <!--            <scope>compile</scope>-->
+        <!--        </dependency>-->
 
-        <!-- Groovy JSON 支持 (如果需要处理 JSON) -->
-        <dependency>
-            <groupId>org.apache.groovy</groupId>
-            <artifactId>groovy-json</artifactId>
-            <version>5.0.5</version>
-            <scope>compile</scope>
-        </dependency>
+        <!--        &lt;!&ndash; Groovy JSON 支持 (如果需要处理 JSON) &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.groovy</groupId>-->
+        <!--            <artifactId>groovy-json</artifactId>-->
+        <!--            <version>5.0.5</version>-->
+        <!--            <scope>compile</scope>-->
+        <!--        </dependency>-->
 
-<!--        <dependency>-->
-<!--            <groupId>org.apache.groovy</groupId>-->
-<!--            <artifactId>groovy-all</artifactId>-->
-<!--            <version>5.0.5</version>-->
-<!--            <type>pom</type>-->
-<!--            <scope>compile</scope>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.groovy</groupId>-->
+        <!--            <artifactId>groovy-all</artifactId>-->
+        <!--            <version>5.0.5</version>-->
+        <!--            <type>pom</type>-->
+        <!--            <scope>compile</scope>-->
+        <!--        </dependency>-->
 
     </dependencies>
 

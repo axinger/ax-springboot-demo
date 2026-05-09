@@ -25,33 +25,20 @@ public class GroovyUtils {
     }
 
     /**
-     * 执行 Groovy 脚本（高性能缓存版）
+     * 执行 Groovy 脚本（禁用缓存，避免变量冲突）
      */
     public static Object execute(String scriptText, Map<String, Object> context) {
         try {
-            // 3. 获取或编译脚本
-            // 只有当缓存中没有时，才进行昂贵的 parse 操作
-            Script script = SCRIPT_CACHE.computeIfAbsent(scriptText, SHELL::parse);
+            // 每次重新编译脚本，避免变量名冲突
+            Script script = SHELL.parse(scriptText);
 
-            // 4. 处理上下文变量（精度修正）
+            // 处理上下文变量
             Binding binding = new Binding(context);
-//            if (context != null) {
-//                for (Map.Entry<String, Object> entry : context.entrySet()) {
-//                    Object value = entry.getValue();
-//                    // 取消自动修正 Double/Float 精度问题
-//                    /// 外部传值BigDecimal 还是double判断,适应不同业务场景
-////                    if (value instanceof Double || value instanceof Float) {
-////                        value = new BigDecimal(value.toString());
-////                    }
-//                    binding.setVariable(entry.getKey(), value);
-//                }
-//            }
 
-            // 5. 将新的 Binding 设置给 Script 实例
-            // 注意：Script 实例是复用的，但 Binding 是每次调用新建的，保证线程安全
+            // 将新的 Binding 设置给 Script 实例
             script.setBinding(binding);
 
-            // 6. 执行
+            // 执行
             return script.run();
 
         } catch (Exception e) {
