@@ -5,7 +5,6 @@ import groovy.lang.GroovyShell;
 import groovy.lang.Script;
 import org.codehaus.groovy.control.CompilerConfiguration;
 
-import java.math.BigDecimal;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -31,24 +30,23 @@ public class GroovyUtils {
     public static Object execute(String scriptText, Map<String, Object> context) {
         try {
             // 3. 获取或编译脚本
-            Script script = SCRIPT_CACHE.computeIfAbsent(scriptText, key -> {
-                // 只有当缓存中没有时，才进行昂贵的 parse 操作
-                return SHELL.parse(key);
-            });
+            // 只有当缓存中没有时，才进行昂贵的 parse 操作
+            Script script = SCRIPT_CACHE.computeIfAbsent(scriptText, SHELL::parse);
 
             // 4. 处理上下文变量（精度修正）
-            Binding binding = new Binding();
-            if (context != null) {
-                for (Map.Entry<String, Object> entry : context.entrySet()) {
-                    Object value = entry.getValue();
-                    // 自动修正 Double/Float 精度问题
-                    if (value instanceof Double || value instanceof Float) {
-                        value = new BigDecimal(value.toString());
-                    }
-                    binding.setVariable(entry.getKey(), value);
-                }
-            }
-            
+            Binding binding = new Binding(context);
+//            if (context != null) {
+//                for (Map.Entry<String, Object> entry : context.entrySet()) {
+//                    Object value = entry.getValue();
+//                    // 取消自动修正 Double/Float 精度问题
+//                    /// 外部传值BigDecimal 还是double判断,适应不同业务场景
+////                    if (value instanceof Double || value instanceof Float) {
+////                        value = new BigDecimal(value.toString());
+////                    }
+//                    binding.setVariable(entry.getKey(), value);
+//                }
+//            }
+
             // 5. 将新的 Binding 设置给 Script 实例
             // 注意：Script 实例是复用的，但 Binding 是每次调用新建的，保证线程安全
             script.setBinding(binding);
@@ -60,7 +58,7 @@ public class GroovyUtils {
             throw new RuntimeException("Groovy 执行异常: " + e.getMessage(), e);
         }
     }
-    
+
     // 可选：提供清理缓存的方法，用于脚本热更新
     public static void clearCache() {
         SCRIPT_CACHE.clear();
