@@ -13,7 +13,6 @@
     <artifactId>a3502-springboot2-flowable-ui</artifactId>
 
     <properties>
-        <java.version>17</java.version>
         <maven.test.skip>true</maven.test.skip>
         <maven.javadoc.skip>true</maven.javadoc.skip>
         <!--        <flowable.version>6.8.0</flowable.version>-->
