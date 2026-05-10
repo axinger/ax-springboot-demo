@@ -1,0 +1,81 @@
+# ===========================================================================
+# 方案一：配置外部化docker-compose编排文件
+# 使用场景：生产环境部署，配置完全外部化
+# ===========================================================================
+
+version: '3.8'
+
+services:
+  a33-docker-jar:
+    # 使用外部配置方案的Dockerfile
+    build:
+      context: .
+      dockerfile: Dockerfile-external-config
+
+    # 容器名称
+    container_name: a33-docker-jar-prod
+
+    # 环境变量配置（生产环境敏感信息建议通过secrets管理）
+    environment:
+      - SPRING_PROFILES_ACTIVE=prd
+      - SERVER_PORT=13301
+      - LOG_LEVEL_ROOT=WARN
+      - LOG_LEVEL_APP=INFO
+      # 数据库配置示例（实际使用secrets）
+      # - DATABASE_URL=jdbc:mysql://mysql:3306/mydb
+      # - DATABASE_USERNAME=user
+      # - DATABASE_PASSWORD=pass
+
+    # 端口映射
+    ports:
+      - "13301:13301"
+
+    # 卷挂载：配置文件、日志、数据
+    volumes:
+      # 挂载外部配置文件（只读）
+      - ./docker/config:/app/config:ro
+      # 挂载日志目录
+      - ./docker/logs:/var/log/a33-docker-jar
+      # 挂载数据目录
+      - ./docker/data:/data
+
+    # 健康检查
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:13301/axinger/actuator/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 60s
+
+    # 重启策略
+    restart: unless-stopped
+
+    # 资源限制
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+    # 安全配置
+    security_opt:
+      - no-new-privileges:true
+
+    # 网络配置
+    networks:
+      - app-network
+
+# 网络配置
+networks:
+  app-network:
+    driver: bridge
+
+# 卷配置（可选）
+volumes:
+  app-logs:
+    driver: local
+  app-data:
+    driver: local

@@ -1,56 +1,48 @@
 # ===========================================================================
-# 生产环境专用配置
-# 注意：此文件作为生产环境配置示例，建议通过外部文件覆盖
+# 生产环境外部配置文件
+# 位置：docker/config/application-prd.yml
+# 说明：此文件会被挂载到容器内的/app/config/目录
 # ===========================================================================
 
-# 生产环境服务器配置
+# 服务器配置
 server:
   port: ${SERVER_PORT:13301}
-  # 启用压缩提升性能
   compression:
     enabled: true
-    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json,application/xml
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
     min-response-size: 1024
-  # 启用HTTP/2
   http2:
     enabled: true
-  # 生产环境超时配置
   servlet:
     session:
       timeout: 30m
 
+# Spring应用配置
 spring:
   application:
     version: ${APP_VERSION:2.0.0}
-    description: ${APP_DESCRIPTION:生产环境}
+    description: ${APP_DESCRIPTION:生产环境应用}
     debug: false
-  # 关闭banner
   main:
     banner-mode: off
 
-# 生产环境缓存配置
-  cache:
-    type: caffeine
-    caffeine:
-      spec: maximumSize=1000,expireAfterWrite=30m
-# 生产环境安全日志级别
+# 日志配置
 logging:
   level:
     root: ${LOG_LEVEL_ROOT:WARN}
     com.github.axinger: ${LOG_LEVEL_APP:INFO}
     org.springframework: WARN
     org.springframework.web: INFO
-    org.springframework.security: WARN
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
 
-# 生产环境安全端点配置
+# 管理端点配置
 management:
   endpoints:
     web:
       exposure:
-        include: ${MANAGEMENT_ENDPOINTS:health,info,metrics,env}
+        include: ${MANAGEMENT_ENDPOINTS:health,info,metrics}
       base-path: /actuator
   endpoint:
     health:
@@ -59,12 +51,15 @@ management:
         enabled: true
     metrics:
       enabled: true
-    env:
-      enabled: true
-      show-values: when_authorized
 
+# 缓存配置
+spring:
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=1000,expireAfterWrite=30m
 
-# 生产环境示例数据库配置（实际使用外部配置）
+# 数据库配置示例（使用环境变量注入）
 # spring:
 #   datasource:
 #     url: ${DATABASE_URL}
@@ -75,4 +70,18 @@ management:
 #       minimum-idle: 5
 #       connection-timeout: 30000
 
+# Redis配置示例
+# spring:
+#   redis:
+#     host: ${REDIS_HOST:localhost}
+#     port: ${REDIS_PORT:6379}
+#     password: ${REDIS_PASSWORD:}
+#     timeout: 3000ms
 
+# 应用特定配置
+app:
+  features:
+    enable-cache: true
+    enable-metrics: true
+  security:
+    api-key-required: true

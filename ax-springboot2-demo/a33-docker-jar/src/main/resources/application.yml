@@ -1,15 +1,35 @@
+# ===========================================================================
+# 应用基础配置（所有环境通用）
+# 注意：此文件只包含通用配置，环境特定配置通过外部文件覆盖
+# ===========================================================================
+
 server:
-  port: 13301
+  port: ${SERVER_PORT:13301}
   servlet:
-    context-path: /axinger
+    context-path: ${SERVER_CONTEXT_PATH:/axinger}
 
 spring:
   profiles:
-    # 这个用来打包
-    #    active: '@my-env@'
-    #    active: dev
+    # 通过环境变量设置激活的profile，默认dev
     active: ${SPRING_PROFILES_ACTIVE:dev}
+  application:
+    name: ${APP_NAME:a33-docker-jar}
+  # 配置导入策略：优先使用外部配置文件
+  config:
+    import:
+      - optional:file:./config/application.yml
+      - optional:file:./config/application-${spring.profiles.active}.yml
 
+# 日志基础配置（会被外部配置覆盖）
 logging:
   file:
-    name: /var/log/a33-docker-jar
+    name: ${LOG_FILE:/var/log/a33-docker-jar/application.log}
+  level:
+    root: ${LOG_LEVEL_ROOT:INFO}
+    com.github.axinger: ${LOG_LEVEL_APP:DEBUG}
+
+# 应用基础信息
+app:
+  name: ${APP_NAME:a33-docker-jar}
+  version: ${APP_VERSION:2.0.0}
+  description: ${APP_DESCRIPTION:Spring Boot Docker Demo}

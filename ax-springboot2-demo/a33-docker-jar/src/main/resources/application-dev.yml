@@ -1,8 +1,57 @@
+# ===========================================================================
+# 开发环境专用配置
+# 注意：此文件仅用于开发环境，生产打包时会被排除
+# ===========================================================================
+
+# 开发环境端口（避免与生产环境冲突）
 server:
-  port: 13301
+  port: ${SERVER_PORT:13301}
 
 spring:
   application:
     version: 1.0.1
     description: 开发环境
-    debug: 0
+    debug: true
+  # 开发工具配置
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java
+    livereload:
+      enabled: true
+# 开发环境缓存配置
+  cache:
+    type: simple
+# 开发环境详细日志
+logging:
+  level:
+    root: DEBUG
+    com.github.axinger: TRACE
+    org.springframework: INFO
+    org.springframework.web: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+# 开发环境端点完全暴露
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    env:
+      enabled: true
+    configprops:
+      enabled: true
+
+# 开发环境数据库配置（示例）
+# spring:
+#   datasource:
+#     url: jdbc:h2:mem:testdb
+#     driver-class-name: org.h2.Driver
+#     username: sa
+#     password:
+
+

@@ -1,0 +1,49 @@
+# ===========================================================================
+# 方案二：配置中心集成方案（云原生推荐）
+# 特点：集成Spring Cloud Config，适合微服务架构
+# ===========================================================================
+
+FROM eclipse-temurin:21-jdk-jammy
+
+LABEL maintainer="阿星" \
+      version="2.0.0" \
+      description="Spring Boot应用生产镜像-配置中心方案" \
+      org.opencontainers.image.source="https://github.com/axinger/ax-springboot-demo"
+
+# 创建非特权用户
+RUN groupadd -r appuser && useradd -r -g appuser appuser
+
+# 设置时区
+RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
+
+# 环境变量配置
+ENV APP_HOME=/app \
+    APP_NAME=server.jar \
+    JAVA_OPTS="-Xms512m -Xmx1024m -Xmn256m -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError" \
+    SPRING_PROFILES_ACTIVE=prd \
+    SPRING_CLOUD_CONFIG_URI=http://config-server:8888 \
+    SPRING_APPLICATION_NAME=a33-docker-jar
+
+WORKDIR ${APP_HOME}
+
+# 创建目录
+RUN mkdir -p ${APP_HOME}/config /var/log/a33-docker-jar && \
+    chown -R appuser:appuser ${APP_HOME} /var/log/a33-docker-jar
+
+# 复制JAR包和bootstrap配置
+COPY target/*.jar ./${APP_NAME}
+COPY src/main/resources/bootstrap.yml ./config/
+
+USER appuser
+
+# 健康检查
+HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost:13301/axinger/actuator/health || exit 1
+
+EXPOSE 13301
+
+# 启动命令：从配置中心获取配置
+ENTRYPOINT exec java ${JAVA_OPTS} -jar ./${APP_NAME} \
+    --spring.profiles.active=${SPRING_PROFILES_ACTIVE} \
+    --spring.cloud.config.uri=${SPRING_CLOUD_CONFIG_URI} \
+    --spring.application.name=${SPRING_APPLICATION_NAME}

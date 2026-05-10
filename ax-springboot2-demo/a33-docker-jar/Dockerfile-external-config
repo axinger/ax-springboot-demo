@@ -1,0 +1,54 @@
+# ===========================================================================
+# 方案一：配置完全外部化（企业级推荐方案）
+# 特点：JAR包纯净，配置完全外部化，适合生产环境
+# ===========================================================================
+
+FROM eclipse-temurin:21-jdk-jammy
+
+LABEL maintainer="阿星" \
+      version="2.0.0" \
+      description="Spring Boot应用生产镜像-配置外部化方案" \
+      org.opencontainers.image.source="https://github.com/axinger/ax-springboot-demo"
+
+# 创建非特权用户（安全最佳实践）
+RUN groupadd -r appuser && useradd -r -g appuser appuser
+
+# 设置时区为上海
+RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
+
+# 环境变量配置
+ENV APP_HOME=/app \
+    APP_NAME=server.jar \
+    # JVM参数优化
+    JAVA_OPTS="-Xms512m -Xmx1024m -Xmn256m -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/var/log/a33-docker-jar" \
+    # 默认激活生产环境
+    SPRING_PROFILES_ACTIVE=prd \
+    # Spring配置导入路径
+    SPRING_CONFIG_IMPORT="optional:file:./config/"
+
+# 创建工作目录
+WORKDIR ${APP_HOME}
+
+# 创建必要的目录并设置权限
+RUN mkdir -p ${APP_HOME}/config /var/log/a33-docker-jar /data && \
+    chown -R appuser:appuser ${APP_HOME} /var/log/a33-docker-jar /data && \
+    chmod 755 ${APP_HOME}/config && \
+    chmod 755 /var/log/a33-docker-jar
+
+# 只复制JAR包，不复制任何配置文件（配置完全外部化）
+COPY target/*.jar ./${APP_NAME}
+
+# 切换为非root用户运行（安全最佳实践）
+USER appuser
+
+# 健康检查配置
+HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost:${SERVER_PORT:-13301}/axinger/actuator/health || exit 1
+
+# 暴露端口
+EXPOSE 13301
+
+# 启动命令：优先使用外部配置文件
+ENTRYPOINT exec java ${JAVA_OPTS} -jar ./${APP_NAME} \
+    --spring.profiles.active=${SPRING_PROFILES_ACTIVE} \
+    --spring.config.import=${SPRING_CONFIG_IMPORT}
