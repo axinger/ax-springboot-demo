@@ -96,7 +96,7 @@ public class PersonEntity implements Serializable {
      * NEVER	从不更新，不管字段是否有值，都不进行更新
      * DEFAULT	追随全局配置
      */
-    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE, updateStrategy = FieldStrategy.IGNORED)
+    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE, updateStrategy = FieldStrategy.NOT_NULL)
     // @TableField(value = "update_time",fill = FieldFill.INSERT_UPDATE,update="now()")
     // @TableField(value = "update_time",fill = FieldFill.INSERT_UPDATE)
     // @TableField(value = "update_time",fill = FieldFill.INSERT_UPDATE)

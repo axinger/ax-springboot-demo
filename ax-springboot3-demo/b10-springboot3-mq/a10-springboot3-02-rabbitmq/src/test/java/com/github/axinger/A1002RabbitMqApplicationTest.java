@@ -79,7 +79,7 @@ class A1002RabbitMqApplicationTest {
                 message,
                 messagePostProcessor -> {
                     // 配置消息的过期时间
-                    messagePostProcessor.getMessageProperties().setDelay(5 * 1000);
+//                    messagePostProcessor.getMessageProperties().setDelay(5 * 1000);
                     return messagePostProcessor;
                 }
         );
@@ -104,7 +104,7 @@ class A1002RabbitMqApplicationTest {
                 message,
                 messagePostProcessor -> {
                     // 配置消息的过期时间
-                    messagePostProcessor.getMessageProperties().setDelay(5 * 1000);
+//                    messagePostProcessor.getMessageProperties().setDelay(5 * 1000);
                     return messagePostProcessor;
                 }
         );
