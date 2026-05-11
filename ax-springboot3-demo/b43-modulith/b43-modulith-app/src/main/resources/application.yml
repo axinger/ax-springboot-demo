@@ -70,6 +70,23 @@ springdoc:
   default-consumes-media-type: application/json
   default-produces-media-type: application/json
   disable-swagger-default-url: true
+  # 模块化 API 分组配置
+  group-configs:
+    - group: orders
+      paths-to-match: /api/orders/**
+      packages-to-scan: com.axinger.order
+    - group: customers
+      paths-to-match: /api/customers/**
+      packages-to-scan: com.axinger.customer
+    - group: inventory
+      paths-to-match: /api/inventory/**
+      packages-to-scan: com.axinger.inventory
+    - group: payments
+      paths-to-match: /api/payments/**
+      packages-to-scan: com.axinger.payment
+    - group: notifications
+      paths-to-match: /api/notifications/**
+      packages-to-scan: com.axinger.notification
 
 # 服务器配置
 server:
