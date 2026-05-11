@@ -44,6 +44,23 @@ mvn spring-boot:run
 | **H2 控制台** | http://localhost:8080/h2-console | 数据库管理（密码：123456） |
 | **健康检查** | http://localhost:8080/actuator/health | 应用状态 |
 
+### 快速测试
+
+#### 方式 1：使用测试脚本（推荐）
+
+```bash
+# Linux/Mac
+chmod +x test-api.sh
+./test-api.sh
+
+# Windows (PowerShell)
+.\test-api.ps1
+```
+
+#### 方式 2：手动测试
+
+参考 [API 测试示例](#-完整业务流程示例)
+
 ---
 
 ## 🏗️ Spring Modulith 核心特性
@@ -501,6 +518,17 @@ curl -X POST http://localhost:8080/api/payments \
 
 测试领域模型和业务逻辑：
 
+```bash
+# 运行所有测试
+mvn test
+
+# 运行特定模块测试
+cd order-module
+mvn test
+```
+
+**示例代码**：
+
 ```java
 @Test
 void shouldCreateOrderSuccessfully() {
@@ -537,9 +565,20 @@ class OrderIntegrationTest {
 }
 ```
 
-### 3. 架构测试
+### 3. 架构测试 ⭐ Spring Modulith 特色
 
-验证模块依赖关系：
+验证模块依赖关系和分层架构：
+
+```bash
+# 运行架构测试
+mvn test -Dtest=ModulithArchitectureTest
+```
+
+**测试内容**：
+- ✅ 模块依赖是否符合配置
+- ✅ 分层架构是否正确（Web → Application → Domain）
+- ✅ Controller 是否在 web 包中
+- ✅ Service 是否在 application 包中
 
 ```java
 @AnalyzeClasses(packagesOf = ModulithApplication.class)
@@ -552,14 +591,27 @@ class ModulithArchitectureTest {
     void shouldRespectModuleDependencies() {
         modules.verify();  // 验证模块依赖是否符合配置
     }
+    
+    @ArchTest
+    void shouldHaveCorrectLayering(Architecture architecture) {
+        layeredArchitecture()
+            .layer("Web").definedBy("..web..")
+            .layer("Application").definedBy("..application..")
+            .layer("Domain").definedBy("..domain..")
+            .whereLayer("Web").mayNotBeAccessedByAnyLayer()
+            .whereLayer("Domain").mayOnlyBeAccessedByLayers("Application", "Infrastructure");
+    }
 }
 ```
 
-运行架构测试：
+### 4. 数据初始化
 
-```bash
-mvn test -Dtest=ModulithArchitectureTest
-```
+项目启动时会自动执行 `data.sql` 脚本，插入测试数据：
+
+- 3 个测试客户
+- 3 个产品库存
+
+**配置文件**：`b43-modulith-app/src/main/resources/data.sql`
 
 ---
 
