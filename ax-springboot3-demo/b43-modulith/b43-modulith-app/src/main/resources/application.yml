@@ -6,10 +6,17 @@ spring:
 
   # 数据库配置
   datasource:
-    url: jdbc:h2:mem:testdb
+    # 方案1: H2 文件数据库（开发/测试推荐）
+    url: jdbc:h2:file:./data/modulith_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     driver-class-name: org.h2.Driver
     username: sa
     password: 123456
+    
+    # 方案2: MySQL（生产推荐）- 取消注释使用
+    # url: jdbc:mysql://localhost:3306/modulith_db?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    # driver-class-name: com.mysql.cj.jdbc.Driver
+    # username: root
+    # password: your_password
 
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
@@ -51,7 +58,13 @@ spring.modulith:
   events:
     jdbc:
       schema-initialization:
-        enabled: true
+        enabled: true  # 自动创建 EVENT_PUBLICATION 表
+    
+    # 事件完成模式（1.3+）
+    # UPDATE: 标记完成日期（默认）
+    # DELETE: 完成后直接删除记录
+    # ARCHIVE: 归档到archive表
+    completion-mode: UPDATE
   actuator:
     enabled: true
 
@@ -113,9 +126,19 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics,modulith
+        include: health,info,metrics,modulith,env
   endpoint:
     health:
       show-details: always
     modulith:
       enabled: true
+    env:
+      show-values: when-authorized  # 生产环境隐藏敏感信息
+  
+  # 健康检查配置
+  health:
+    db:
+      enabled: true
+    diskspace:
+      enabled: true
+      threshold: 10MB
