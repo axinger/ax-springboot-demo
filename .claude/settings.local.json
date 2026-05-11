@@ -1,11 +1,12 @@
 {
-  "language": "zh-CN",
   "permissions": {
     "allow": [
       "Bash(mvn clean *)",
       "Bash(where mvn *)",
       "Bash(mkdir -p axinger-bom)",
-      "Bash(mv axinger-common-bom *)"
+      "Bash(mv axinger-common-bom *)",
+      "Bash(mvn test *)",
+      "Bash(curl -s http://localhost:8080/v3/api-docs)"
     ]
   },
   "hooks": {
@@ -21,6 +22,7 @@
       }
     ]
   },
+  "language": "zh-CN",
   "mcpServers": {
     "本地数据库-demo1": {
       "command": "C:\\Users\\xing\\AppData\\Local\\Volta\\tools\\image\\node\\18.20.8\\npx.cmd",
@@ -40,7 +42,11 @@
     },
     "本地数据库-demo2": {
       "command": "uvx",
-      "args": ["--from", "mysql-mcp-server", "mysql_mcp_server"],
+      "args": [
+        "--from",
+        "mysql-mcp-server",
+        "mysql_mcp_server"
+      ],
       "env": {
         "MYSQL_HOST": "localhost",
         "MYSQL_PORT": "3306",

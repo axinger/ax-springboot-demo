@@ -95,6 +95,7 @@
         <module>b21-springboot3-oauth2</module>
         <module>b41-springboot3-ai</module>
         <module>b42-springboot3-ai-alibaba</module>
+        <module>b43-modulith</module>
     </modules>
 
     <dependencies>

@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  # 主应用服务
+  b43-modulith-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: b43-modulith-app
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - JAVA_OPTS=-Xms512m -Xmx1024m
+      - SPRING_DATASOURCE_URL=jdbc:h2:mem:testdb
+      - SPRING_DATASOURCE_USERNAME=sa
+      - SPRING_DATASOURCE_PASSWORD=123456
+    networks:
+      - modulith-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # H2 数据库控制台（可选，用于生产环境调试）
+  h2-console:
+    image: oscarfonts/h2:latest
+    container_name: h2-console
+    ports:
+      - "8082:8082"  # H2 控制台端口
+      - "9092:9092"  # H2 TCP 端口
+    environment:
+      - H2_OPTIONS=-web -webAllowOthers -tcp -tcpAllowOthers -ifNotExists
+    networks:
+      - modulith-network
+    restart: unless-stopped
+
+  # Nginx 反向代理（可选）
+  nginx:
+    image: nginx:alpine
+    container_name: modulith-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - b43-modulith-app
+    networks:
+      - modulith-network
+    restart: unless-stopped
+
+# 网络配置
+networks:
+  modulith-network:
+    driver: bridge
+    name: modulith-network
+
+# 卷配置（用于持久化数据，如果需要）
+volumes:
+  h2-data:
+    driver: local

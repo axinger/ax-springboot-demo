@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mvn clean *)",
+      "Bash(mvn dependency:tree -Dincludes=org.jmolecules -q)",
+      "Bash(java *)",
+      "Bash(mvn spring-boot:run *)",
+      "Bash(curl -s http://localhost:8080/api/demo/info)",
+      "Bash(curl *)",
+      "Bash(pkill -f spring-boot)"
+    ]
+  }
+}
