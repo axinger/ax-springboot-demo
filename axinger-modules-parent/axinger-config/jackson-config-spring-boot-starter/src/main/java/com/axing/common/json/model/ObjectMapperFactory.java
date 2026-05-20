@@ -5,9 +5,14 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.TimeZone;
@@ -37,7 +42,14 @@ public class ObjectMapperFactory {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(jsonProperties.getDateFormat());
             objectMapper.setDateFormat(simpleDateFormat);
             // objectMapper.registerModules(new JsonMixinModule(), new Java8TimeModule(jsonProperties));
-            objectMapper.registerModules(new Java8TimeModule(jsonProperties));
+//            objectMapper.registerModules(new Java8TimeModule(jsonProperties));
+
+            JavaTimeModule javaTimeModule = new JavaTimeModule();
+            javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(jsonProperties.getDateFormat())));
+
+            javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(jsonProperties.getDateFormat())));
+            javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(jsonProperties.getDateFormat())));
+            objectMapper.registerModules(javaTimeModule);
         }
 
         // 自定义

@@ -3,7 +3,6 @@ package com.axing.common.json.config;
 import cn.hutool.core.date.DatePattern;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.format.Formatter;
 import org.springframework.lang.NonNull;
 
@@ -14,7 +13,7 @@ import java.util.Locale;
 
 /// 格式化get请求java.time.参数
 @Slf4j
-@Configuration
+//@Configuration
 public class LocalDateFormatterConfig {
     @Bean
     public Formatter<LocalTime> localTimeFormatter() {

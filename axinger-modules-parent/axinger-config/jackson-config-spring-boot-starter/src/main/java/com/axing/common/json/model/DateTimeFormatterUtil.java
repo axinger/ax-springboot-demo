@@ -6,6 +6,10 @@ public interface DateTimeFormatterUtil {
      * Date,LocalDateTime 格式
      */
     String dateFormat = "yyyy-MM-dd HH:mm:ss";
+    /**
+     * LocalDateTime 格式
+     */
+    String localDateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 
     /**
      * LocalDate格式

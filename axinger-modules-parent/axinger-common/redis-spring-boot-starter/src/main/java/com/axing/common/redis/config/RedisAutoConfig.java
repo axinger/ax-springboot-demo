@@ -1,7 +1,7 @@
 package com.axing.common.redis.config;
 
 import com.axing.common.json.bean.JsonProperties;
-import com.axing.common.json.config.ObjectMapperConfig;
+import com.axing.common.json.config.Jackson2ObjectMapperConfig;
 import com.axing.common.json.model.ObjectMapperFactory;
 import com.axing.common.redis.bean.RedisProperties;
 import com.axing.common.redis.service.RedisService;
@@ -33,7 +33,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @EnableCaching
 @RequiredArgsConstructor
 @EnableConfigurationProperties(RedisProperties.class)
-@AutoConfigureAfter(ObjectMapperConfig.class)
+@AutoConfigureAfter(Jackson2ObjectMapperConfig.class)
 public class RedisAutoConfig {
 
     //    private final RedisConnectionFactory redisConnectionFactory;

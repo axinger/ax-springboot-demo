@@ -65,9 +65,9 @@ public class JsonUtil extends ObjectMapper {
 //        mapper.registerModule(new JavaTimeModule());
 //        mapper.registerModule(new Java8CommonTimeModule());
 
-        JavaTimeModule javaTimeModule = new JavaTimeModule();
 
         // 替换默认的序列化器/反序列化器
+        JavaTimeModule javaTimeModule = new JavaTimeModule();
         javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DateTimeFormatterUtil.dateFormat)));
         javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(DateTimeFormatterUtil.dateFormat)));
         mapper.registerModule(javaTimeModule);

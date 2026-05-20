@@ -17,6 +17,8 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+    local-date-format: yyyy-MM-dd      # LocalDate 格式
+    local-time-format: HH:mm:ss        # LocalTime 格式
 
 #开放端点用于SpringBoot Admin的监控
 management:

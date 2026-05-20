@@ -1,2 +1,1 @@
-com.axing.common.json.config.ObjectMapperConfig
-com.axing.common.json.config.LocalDateFormatterConfig
+com.axing.common.json.auto.MyJackson2ObjectAutoConfig
