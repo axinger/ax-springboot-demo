@@ -34,11 +34,8 @@
 
 
         <dependencies>
-            <dependency>
-                <groupId>com.github.axinger</groupId>
-                <artifactId>a01-26-b</artifactId>
-                <version>${axinger.version}</version>
-            </dependency>
+            <!-- a01-26-b 是 Spring Boot 2 项目中的模块，在 Spring Boot 3 项目中不存在 -->
+            <!-- 如果需要使用类似功能，请在当前项目中创建对应的模块 -->
         </dependencies>
     </dependencyManagement>
 </project>

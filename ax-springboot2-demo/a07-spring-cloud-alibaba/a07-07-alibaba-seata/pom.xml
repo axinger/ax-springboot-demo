@@ -2,18 +2,19 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
     <parent>
+        <artifactId>a07-spring-cloud-alibaba</artifactId>
         <groupId>com.github.axinger</groupId>
-        <artifactId>ax-springboot3-demo</artifactId>
-        <version>2026.01.01-3.5</version>
+        <version>2026.01.01-2.7</version>
     </parent>
+    <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
-    <artifactId>b04-springboot3-cacheable</artifactId>
+    <artifactId>a07-07-alibaba-seata</artifactId>
 
     <modules>
-        <module>b04-01-cacheable-caffeine</module>
-        <module>b04-02-cacheable-redis</module>
-        <module>b04-03-cacheable-redisson</module>
+        <module>a07-0701-alibaba-seata-order</module>
+        <module>a07-0702-alibaba-seata-storage</module>
     </modules>
+
+
 </project>

@@ -14,9 +14,9 @@
 
     <modules>
         <module>A0701-nacos-demo</module>
-        <module>alibaba-dubbo</module>
+        <module>a07-08-alibaba-dubbo</module>
         <module>alibaba-sentinel</module>
-        <module>alibaba-seata</module>
+        <module>a07-07-alibaba-seata</module>
         <module>A07mall-gateway-app</module>
         <module>A07mall-order-app</module>
         <module>A07mall-payment-app</module>

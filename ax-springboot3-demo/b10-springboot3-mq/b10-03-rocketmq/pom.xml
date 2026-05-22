@@ -5,15 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.github.axinger</groupId>
-        <artifactId>ax-springboot3-demo</artifactId>
+        <artifactId>b10-springboot3-mq</artifactId>
         <version>2026.01.01-3.5</version>
     </parent>
+
+    <artifactId>b10-03-rocketmq</artifactId>
     <packaging>pom</packaging>
-    <artifactId>b04-springboot3-cacheable</artifactId>
+
 
     <modules>
-        <module>b04-01-cacheable-caffeine</module>
-        <module>b04-02-cacheable-redis</module>
-        <module>b04-03-cacheable-redisson</module>
+        <module>b10-0301-rocketmq-demo</module>
+        <module>b10-0302-rocketmq-demo</module>
+        <module>b10-0303-rocketmq-stream</module>
     </modules>
 </project>

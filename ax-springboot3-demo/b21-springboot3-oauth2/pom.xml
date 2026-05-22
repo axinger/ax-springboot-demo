@@ -12,10 +12,10 @@
     <artifactId>b21-springboot3-oauth2</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>a21-springboot3-oauth2-server</module>
-        <module>a21-springboot3-oauth2-resource</module>
-        <module>a21-springboot3-oauth2-client</module>
-        <module>a21-springboot3-oauth2-allinone</module>
+        <module>b21-oauth2-server</module>
+        <module>b21-oauth2-resource</module>
+        <module>b21-oauth2-client</module>
+        <module>b21-oauth2-all-in-one</module>
     </modules>
 
 </project>

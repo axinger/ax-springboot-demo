@@ -2,18 +2,15 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
     <parent>
+        <artifactId>b07-02-alibaba-dubbo</artifactId>
         <groupId>com.github.axinger</groupId>
-        <artifactId>ax-springboot3-demo</artifactId>
         <version>2026.01.01-3.5</version>
     </parent>
-    <packaging>pom</packaging>
-    <artifactId>b04-springboot3-cacheable</artifactId>
+    <modelVersion>4.0.0</modelVersion>
 
-    <modules>
-        <module>b04-01-cacheable-caffeine</module>
-        <module>b04-02-cacheable-redis</module>
-        <module>b04-03-cacheable-redisson</module>
-    </modules>
+    <artifactId>b07-02-01-dubbo-api</artifactId>
+    <properties>
+        <repackage.skip>true</repackage.skip>
+    </properties>
 </project>
