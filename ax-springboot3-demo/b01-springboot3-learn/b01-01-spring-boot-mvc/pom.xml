@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.github.axinger</groupId>
         <artifactId>b01-springboot3-learn</artifactId>
-        <version>2026.01.01-3.5</version>
+        <version>2026.06.01-3.5</version>
     </parent>
 
     <artifactId>b01-01-spring-boot-mvc</artifactId>

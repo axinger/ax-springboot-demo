@@ -6,7 +6,7 @@
     <parent>
         <artifactId>a01-spring-boot-learn</artifactId>
         <groupId>com.github.axinger</groupId>
-        <version>2026.01.01-2.7</version>
+        <version>2026.06.01-2.7</version>
     </parent>
 
     <artifactId>a01-22-main-a</artifactId>

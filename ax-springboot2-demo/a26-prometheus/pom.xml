@@ -4,7 +4,7 @@
     <parent>
         <artifactId>ax-springboot2-demo</artifactId>
         <groupId>com.github.axinger</groupId>
-        <version>2026.01.01-2.7</version>
+        <version>2026.06.01-2.7</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 

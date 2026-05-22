@@ -91,7 +91,7 @@ mvn clean deploy
         <dependency>
             <groupId>com.github.axinger</groupId>
             <artifactId>axinger-all</artifactId>
-            <version>2026.01.01-2.7</version>
+            <version>2026.06.01-2.7</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
@@ -108,7 +108,7 @@ mvn clean deploy
         <dependency>
             <groupId>com.github.axinger</groupId>
             <artifactId>axinger-common-bom</artifactId>
-            <version>2026.01.01-2.7</version>
+            <version>2026.06.01-2.7</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
@@ -117,7 +117,7 @@ mvn clean deploy
         <dependency>
             <groupId>com.github.axinger</groupId>
             <artifactId>axinger-config-bom</artifactId>
-            <version>2026.01.01-2.7</version>
+            <version>2026.06.01-2.7</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
@@ -126,7 +126,7 @@ mvn clean deploy
         <dependency>
             <groupId>com.github.axinger</groupId>
             <artifactId>axinger-cloud-bom</artifactId>
-            <version>2026.01.01-2.7</version>
+            <version>2026.06.01-2.7</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
@@ -153,19 +153,19 @@ mvn clean deploy
     <dependency>
         <groupId>com.github.axinger</groupId>
         <artifactId>redis-spring-boot-starter</artifactId>
-        <version>2026.01.01-2.7</version>
+        <version>2026.06.01-2.7</version>
     </dependency>
     <dependency>
         <groupId>com.github.axinger</groupId>
         <artifactId>result-config-spring-boot-starter</artifactId>
-        <version>2026.01.01-2.7</version>
+        <version>2026.06.01-2.7</version>
     </dependency>
 </dependencies>
 ```
 
 ## 版本说明
 
-当前版本：`2026.01.01-2.7`
+当前版本：`2026.06.01-2.7`
 
 -   `2026.01.01` - 年月版本号
 -   `2.7` - 对应的 Spring Boot 版本

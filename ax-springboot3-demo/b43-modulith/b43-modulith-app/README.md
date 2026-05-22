@@ -238,7 +238,7 @@ class OrderApiIntegrationTest {
 mvn clean package
 
 # 运行应用
-java -jar target/b43-modulith-app-2026.01.01-3.5.jar
+java -jar target/b43-modulith-app-2026.06.01-3.5.jar
 ```
 
 ### 2. Docker 部署

@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.github.axinger</groupId>
         <artifactId>a35-springboot2-flowable</artifactId>
-        <version>2026.01.01-2.7</version>
+        <version>2026.06.01-2.7</version>
     </parent>
 
     <artifactId>a3501-springboot2-flowable-basic</artifactId>

@@ -70,7 +70,7 @@ mvn test -Dtest=MyTestClass#myTestMethod
 
 **更新项目版本：**
 ```bash
-mvn versions:set -DnewVersion=2026.01.01-3.5
+mvn versions:set -DnewVersion=2026.06.01-3.5
 ```
 
 ## 环境配置

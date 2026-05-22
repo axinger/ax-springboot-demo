@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.axinger</groupId>
     <artifactId>axinger-config</artifactId>
-    <version>2026.01.01-2.7</version>
+    <version>2026.06.01-2.7</version>
     <packaging>pom</packaging>
     <name>阿星config配置</name>
     <description>Axinger spring boot auto configuration starters</description>

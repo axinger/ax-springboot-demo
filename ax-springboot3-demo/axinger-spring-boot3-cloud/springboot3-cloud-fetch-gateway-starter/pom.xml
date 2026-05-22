@@ -6,7 +6,7 @@
     <parent>
         <artifactId>axinger-spring-boot3-cloud</artifactId>
         <groupId>com.github.axinger</groupId>
-        <version>2026.01.01-3.5</version>
+        <version>2026.06.01-3.5</version>
     </parent>
     <artifactId>springboot3-cloud-fetch-gateway-starter</artifactId>
 

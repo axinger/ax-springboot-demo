@@ -46,7 +46,7 @@ mvn test
 
 **版本管理（更新所有模块）：**
 ```bash
-mvn versions:set -DnewVersion=2026.01.01-2.7
+mvn versions:set -DnewVersion=2026.06.01-2.7
 ```
 
 ## 多环境配置

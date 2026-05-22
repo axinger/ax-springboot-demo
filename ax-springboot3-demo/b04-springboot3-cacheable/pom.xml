@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.github.axinger</groupId>
         <artifactId>ax-springboot3-demo</artifactId>
-        <version>2026.01.01-3.5</version>
+        <version>2026.06.01-3.5</version>
     </parent>
     <packaging>pom</packaging>
     <artifactId>b04-springboot3-cacheable</artifactId>

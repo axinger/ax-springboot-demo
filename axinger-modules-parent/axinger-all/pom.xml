@@ -7,7 +7,7 @@
 
     <groupId>com.github.axinger</groupId>
     <artifactId>axinger-all</artifactId>
-    <version>2026.01.01-2.7</version>
+    <version>2026.06.01-2.7</version>
     <packaging>pom</packaging>
     <name>axinger-all统一依赖管理 BOM</name>
 
