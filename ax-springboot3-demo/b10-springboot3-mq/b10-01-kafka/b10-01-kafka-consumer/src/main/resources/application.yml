@@ -1,0 +1,31 @@
+server:
+  port: 11011
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: kafka-consumer-group1
+  kafka:
+    # Kafka集群地址
+    bootstrap-servers: localhost:9092
+    consumer:
+      # 禁用自动提交，使用手动确认模式
+      enable-auto-commit: false
+      # 键的反序列化方式
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      # 值的反序列化方式（JSON）
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      # 消费者组ID
+      group-id: my_group_id1
+      # 配置JSON信任包
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: 'com.github.axinger.api.model'
+    listener:
+      # 并发消费者数量
+      concurrency: 3
+      # 手动立即确认模式
+      ack-mode: manual_immediate

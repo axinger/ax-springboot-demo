@@ -1,0 +1,51 @@
+server:
+  port: 11013
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: kafka-producer
+  kafka:
+    # Kafka集群地址
+    bootstrap-servers: localhost:9092
+    producer:
+      # 消息发送失败重试次数
+      retries: 3
+      # 批次大小（字节）
+      batch-size: 16384
+      # 生产者内存缓冲区大小（32MB）
+      buffer-memory: 33554432
+      # 键的序列化方式
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # 值的序列化方式（JSON）
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      
+      # ===== 可靠性配置 =====
+      # acks 配置：
+      # 0: 不等待确认（最快，可能丢消息）
+      # 1: 只等待 leader 确认（平衡）
+      # all/-1: 等待所有副本确认（最可靠）
+      acks: all
+      
+      # 启用幂等性，防止重复发送（需要 acks=all 且 retries>0）
+      properties:
+        enable:
+          idempotence: true
+        
+        # 请求超时时间
+        request:
+          timeout:
+            ms: 30000
+        
+        # 最大阻塞时间
+        max:
+          block:
+            ms: 30000
+        spring:
+          # JSON 信任包配置
+          json:
+            trusted:
+              packages: 'com.github.axinger.api.model'
+
+

@@ -1,0 +1,10 @@
+axinger:
+  doc:
+    title: 本地案例
+    description: 123
+    version: v1234
+    websiteName: 11111
+    websiteUrl: 11111
+  filter:
+    blacklist: /order/**
+    whitelist: /order/1,/order/2,/test/**
