@@ -1,0 +1,63 @@
+# ============================================================================
+# Spring Boot 应用 systemd 服务配置文件
+# 用途: 实现应用开机自启动和系统服务管理
+# ============================================================================
+
+[Unit]
+# 服务描述
+Description=Demo Application Service
+# 在网络服务启动后启动
+After=network.target
+
+[Service]
+# 服务类型
+Type=forking
+
+# 工作目录 (脚本所在目录)
+WorkingDirectory=/opt/application/demo-app/bin
+
+# 启动命令 (使用绝对路径)
+ExecStart=/opt/application/demo-app/bin/start.sh
+
+# 停止命令
+ExecStop=/opt/application/demo-app/bin/stop.sh
+
+# 重启命令
+ExecReload=/bin/kill -HUP $MAINPID
+
+# 用户和组 (建议创建专用用户运行应用)
+User=root
+Group=root
+
+# 环境变量 (可选，如果需要设置额外的环境变量)
+# Environment="JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64"
+# Environment="SPRING_PROFILES_ACTIVE=prod"
+
+# 重启策略
+# no: 不自动重启
+# on-failure: 仅在失败时重启
+# always: 总是重启
+Restart=on-failure
+
+# 重启延迟时间
+RestartSec=10
+
+# 最大重启次数
+StartLimitBurst=5
+StartLimitInterval=60s
+
+# 日志输出
+StandardOutput=journal
+StandardError=journal
+
+# 资源限制 (可选)
+# LimitNOFILE=65536
+# LimitNPROC=4096
+
+# 超时设置
+TimeoutStartSec=120
+TimeoutStopSec=30
+
+[Install]
+# 开机自启动目标
+WantedBy=multi-user.target

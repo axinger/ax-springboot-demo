@@ -10,9 +10,16 @@ source /etc/profile
 APP_PATH="/opt/application/demo-app"
 APP_NAME="demo-application"
 LOG_PATH="/opt/logs/demo"
-NACOS_SERVER="localhost:8848"
 MODE="cluster"
 JAVA_VERSION=""  # 留空则自动检测系统默认Java，也可填写 8, 11, 17, 21
+
+# Spring Cloud Nacos 配置 (可通过 .env 文件或命令行参数覆盖)
+SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR="localhost:8848"
+SPRING_CLOUD_NACOS_DISCOVERY_SERVER_ADDR="localhost:8848"
+
+# 其他 Spring Boot 配置
+SERVER_MAX_HTTP_HEADER_SIZE="524288"
+SPRING_CONFIG_LOCATION="classpath:/,classpath:/config/,file:./,file:./config/"
 # ---------------------------------------------------------------------
 
 # 获取当前脚本所在的绝对路径
@@ -25,6 +32,12 @@ if [ -f "${BASE_DIR}/.env" ]; then
     source "${BASE_DIR}/.env"
 fi
 
+# 🔄 兼容旧版本的 NACOS_SERVER 变量 (如果 .env 中使用了旧变量名)
+if [ -n "$NACOS_SERVER" ] && [ -z "$SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR" ]; then
+    SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR="$NACOS_SERVER"
+    SPRING_CLOUD_NACOS_DISCOVERY_SERVER_ADDR="$NACOS_SERVER"
+fi
+
 # ❌ 错误退出函数
 error_exit() {
     echo "❌ 致命错误: $1 !!"
@@ -34,12 +47,13 @@ error_exit() {
 # 📝 解析命令行参数 (优先级最高，会覆盖上述所有默认配置)
 while getopts ":p:n:a:l:m:j:" opt; do
     case $opt in
-        m) MODE=$OPTARG;;           # 运行模式: standalone/cluster
-        p) APP_PATH=$OPTARG;;       # 应用路径
-        n) APP_NAME=$OPTARG;;       # 应用名称
-        a) NACOS_SERVER=$OPTARG;;   # Nacos 服务器地址
-        l) LOG_PATH=$OPTARG;;       # 日志路径
-        j) JAVA_VERSION=$OPTARG;;   # Java 版本 (8, 11, 17, 21)
+        m) MODE=$OPTARG;;                                    # 运行模式: standalone/cluster
+        p) APP_PATH=$OPTARG;;                                # 应用路径
+        n) APP_NAME=$OPTARG;;                                # 应用名称
+        a) SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR=$OPTARG     # Nacos 配置中心地址
+           SPRING_CLOUD_NACOS_DISCOVERY_SERVER_ADDR=$OPTARG;; # Nacos 服务发现地址
+        l) LOG_PATH=$OPTARG;;                                # 日志路径
+        j) JAVA_VERSION=$OPTARG;;                            # Java 版本 (8, 11, 17, 21)
         ?) echo "⚠️ 未知参数"; exit 1;;
     esac
 done
@@ -189,11 +203,11 @@ else
   JAVA_OPT="${JAVA_OPT} -Xloggc:${GC_LOG_FILE} -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=100M"
 fi
 
-# 🔗 应用启动参数
-JAVA_OPT="${JAVA_OPT} -Dspring.cloud.nacos.config.server-addr=${NACOS_SERVER}"
-JAVA_OPT="${JAVA_OPT} -Dspring.cloud.nacos.discovery.server-addr=${NACOS_SERVER}"
-JAVA_OPT="${JAVA_OPT} --spring.config.location=classpath:/,classpath:/config/,file:./,file:./config/"
-JAVA_OPT="${JAVA_OPT} --server.max-http-header-size=524288"
+# 🔗 应用启动参数 (使用环境变量动态拼接)
+JAVA_OPT="${JAVA_OPT} -Dspring.cloud.nacos.config.server-addr=${SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR}"
+JAVA_OPT="${JAVA_OPT} -Dspring.cloud.nacos.discovery.server-addr=${SPRING_CLOUD_NACOS_DISCOVERY_SERVER_ADDR}"
+JAVA_OPT="${JAVA_OPT} --spring.config.location=${SPRING_CONFIG_LOCATION}"
+JAVA_OPT="${JAVA_OPT} --server.max-http-header-size=${SERVER_MAX_HTTP_HEADER_SIZE}"
 JAVA_OPT="${JAVA_OPT} ${JAVA_OPT_EXT}"
 
 # 📂 创建必要的目录
@@ -205,7 +219,8 @@ echo "🚀 正在启动应用: ${APP_NAME} ..."
 echo "☕ Java 路径: $JAVA_HOME"
 echo "⚙️ 运行模式: $MODE"
 echo "📄 日志文件: $LOG_FILE"
-echo "🔗 Nacos 地址: $NACOS_SERVER"
+echo "🔗 Nacos 配置中心: $SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR"
+echo "🔗 Nacos 服务发现: $SPRING_CLOUD_NACOS_DISCOVERY_SERVER_ADDR"
 echo "----------------------------------------"
 
 # 启动应用，并将标准输出和错误输出重定向到日志文件
