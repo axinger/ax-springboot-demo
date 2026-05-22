@@ -1,0 +1,77 @@
+axinger:
+  user:
+    username: |- #没有最后的换行符
+      jim,
+      tom
+    password: |  #每个都有换行符
+      123
+      456
+    dog: # 必须缩进两格
+      min: 1 # 必须缩进四格
+      max: 100
+  person:
+    id: 1
+    name: jim
+    age: 18
+    time: 12:00:00
+    time2: "13:00:00"
+    created-date: "2000-01-01 13:00:00"
+    created-time: "13:00:01"
+    updated-date-time: "2000-01-02 14:00:00"
+    updated-date: "2000-01-02"
+    updated-time: "14:00:01"
+    
+    #保留换行符，但去掉最后的换行符
+    text1: |-
+      hello,
+      world
+    
+    #保留换行符和最后的换行符 
+    text2: |
+      hello,
+      world
+      
+    # 折叠换行符，将多行合并为一行（用空格替换换行）
+    text3: >
+      hello,
+      world
+    # 布尔值
+    enabled: true
+    disabled: false
+
+    # null 值
+    empty: ~
+    empty2: null
+    # 方式2：方括号
+    fruits: [ apple, banana, orange ]
+    # 字符串转数字
+    number: !!str 123
+    # 显式指定类型
+    date: !!timestamp 2024-01-01
+    # ========== LocalDate 日期配置示例 ==========
+    # 方式1：标准日期格式（Spring Boot 自动转换为 LocalDate）
+    birth-date: 2024-01-01
+    join-date: 2023-06-15
+    
+    # 方式2：带引号的日期字符串（同样可以转换）
+    start-date: "2024-02-01"
+    end-date: "2024-12-31"
+    
+    # 方式3：多个日期列表（Spring Boot 不支持 List<LocalDate>，使用 String 列表）
+    holidays:
+      - "2024-01-01"
+      - "2024-05-01"
+      - "2024-10-01"
+    
+    # 方式4：日期范围配置
+    vacation:
+      from: 2024-07-01
+      to: 2024-07-15
+    
+    # 方式5： LocalDateTime（包含时间）
+    created-at: 2024-01-01T10:30:00
+    updated-at: "2024-01-02 14:30:00"
+    
+    # 方式6： LocalTime（仅时间）
+    work-start-time: "09:00:00"
+    work-end-time: "18:00:00"

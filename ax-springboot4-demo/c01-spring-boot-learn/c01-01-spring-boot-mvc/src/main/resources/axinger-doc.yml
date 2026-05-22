@@ -1,0 +1,19 @@
+axinger:
+  doc:
+    enable: true
+    title: |- 
+      测试项目
+      1
+    description: |
+      doc
+      描述
+    version: v1234
+    websiteName: 11111
+    websiteUrl: 222
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+

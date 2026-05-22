@@ -1,0 +1,72 @@
+server:
+  port: 30101
+
+spring:
+  application:
+    version: 1.0.1
+    description: dev环境
+  config:
+    import:
+      #Spring Boot 2.4 及以上版本
+      - classpath:axinger.yml      # 从 classpath 加载
+      - classpath:my-user.yml      # 从 classpath 加载
+      - classpath:axinger-doc.yml
+  #      - file:./config/my-user.yml  # 从文件系统加载（项目根目录的 config 目录下）
+  #      - optional:file:./my-user.yml # 可选导入（文件不存在时不报错）
+
+  #适用于 Spring Boot 2.4 以下版本：
+#  profiles:
+#    include: user  # 加载名为 my-user.yml 或 application-my-user.yml 的文件
+
+Java-time-module:
+  date-time-format: yyyy-MM-dd HH:mm:ss
+show:
+  # 湿度
+  humidity:
+    min: 40.0
+    max: 65.0
+  # 温度
+  temperature:
+    min: 150
+    max: 300
+
+
+my:
+  custom1:
+    property: true
+  custom2:
+    property: false
+  feature:
+    enabled: true
+
+  module:
+    enabled: true
+    mode: advanced
+
+
+app:
+  currentTime: ${custom.timestamp}
+  randomValue: ${custom.randomString}
+
+  currentTime2: ${custom2.timestamp}
+  randomValue2: ${custom2.randomString}
+
+# ${random.uuid}
+#  ${random.int} - 随机整数
+#
+#  ${random.int(10)} - 10以内的随机整数
+#
+#  ${random.int(10,100)} - 10到100之间的随机整数
+#
+#  ${random.long} - 随机长整数
+#
+#  ${random.value} - 随机字母数字字符串
+
+axinger:
+  user1:
+    name: axinger
+    age: 18
+
+
+path:
+  test11: /test11.do

@@ -76,6 +76,7 @@
 
     <modules>
 
+        <module>c01-spring-boot-learn</module>
     </modules>
 
     <dependencies>
