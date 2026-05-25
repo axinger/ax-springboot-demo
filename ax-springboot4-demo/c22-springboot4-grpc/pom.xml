@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.github.axinger</groupId>
+        <artifactId>ax-springboot4-demo</artifactId>
+        <version>2026.06.01-4.0</version>
+    </parent>
+
+    <artifactId>c22-springboot4-grpc</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>c22-grpc-api</module>
+        <module>c22-grpc-server</module>
+        <module>c22-grpc-client</module>
+    </modules>
+
+    <properties>
+        <spring-grpc.version>1.0.2</spring-grpc.version>
+        <protobuf-java.version>4.28.2</protobuf-java.version>
+        <grpc.version>1.77.1</grpc.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.grpc</groupId>
+                <artifactId>spring-grpc-dependencies</artifactId>
+                <version>${spring-grpc.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>

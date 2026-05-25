@@ -89,8 +89,9 @@ public class NotificationController {
         NotificationModule.NotificationId id = NotificationModule.NotificationId.fromString(notificationId);
         Optional<NotificationModule.Notification> notification = notificationService.findNotificationById(id);
 
-        return notification.map(n -> ResponseEntity.ok(toNotificationResponse(n)))
-                .orElse(ResponseEntity.notFound().build());
+//        return notification.map(n -> ResponseEntity.ok(toNotificationResponse(n)))
+//                .orElse(ResponseEntity.notFound().build());
+        return null;
     }
 
     /**

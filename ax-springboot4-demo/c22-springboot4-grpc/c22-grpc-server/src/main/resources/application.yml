@@ -1,0 +1,9 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: c22-grpc-server
+  grpc:
+    server:
+      port: 9090
