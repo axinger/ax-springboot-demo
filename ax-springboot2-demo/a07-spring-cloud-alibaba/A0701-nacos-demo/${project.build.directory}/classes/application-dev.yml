@@ -1,7 +1,0 @@
-spring:
-  config:
-    import:
-      - optional:axinger-user.yml
-      - optional:axinger-doc.yml
-      - optional:axinger-filter.yml
-#      - axinger-user.yml
