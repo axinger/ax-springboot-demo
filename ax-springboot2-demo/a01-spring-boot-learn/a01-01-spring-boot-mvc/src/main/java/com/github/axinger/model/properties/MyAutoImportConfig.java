@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableConfigurationProperties(value = {
+        DemoProperties.class,
         DemoUserProperties.class,
         DemoBlockScalarProperties.class,
         DemoPropertySourceProperties.class,

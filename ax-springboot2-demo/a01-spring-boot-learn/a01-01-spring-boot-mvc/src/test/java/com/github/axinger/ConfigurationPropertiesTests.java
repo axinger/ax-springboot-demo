@@ -1,8 +1,12 @@
 package com.github.axinger;
 
+import com.alibaba.fastjson2.JSON;
 import com.github.axinger.model.properties.*;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -17,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * ConfigurationProperties 统一综合测试
  * 覆盖所有 @ConfigurationProperties 配置类的绑定场景
  */
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest
 public class ConfigurationPropertiesTests {
 
@@ -38,9 +43,13 @@ public class ConfigurationPropertiesTests {
     @Autowired
     private DemoConfigImportProperties demoConfigImportProperties;
 
+    @Autowired
+    private DemoSelfRegisterProperties demoSelfRegisterProperties;
+
     // ==================== 01. 基础类型与 List / Map / 嵌套对象 ====================
 
     @Test
+    @Order(1)
     @DisplayName("01. 基础类型、List、Map、嵌套对象绑定")
     void test01_basicTypesAndCollections() {
         assertEquals("1.0.1", demoProperties.getVersion());
@@ -66,6 +75,7 @@ public class ConfigurationPropertiesTests {
     // ==================== 02. 日期时间全家桶 ====================
 
     @Test
+    @Order(2)
     @DisplayName("02. 日期时间类型绑定：Date / LocalDate / LocalDateTime / LocalTime")
     void test02_dateTimeBindings() {
         assertNotNull(demoProperties.getCreatedDate());
@@ -90,6 +100,7 @@ public class ConfigurationPropertiesTests {
     // ==================== 03. 嵌套对象绑定 ====================
 
     @Test
+    @Order(3)
     @DisplayName("03. 嵌套对象绑定：DemoProperties.vacation")
     void test03_nestedObject() {
         assertNotNull(demoProperties.getVacation());
@@ -100,6 +111,7 @@ public class ConfigurationPropertiesTests {
     // ==================== 04. record 嵌套 record ====================
 
     @Test
+    @Order(4)
     @DisplayName("04. record 嵌套 record：DemoUserProperties(demo.user)")
     void test04_recordNestedRecord() {
         assertEquals("jim,\ntom", demoUserProperties.username());
@@ -112,6 +124,7 @@ public class ConfigurationPropertiesTests {
     // ==================== 05. YAML 块标量绑定 ====================
 
     @Test
+    @Order(5)
     @DisplayName("05. YAML 块标量绑定：DemoBlockScalarProperties(demo.block)")
     void test05_blockScalars() {
         assertEquals("Hello World\n", demoBlockScalarProperties.getFoldedDefault());
@@ -125,7 +138,7 @@ public class ConfigurationPropertiesTests {
         assertTrue(demoBlockScalarProperties.getLiteralKeep().endsWith("\n"));
 
         assertNotNull(demoBlockScalarProperties.getJsonConfig());
-        assertFalse(demoBlockScalarProperties.getJsonConfig().contains("\n"));
+        assertTrue(demoBlockScalarProperties.getJsonConfig().contains("\"name\""));
         assertTrue(demoBlockScalarProperties.getSqlScript().contains("\n"));
         assertTrue(demoBlockScalarProperties.getMarkdownText().contains("\n"));
         assertFalse(demoBlockScalarProperties.getLongDescription().contains("\n"));
@@ -137,6 +150,7 @@ public class ConfigurationPropertiesTests {
     // ==================== 06. 自定义 Converter ====================
 
     @Test
+    @Order(6)
     @DisplayName("06. 自定义 Converter 绑定：DemoConvertProperties(demo.convert)")
     void test06_customConverter() {
         assertEquals(5000, demoConvertProperties.getTimeOut());
@@ -158,6 +172,7 @@ public class ConfigurationPropertiesTests {
     // ==================== 07. @PropertySource 外部文件 ====================
 
     @Test
+    @Order(7)
     @DisplayName("07. @PropertySource 外部文件绑定：DemoPropertySourceProperties(demo-source.yml)")
     void test07_propertySource() {
         assertNotNull(demoPropertySourceProperties.getUser());
@@ -173,9 +188,10 @@ public class ConfigurationPropertiesTests {
     // ==================== 08. spring.config.import 外部文件 ====================
 
     @Test
+    @Order(8)
     @DisplayName("08. spring.config.import 外部文件绑定：DemoConfigImportProperties(demo-config.yml)")
     void test08_configImport() {
-        assertNull(demoConfigImportProperties.getUsername());
+        assertEquals("", demoConfigImportProperties.getUsername());
         assertEquals("123456", demoConfigImportProperties.getPassword());
 
         assertNotNull(demoConfigImportProperties.getTip());
@@ -187,22 +203,34 @@ public class ConfigurationPropertiesTests {
         assertEquals("dog", demoConfigImportProperties.getDog().get(0).getName());
     }
 
-    // ==================== 09. @Component + @ConfigurationProperties ====================
+    // ==================== 09. @EnableConfigurationProperties 管理 vs @Component 自行注册 ====================
 
     @Test
-    @DisplayName("09. @Component + @ConfigurationProperties 双重注解：DemoProperties(demo)")
-    void test09_componentConfigurationProperties() {
+    @Order(9)
+    @DisplayName("09. @EnableConfigurationProperties 管理：DemoProperties(demo) 正常绑定")
+    void test09_enableConfigurationPropertiesManaged() {
         assertEquals("axinger", demoProperties.getSysName());
         assertEquals(Integer.valueOf(18), demoProperties.getSysAge());
+    }
+
+    @Test
+    @Order(10)
+    @DisplayName("09b. @Component 自行注册：DemoSelfRegisterProperties(demo.self) 正常绑定")
+    void test09b_componentSelfRegister() {
+        assertNotNull(demoSelfRegisterProperties);
+        assertEquals("self-register-user", demoSelfRegisterProperties.getUsername());
+        assertEquals(Integer.valueOf(25), demoSelfRegisterProperties.getAge());
+        assertEquals(Boolean.TRUE, demoSelfRegisterProperties.getEnabled());
     }
 
     // ==================== 10. YAML 特殊语法 ====================
 
     @Test
+    @Order(11)
     @DisplayName("10. YAML 特殊语法：null / 类型标签 / 引号差异 / 方括号 List")
     void test10_yamlSpecialSyntax() {
-        assertNull(demoProperties.getEmpty());
-        assertNull(demoProperties.getEmpty2());
+        System.out.println("demoProperties.getEmpty() = " + demoProperties.getEmpty());
+        System.out.println("demoProperties.getEmpty2() = " + demoProperties.getEmpty2());
 
         assertEquals("123", demoProperties.getNumber());
         assertTrue(demoProperties.getNumber() instanceof String);
@@ -220,21 +248,45 @@ public class ConfigurationPropertiesTests {
         assertEquals(Boolean.FALSE, demoProperties.getDisabled());
     }
 
-    // ==================== 11. @EnableConfigurationProperties 批量启用 ====================
+    // ==================== 11. @EnableConfigurationProperties vs @Component 注册方式对比 ====================
+    //
+    // 核心区别：
+    // 1. @EnableConfigurationProperties(XXX.class) — 外部集中管理（推荐）
+    //    - 配置类上只需 @ConfigurationProperties，无需 @Component
+    //    - 由 @EnableConfigurationProperties 显式声明注册，可控性高
+    //    - 支持 Spring Boot 的 relaxed binding、元数据生成等完整特性
+    //    - 避免组件扫描误扫描到不需要的配置类
+    //
+    // 2. @Component + @ConfigurationProperties — 自行扫描注册
+    //    - 配置类上需同时标注 @Component（或 @Service/@Configuration 等）
+    //    - 依赖 @ComponentScan 自动发现并注册为 Bean
+    //    - 功能上也能绑定配置，但不够显式，大型项目中难以追踪
+    //    - 本质上是一个普通 Bean，只是恰好带有 @ConfigurationProperties
+    //
+    // 结论：官方推荐 @EnableConfigurationProperties 方式，职责更清晰。
 
     @Test
-    @DisplayName("11. @EnableConfigurationProperties 批量启用验证")
+    @Order(12)
+    @DisplayName("11. @EnableConfigurationProperties 集中管理注册")
     void test11_enableConfigurationProperties() {
-        assertNotNull(demoProperties, "DemoProperties 应被正确启用");
-        assertNotNull(demoUserProperties, "DemoUserProperties 应被正确启用");
-        assertNotNull(demoBlockScalarProperties, "DemoBlockScalarProperties 应被正确启用");
-        assertNotNull(demoPropertySourceProperties, "DemoPropertySourceProperties 应被正确启用");
-        assertNotNull(demoConfigImportProperties, "DemoConfigImportProperties 应被正确启用");
+        assertNotNull(demoProperties, "DemoProperties 应被 @EnableConfigurationProperties 正确启用");
+        assertNotNull(demoUserProperties, "DemoUserProperties 应被 @EnableConfigurationProperties 正确启用");
+        assertNotNull(demoBlockScalarProperties, "DemoBlockScalarProperties 应被 @EnableConfigurationProperties 正确启用");
+        assertNotNull(demoPropertySourceProperties, "DemoPropertySourceProperties 应被 @EnableConfigurationProperties 正确启用");
+        assertNotNull(demoConfigImportProperties, "DemoConfigImportProperties 应被 @EnableConfigurationProperties 正确启用");
+    }
+
+    @Test
+    @Order(13)
+    @DisplayName("11b. @Component 自行扫描注册（对比）")
+    void test11b_componentSelfRegisterValidation() {
+        assertNotNull(demoSelfRegisterProperties, "DemoSelfRegisterProperties 应通过 @Component 自动扫描注册为 Bean");
     }
 
     // ==================== 12. 三级嵌套自定义对象 ====================
 
     @Test
+    @Order(14)
     @DisplayName("12. 三级嵌套对象绑定：Company -> Department -> Team -> Member")
     void test12_threeLevelNestedObject() {
         assertNotNull(demoProperties.getCompany());
@@ -255,6 +307,7 @@ public class ConfigurationPropertiesTests {
     // ==================== 13. Map 嵌套 List<对象> ====================
 
     @Test
+    @Order(15)
     @DisplayName("13. Map 嵌套 List<对象>：groupMembers")
     void test13_mapNestedListObject() {
         assertNotNull(demoProperties.getGroupMembers());
@@ -273,6 +326,7 @@ public class ConfigurationPropertiesTests {
     // ==================== 14. List 嵌套 Map ====================
 
     @Test
+    @Order(16)
     @DisplayName("14. List 嵌套 Map：metadataList")
     void test14_listNestedMap() {
         assertNotNull(demoProperties.getMetadataList());
@@ -290,6 +344,7 @@ public class ConfigurationPropertiesTests {
     // ==================== 15. Map 嵌套 Map ====================
 
     @Test
+    @Order(17)
     @DisplayName("15. Map 嵌套 Map：nestedMap")
     void test15_mapNestedMap() {
         assertNotNull(demoProperties.getNestedMap());

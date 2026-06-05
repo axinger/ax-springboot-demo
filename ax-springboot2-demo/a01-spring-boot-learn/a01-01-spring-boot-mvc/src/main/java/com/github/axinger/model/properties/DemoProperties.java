@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.stereotype.Component;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -15,10 +13,9 @@ import java.util.List;
 /**
  * ConfigurationProperties 大合集演示类
  * 统一前缀 demo，覆盖基础类型、List、Map、嵌套对象、日期时间、YAML 特殊语法
- * 同时带有 @Component 演示自动注册 Bean
+ * 由 @EnableConfigurationProperties 统一管理注册为 Bean（非 @Component 自注册）
  */
 @Data
-@Component
 @ConfigurationProperties(prefix = "demo")
 public class DemoProperties {
 

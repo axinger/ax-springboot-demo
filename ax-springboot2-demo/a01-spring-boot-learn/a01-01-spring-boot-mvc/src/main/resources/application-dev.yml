@@ -59,7 +59,7 @@ demo:
   updated-date: "2000-01-02"
   updated-time: "14:00:01"
 
-  time: 12:00:00
+  time: "12:00:00"
   time2: "13:00:00"
 
   text1: |-
@@ -248,6 +248,12 @@ demo:
           "status": 200,
           "message": "success"
         }
+
+  # === 自行注册 Bean 演示（@Component + @ConfigurationProperties）===
+  self:
+    username: self-register-user
+    age: 25
+    enabled: true
 
   # ==================== 自定义 Converter ====================
   convert:

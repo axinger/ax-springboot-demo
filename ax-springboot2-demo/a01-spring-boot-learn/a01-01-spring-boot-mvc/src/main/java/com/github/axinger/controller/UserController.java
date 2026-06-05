@@ -48,7 +48,7 @@ public class UserController {
     }
 
     @GetMapping("/list")
-    public Result<List<UserPojo<UserPojo.BookPojo>>>> list(@RequestHeader HttpHeaders headers,
+    public Result<List<UserPojo<UserPojo.BookPojo>>> list(@RequestHeader HttpHeaders headers,
                                                           @RequestHeader(value = "token", required = false) String token) throws InterruptedException {
         System.out.println("headers = " + headers);
         System.out.println("token = " + token);

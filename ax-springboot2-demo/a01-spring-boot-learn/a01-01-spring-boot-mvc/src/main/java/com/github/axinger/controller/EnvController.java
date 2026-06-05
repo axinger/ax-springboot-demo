@@ -26,6 +26,10 @@ public class EnvController {
     @Resource
     private DemoConfigImportProperties demoConfigImportProperties;
 
+
+    @Autowired
+    private DemoSelfRegisterProperties demoSelfRegisterProperties;
+    
     @GetMapping("/1")
     public Object test1() {
         return demoProperties;
@@ -38,6 +42,15 @@ public class EnvController {
         map.put("demoProperties", demoProperties.getPersonName());
         map.put("demoConfigImportProperties", demoConfigImportProperties);
         map.put("demoPropertySourceProperties", demoPropertySourceProperties.getList());
+
+
+        //        map.put("axingerUserProperties", axingerUserProperties.all());
+        // record 可以直接返回
+        map.put("demoSelfRegisterProperties", demoSelfRegisterProperties);
+        // class 不要单独使用 @Configuration  ,不然无整体返回给webmvc,但是可以正常取值,但可以属性一个个获取, 统一使用 EnableConfigurationProperties
+//        map.put("person", axingerPersonProperties); // 不可用
+        map.put("person", demoSelfRegisterProperties.getUsername()); // 可以
+        
         return map;
     }
 
