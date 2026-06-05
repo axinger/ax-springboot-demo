@@ -1,19 +1,15 @@
 package com.github.axinger.model.bean;
 
+import com.github.axinger.model.properties.*;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-//@AutoConfiguration
 @Configuration
 @EnableConfigurationProperties(value = {
-        AxingerUserProperties.class,
-//        AxingerPersonProperties.class,
-        HumitureRuleProperties.class,
-        MyYmlBean.class,
-        ApplicationInfo.class,
-
-        MyUserProperties.class
+        DemoUserProperties.class,
+        DemoBlockScalarProperties.class,
+        DemoPropertySourceProperties.class,
+        DemoConfigImportProperties.class
 })
 public class MyAutoImportConfig {
-
 }

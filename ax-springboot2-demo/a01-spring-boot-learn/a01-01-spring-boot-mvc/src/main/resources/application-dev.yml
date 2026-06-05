@@ -7,29 +7,13 @@ spring:
     description: dev环境
   config:
     import:
-      #Spring Boot 2.4 及以上版本
-      - classpath:axinger.yml      # 从 classpath 加载
-      - classpath:my-user.yml      # 从 classpath 加载
-      - classpath:axinger-doc.yml
-  #      - file:./config/my-user.yml  # 从文件系统加载（项目根目录的 config 目录下）
-  #      - optional:file:./my-user.yml # 可选导入（文件不存在时不报错）
-
-  #适用于 Spring Boot 2.4 以下版本：
-#  profiles:
-#    include: user  # 加载名为 my-user.yml 或 application-my-user.yml 的文件
+      # Spring Boot 2.4 及以上版本
+      - classpath:demo-user.yml      # record 类绑定演示
+      - classpath:demo-config.yml   # spring.config.import 演示
+      - classpath:demo-doc.yml      # 文档配置
 
 Java-time-module:
   date-time-format: yyyy-MM-dd HH:mm:ss
-show:
-  # 湿度
-  humidity:
-    min: 40.0
-    max: 65.0
-  # 温度
-  temperature:
-    min: 150
-    max: 300
-
 
 my:
   custom1:
@@ -38,35 +22,241 @@ my:
     property: false
   feature:
     enabled: true
-
   module:
     enabled: true
     mode: advanced
 
-
 app:
   currentTime: ${custom.timestamp}
   randomValue: ${custom.randomString}
-
   currentTime2: ${custom2.timestamp}
   randomValue2: ${custom2.randomString}
 
-# ${random.uuid}
-#  ${random.int} - 随机整数
-#
-#  ${random.int(10)} - 10以内的随机整数
-#
-#  ${random.int(10,100)} - 10到100之间的随机整数
-#
-#  ${random.long} - 随机长整数
-#
-#  ${random.value} - 随机字母数字字符串
+# ==================== Demo 大合集（基础类型 / 日期 / 嵌套 / 特殊语法 / 组件演示）====================
+# 统一前缀 demo，覆盖：
+# - 基础类型、List、Map、嵌套对象
+# - 日期时间（Date / LocalDate / LocalDateTime / LocalTime）
+# - YAML 特殊语法（null / 类型标签 / 引号差异 / 方括号）
+# - @Component + @ConfigurationProperties 自动注册
+demo:
+  version: 1.0.1
+  description: dev环境
 
-axinger:
-  user1:
-    name: axinger
-    age: 18
+  feature-enabled: true
+  feature-mode: development
+  feature-list:
+    - cache
+    - log
+    - metric
 
+  person-id: 1
+  person-name: jim
+  person-age: 18
+
+  created-date: "2000-01-01 13:00:00"
+  created-time: "13:00:01"
+  updated-date-time: "2000-01-02 14:00:00"
+  updated-date: "2000-01-02"
+  updated-time: "14:00:01"
+
+  time: 12:00:00
+  time2: "13:00:00"
+
+  text1: |-
+    hello,
+    world
+  text2: |
+    hello,
+    world
+  text3: >
+    hello,
+    world
+
+  enabled: true
+  disabled: false
+
+  empty: ~
+  empty2: null
+
+  fruits: [apple, banana, orange]
+
+  number: !!str 123
+  date: !!timestamp 2024-01-01
+
+  birth-date: 2024-01-01
+  join-date: 2023-06-15
+  start-date: "2024-02-01"
+  end-date: "2024-12-31"
+  holidays:
+    - "2024-01-01"
+    - "2024-05-01"
+    - "2024-10-01"
+
+  vacation:
+    from: 2024-07-01
+    to: 2024-07-15
+
+  created-at: 2024-01-01T10:30:00
+  updated-at: "2024-01-02 14:30:00"
+  work-start-time: "09:00:00"
+  work-end-time: "18:00:00"
+
+  # === SysUser 组件演示 ===
+  sys-name: axinger
+  sys-age: 18
+
+  # === HumitureRule 规则演示 ===
+  humidity:
+    min: 40.0
+    max: 65.0
+  temperature:
+    min: 150
+    max: 300
+
+  # ==================== 多级嵌套自定义对象（二级/三级/复杂集合）====================
+  company:
+    name: AxingerTech
+    department:
+      name: 研发部
+      team:
+        name: 后端组
+        members:
+          - name: jim
+            age: 28
+          - name: tom
+            age: 25
+          - name: lucy
+            age: 24
+
+  # Map 嵌套 List<对象>
+  group-members:
+    backend:
+      - name: jim
+        age: 28
+      - name: tom
+        age: 25
+    frontend:
+      - name: lucy
+        age: 24
+      - name: lily
+        age: 23
+
+  # List 嵌套 Map
+  metadata-list:
+    - env: dev
+      region: cn-north
+      zone: a
+    - env: test
+      region: cn-south
+      zone: b
+
+  # Map 嵌套 Map
+  nested-map:
+    db:
+      host: localhost
+      port: "3306"
+      username: root
+    redis:
+      host: localhost
+      port: "6379"
+      password: "123456"
+
+  # ==================== 块标量（Block Scalars）====================
+  block:
+    # > 折叠样式（Folded）
+    folded-default: >
+      Hello
+      World
+    folded-strip: >-
+      Hello
+      World
+    folded-keep: >+
+      Hello
+      World
+
+    # | 字面样式（Literal）
+    literal-default: |
+      Hello
+      World
+    literal-strip: |-
+      Hello
+      World
+    literal-keep: |+
+      Hello
+      World
+
+    # 实际应用场景
+    json-config: >-
+      {
+        "name": "axinger",
+        "age": 18,
+        "hobbies": ["coding", "reading"],
+        "address": {
+          "city": "Beijing",
+          "zip": "100000"
+        }
+      }
+    sql-script: |
+      SELECT u.id, u.name, u.email
+      FROM users u
+      LEFT JOIN orders o ON u.id = o.user_id
+      WHERE u.status = 'ACTIVE'
+        AND o.created_at > '2024-01-01'
+      ORDER BY u.id DESC
+      LIMIT 100;
+    markdown-text: |
+      # 欢迎使用块标量
+
+      这是使用 `|` 语法配置的多行 Markdown 文本。
+
+      - 支持列表
+      - 支持**加粗**
+      - 支持 `代码`
+
+      > 这是一个引用块
+    long-description: >-
+      这是一段很长的描述文本，
+      在 YAML 中可以换行书写以提高可读性，
+      但最终会被解析为一行没有换行符的字符串。
+      非常适合配置长段落、法律声明或服务条款等内容。
+
+    # 集合类型中的块标量
+    multi-line-list:
+      - >-
+        第一项：这是一个很长的列表项，
+        使用 >- 语法可以在 YAML 中换行书写，
+        最终解析为单行字符串。
+      - |
+        第二项：这是一个
+        保留换行的
+        多行列表项。
+      - >-
+        第三项：JSON 配置示例
+        {"key": "value", "enabled": true}
+
+    multi-line-map:
+      folded: >-
+        这是 Map 中的折叠样式值，
+        换行会被替换为空格，
+        末尾没有换行符。
+      literal: |
+        这是 Map 中的字面样式值
+        每一行都会保留换行
+        末尾保留一个换行符
+      json: >-
+        {
+          "status": 200,
+          "message": "success"
+        }
+
+  # ==================== 自定义 Converter ====================
+  convert:
+    timeOut: 5000
+    connectTimeout: 5000
+    intervalConfig: "{\"0_720\":\"0\",\"720_1020\":\"1\",\"1400_1800\":\"2\",\"1800_2600\":\"3\",\"2600_3600\":\"4\",\"3600_+∞\":\"5\"}"
+    intervalConfigByTakeout:
+      "1": "{\"0_600\":\"0\",\"600_900\":\"1\",\"900_1200\":\"2\",\"1200_1800\":\"3\",\"1800_+∞\":\"4\"}"
+      "2": "{\"0_480\":\"0\",\"480_720\":\"1\",\"720_1020\":\"2\",\"1020_1500\":\"3\",\"1500_+∞\":\"4\"}"
 
 path:
   test11: /test11.do

@@ -1,7 +1,7 @@
 package com.github.axinger;
 
 import cn.hutool.extra.spring.SpringUtil;
-import com.github.axinger.model.bean.MyBean;
+import com.github.axinger.model.properties.MyBean;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,0 +1,13 @@
+# @PropertySource 外部文件加载演示配置
+demo:
+  source:
+    user:
+      username: lili
+      password: 123456
+      tip: 1,2
+    list:
+      - username: jim
+        password: 132456
+        tip: jim1,jim2
+      - username: tom
+        password: 132456

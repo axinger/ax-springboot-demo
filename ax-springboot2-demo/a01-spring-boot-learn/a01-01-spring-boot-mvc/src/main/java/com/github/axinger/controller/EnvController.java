@@ -1,6 +1,6 @@
 package com.github.axinger.controller;
 
-import com.github.axinger.model.bean.*;
+import com.github.axinger.model.properties.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -18,59 +18,46 @@ import java.util.Map;
 public class EnvController {
     private final Environment environment;
     @Resource
-    MyYmlBean myYmlBean;
+    DemoPropertySourceProperties demoPropertySourceProperties;
     @Autowired
-    private ApplicationInfo applicationInfo;
+    private DemoProperties demoProperties;
     @Autowired
-    private AxingerUserProperties axingerUserProperties;
-    @Autowired
-    private AxingerPersonProperties axingerPersonProperties;
+    private DemoUserProperties demoUserProperties;
     @Resource
-    private MyUserProperties myUserProperties;
+    private DemoConfigImportProperties demoConfigImportProperties;
 
     @GetMapping("/1")
     public Object test1() {
-        return applicationInfo;
+        return demoProperties;
     }
 
     @GetMapping("/2")
     public Object test2() {
         Map<String, Object> map = new HashMap<>();
-//        map.put("axingerUserProperties", axingerUserProperties.all());
-        // record 可以直接返回
-        map.put("axingerUserProperties", axingerUserProperties);
-        // class 不要单独使用 @Configuration  ,不然无整体返回给webmvc,但是可以正常取值,但可以属性一个个获取, 统一使用 EnableConfigurationProperties
-//        map.put("person", axingerPersonProperties); // 不可用
-        map.put("person", axingerPersonProperties.getName()); // 可以
-        map.put("userProperties", myUserProperties);
-        map.put("myYmlBean", myYmlBean.getList());
+        map.put("demoUserProperties", demoUserProperties);
+        map.put("demoProperties", demoProperties.getPersonName());
+        map.put("demoConfigImportProperties", demoConfigImportProperties);
+        map.put("demoPropertySourceProperties", demoPropertySourceProperties.getList());
         return map;
     }
-
 
     @GetMapping("/3")
     public Object test3() {
         Map<String, Object> map = new HashMap<>();
-        // 不支持复杂对象转换
-        String newValue = environment.getProperty("my-user", "");
+        String newValue = environment.getProperty("demo.config", "");
         map.put("newValue", newValue);
-        /// 不支持复杂对象转换：无法直接将属性转换为自定义的 POJO 类或配置属性类
-        MyUserProperties property = environment.getProperty("my-user", MyUserProperties.class);
+        DemoConfigImportProperties property = environment.getProperty("demo.config", DemoConfigImportProperties.class);
         map.put("property", property);
-
-        map.put("myUserProperties", myUserProperties);
-
-        /// 才可以
-        String username = environment.getProperty("my-user.username", "");
+        map.put("demoConfigImportProperties", demoConfigImportProperties);
+        String username = environment.getProperty("demo.config.username", "");
         map.put("username", username);
-
         return map;
     }
 
     @GetMapping("/4")
     public Object test4() {
         Map<String, Object> map = new HashMap<>();
-        map.put("myUserProperties", myUserProperties);
+        map.put("demoConfigImportProperties", demoConfigImportProperties);
         return map;
     }
 }

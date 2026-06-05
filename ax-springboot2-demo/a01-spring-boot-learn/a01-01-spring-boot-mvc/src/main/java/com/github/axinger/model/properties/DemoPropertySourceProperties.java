@@ -1,31 +1,27 @@
-package com.github.axinger.model.bean;
+package com.github.axinger.model.properties;
 
 import com.axing.common.util.factory.YamlPropertySourceFactory;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 import java.util.List;
 
+/**
+ * @PropertySource 外部文件加载演示
+ * 通过自定义 YamlPropertySourceFactory 加载非 application 的 YAML 文件
+ */
 @Data
 @Configuration
-@NoArgsConstructor
-@AllArgsConstructor
-@ConfigurationProperties(prefix = "my")
-@PropertySource(value = {"classpath:my.yml"}, factory = YamlPropertySourceFactory.class) // 需要自定义yaml解析
+@ConfigurationProperties(prefix = "demo.source")
+@PropertySource(value = {"classpath:demo-source.yml"}, factory = YamlPropertySourceFactory.class)
+public class DemoPropertySourceProperties {
 
-public class MyYmlBean {
-
-    private MyYmlBean.User user;
-
-    private List<MyYmlBean.User> list;
+    private User user;
+    private List<User> list;
 
     @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
     public static class User {
         private String username;
         private String password;

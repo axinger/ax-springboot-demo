@@ -1,7 +1,8 @@
-axinger:
+# 文档配置演示
+demo:
   doc:
     enable: true
-    title: |- 
+    title: |-
       测试项目
       1
     description: |
@@ -16,4 +17,3 @@ springdoc:
     enabled: true
   swagger-ui:
     enabled: true
-
