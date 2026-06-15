@@ -7,3 +7,32 @@ spring:
   grpc:
     server:
       port: 9090
+      # 最大消息大小 (4MB)
+      max-inbound-message-size: 4194304B
+      # 最大元数据大小 (8KB)
+      max-inbound-metadata-size: 8192B
+      # 优雅关闭等待时间
+      shutdown-grace-period: 30s
+      # 启用健康检查
+      health:
+        enabled: true
+        actuator:
+          enabled: true
+          # 健康检查更新频率
+          update-rate: 5s
+          # 健康检查初始延迟
+          update-initial-delay: 5s
+      # 启用反射服务
+      reflection:
+        enabled: true
+      # 启用观察
+      observation:
+        enabled: true
+      # Keep-alive 配置
+      keep-alive:
+        time: 2h
+        timeout: 20s
+        max-age: 2h
+        max-idle: 1h
+        permit-time: 5m
+        permit-without-calls: false

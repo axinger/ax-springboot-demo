@@ -1,0 +1,70 @@
+# 客户端 SSL/TLS 配置示例
+# 使用时将 application.yml 中的配置替换为此文件内容
+# 或者使用 spring.profiles.active=ssl 激活此配置
+
+server:
+  port: 8081
+
+spring:
+  application:
+    name: c22-grpc-client
+  grpc:
+    client:
+      default-channel:
+        address: localhost:9090
+        # 使用 TLS 连接
+        negotiation-type: TLS
+        # SSL bundle 名称
+        ssl:
+          bundle: grpc-client
+          enabled: true
+        # 默认超时时间
+        default-deadline: 10s
+        # 启用 keep-alive
+        enable-keep-alive: true
+        keep-alive-time: 5m
+        keep-alive-timeout: 20s
+        keep-alive-without-calls: false
+        # 最大消息大小 (4MB)
+        max-inbound-message-size: 4194304B
+        # 最大元数据大小 (8KB)
+        max-inbound-metadata-size: 8192B
+        # 启用健康检查
+        health:
+          enabled: true
+        # 启用观察
+        observation:
+          enabled: true
+      # 启用 in-process 通道
+      inprocess:
+        enabled: true
+        exclusive: false
+  # SSL Bundle 配置
+  ssl:
+    bundle:
+      jks:
+        grpc-client:
+          keystore:
+            # 客户端证书文件路径（mTLS 时需要）
+            location: classpath:client.jks
+            # 证书密码
+            password: changeit
+            # 证书类型
+            type: JKS
+          key:
+            # 私钥密码
+            password: changeit
+          truststore:
+            # 信任的 CA 证书文件路径
+            location: classpath:truststore.jks
+            # 信任库密码
+            password: changeit
+            # 信任库类型
+            type: JKS
+
+# 日志配置
+logging:
+  level:
+    root: INFO
+    com.github.axinger: DEBUG
+    io.grpc: DEBUG

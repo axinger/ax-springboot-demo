@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * gRPC Client 控制器
+ * 通过构造函数注入 gRPC stub
  */
 @Slf4j
 @RestController

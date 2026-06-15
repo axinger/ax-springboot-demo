@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.github.axinger</groupId>
         <artifactId>c01-spring-boot-learn</artifactId>
-        <version>2026.06.01-4.0</version>
+        <version>2026.06.01-4.1</version>
     </parent>
 
     <artifactId>c01-01-spring-boot-mvc</artifactId>

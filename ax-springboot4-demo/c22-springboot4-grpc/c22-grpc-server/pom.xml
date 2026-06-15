@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.github.axinger</groupId>
         <artifactId>c22-springboot4-grpc</artifactId>
-        <version>2026.06.01-4.0</version>
+        <version>2026.06.01-4.1</version>
     </parent>
 
     <artifactId>c22-grpc-server</artifactId>

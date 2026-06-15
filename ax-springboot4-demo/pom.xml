@@ -15,7 +15,7 @@
     <groupId>com.github.axinger</groupId>
     <artifactId>ax-springboot4-demo</artifactId>
     <!--年-月-第几个版本-springboot版本-->
-    <version>2026.06.01-4.0</version>
+    <version>2026.06.01-4.1</version>
     <name>ax-springboot4-demo-${project.version}</name>
     <description>个人代码总结</description>
     <packaging>pom</packaging>
@@ -36,7 +36,6 @@
         <mybatis-plus.version>3.5.6</mybatis-plus.version>
         <mybatis-plus3.version>3.5.10.1</mybatis-plus3.version>
         <guava.version>33.3.0-jre</guava.version>
-        <hutool.version>5.8.32</hutool.version>
         <fastjson2.version>2.0.49</fastjson2.version>
         <lombok.version>1.18.38</lombok.version>
         <druid.version>1.2.22</druid.version>
@@ -45,39 +44,13 @@
         <minio.version>8.5.9</minio.version>
         <poi-version>5.4.0</poi-version>
         <itextpdf.version>5.5.13.3</itextpdf.version>
+        <hutool.version>5.8.42</hutool.version>
     </properties>
-
-    <!--指定运行环境,每次切换需要更新一下maven,有缓存-->
-    <profiles>
-        <profile>
-            <id>my-dev</id>
-            <properties>
-                <my-env>dev</my-env>
-            </properties>
-        </profile>
-        <profile>
-            <id>my-prd</id>
-            <properties>
-                <my-env>prd</my-env>
-            </properties>
-            <!--默认变量-->
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
-        <profile>
-            <id>my-test</id>
-            <properties>
-                <my-env>test</my-env>
-            </properties>
-        </profile>
-    </profiles>
 
 
     <modules>
         <module>c01-spring-boot-learn</module>
         <module>c22-springboot4-grpc</module>
-                <module>c22-grpc</module>
     </modules>
 
     <dependencies>
@@ -95,5 +68,62 @@
         </dependency>
 
     </dependencies>
-    
+
+    <dependencyManagement>
+
+        <dependencies>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+        </dependencies>
+
+    </dependencyManagement>
+
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>versions-maven-plugin</artifactId>
+                    <version>2.15.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <!-- 统一管理父子模块的版本号 -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <configuration>
+                    <generateBackupPoms>false</generateBackupPoms>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source> <!-- 设置源代码的语言级别 -->
+                    <target>${java.version}</target><!-- 设置目标代码的语言级别 -->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

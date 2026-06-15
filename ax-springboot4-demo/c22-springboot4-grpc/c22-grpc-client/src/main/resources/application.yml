@@ -7,5 +7,26 @@ spring:
   grpc:
     client:
       default-channel:
-        address: localhost:9090
+        address: static://localhost:9090
         negotiation-type: plaintext
+        # 默认超时时间
+        default-deadline: 10s
+        # 启用 keep-alive
+        enable-keep-alive: true
+        keep-alive-time: 5m
+        keep-alive-timeout: 20s
+        keep-alive-without-calls: false
+        # 最大消息大小 (4MB)
+        max-inbound-message-size: 4194304B
+        # 最大元数据大小 (8KB)
+        max-inbound-metadata-size: 8192B
+        # 启用健康检查
+        health:
+          enabled: true
+        # 启用观察
+        observation:
+          enabled: true
+      # 启用 in-process 通道
+      inprocess:
+        enabled: true
+        exclusive: false

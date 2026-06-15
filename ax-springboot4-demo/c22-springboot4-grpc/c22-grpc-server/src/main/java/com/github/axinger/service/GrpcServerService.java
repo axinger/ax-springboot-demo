@@ -6,12 +6,15 @@ import com.github.axinger.grpc.proto.SimpleGrpc;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.grpc.server.service.GrpcService;
+import org.springframework.stereotype.Service;
 
 /**
  * gRPC 服务实现
+ * 使用 @GrpcService 注解标识为 gRPC 服务
  */
 @Slf4j
 @GrpcService
+@Service
 public class GrpcServerService extends SimpleGrpc.SimpleImplBase {
 
     @Override

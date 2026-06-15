@@ -1,0 +1,76 @@
+# SSL/TLS 配置示例
+# 使用时将 application.yml 中的配置替换为此文件内容
+# 或者使用 spring.profiles.active=ssl 激活此配置
+
+server:
+  port: 8080
+
+spring:
+  application:
+    name: c22-grpc-server
+  grpc:
+    server:
+      port: 9090
+      # 启用 SSL
+      ssl:
+        enabled: true
+        # SSL bundle 名称
+        bundle: grpc-server
+        # 客户端认证模式: none, optional, require
+        client-auth: none
+        # 是否启用安全模式（生产环境必须为 true）
+        secure: true
+      # 最大消息大小 (4MB)
+      max-inbound-message-size: 4194304B
+      # 最大元数据大小 (8KB)
+      max-inbound-metadata-size: 8192B
+      # 优雅关闭等待时间
+      shutdown-grace-period: 30s
+      # 启用健康检查
+      health:
+        enabled: true
+        actuator:
+          enabled: true
+          update-rate: 5s
+          update-initial-delay: 5s
+      # 启用反射服务
+      reflection:
+        enabled: true
+      # 启用观察
+      observation:
+        enabled: true
+      # Keep-alive 配置
+      keep-alive:
+        time: 2h
+        timeout: 20s
+        max-age: 2h
+        max-idle: 1h
+        permit-time: 5m
+        permit-without-calls: false
+  # SSL Bundle 配置
+  ssl:
+    bundle:
+      jks:
+        grpc-server:
+          keystore:
+            # 证书文件路径
+            location: classpath:server.jks
+            # 证书密码
+            password: changeit
+            # 证书类型
+            type: JKS
+          key:
+            # 私钥密码
+            password: changeit
+      # 也可以使用 PEM 格式
+      # pem:
+      #   grpc-server:
+      #     certificate: classpath:server.crt
+      #     private-key: classpath:server.key
+
+# 日志配置
+logging:
+  level:
+    root: INFO
+    com.github.axinger: DEBUG
+    io.grpc: DEBUG
