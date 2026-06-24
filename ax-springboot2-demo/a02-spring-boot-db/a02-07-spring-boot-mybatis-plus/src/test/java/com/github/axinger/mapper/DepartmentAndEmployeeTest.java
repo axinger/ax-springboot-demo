@@ -127,6 +127,12 @@ public class DepartmentAndEmployeeTest {
                 .eq(DepartmentEntity::getId, 1)
                 .listLeftSon();
         System.out.println("list3 = " + list3);
+
+
+        List<DepartmentEntity> list4 = departmentService.lambdaQuery()
+                .eq(DepartmentEntity::getId, 1)
+                .listLeftSon();
+        System.out.println("list4 = " + list4);
     }
 
     @Test

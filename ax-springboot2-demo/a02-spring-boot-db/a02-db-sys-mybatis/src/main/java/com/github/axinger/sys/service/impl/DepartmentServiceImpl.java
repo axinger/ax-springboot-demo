@@ -25,8 +25,8 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
      * 提供链式查询的入口
      */
     @Override
-    public DepartmentServiceChainWrapper chainQuery() {
-        return new DepartmentServiceChainWrapper(this);
+    public DepartmentChainWrapper chainQuery() {
+        return new DepartmentChainWrapper(this);
     }
 
     @Override

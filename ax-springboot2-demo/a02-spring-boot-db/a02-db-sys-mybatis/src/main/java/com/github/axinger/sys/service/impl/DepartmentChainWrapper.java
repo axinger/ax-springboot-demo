@@ -12,12 +12,12 @@ import java.util.List;
  * 自定义链式查询包装器
  * 继承 AbstractChainWrapper 以获得 eq, like, in 等链式方法
  */
-public class DepartmentServiceChainWrapper
-        extends AbstractChainWrapper<DepartmentEntity, SFunction<DepartmentEntity, ?>, DepartmentServiceChainWrapper, LambdaQueryWrapper<DepartmentEntity>> {
+public class DepartmentChainWrapper
+        extends AbstractChainWrapper<DepartmentEntity, SFunction<DepartmentEntity, ?>, DepartmentChainWrapper, LambdaQueryWrapper<DepartmentEntity>> {
 
     private final DepartmentService service;
 
-    public DepartmentServiceChainWrapper(DepartmentService service) {
+    public DepartmentChainWrapper(DepartmentService service) {
         super();
         this.wrapperChildren = new LambdaQueryWrapper<>();
         this.service = service;
