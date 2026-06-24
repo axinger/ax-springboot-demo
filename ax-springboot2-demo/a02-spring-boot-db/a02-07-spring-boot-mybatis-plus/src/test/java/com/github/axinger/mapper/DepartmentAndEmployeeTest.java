@@ -131,8 +131,13 @@ public class DepartmentAndEmployeeTest {
 
         List<DepartmentEntity> list4 = departmentService.lambdaQuery()
                 .eq(DepartmentEntity::getId, 1)
-                .listLeftSon();
+                .list();
         System.out.println("list4 = " + list4);
+
+//        List<DepartmentEntity> list5 = departmentService.lambdaQuery()
+//                .eq(DepartmentEntity::getId, 1)
+//                .listLeftSon();
+//        System.out.println("list5 = " + list5);
     }
 
     @Test
