@@ -1,7 +1,13 @@
 package com.github.axinger.sys.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.axinger.sys.domain.DepartmentEntity;
+import com.github.axinger.sys.service.impl.DepartmentServiceChainWrapper;
+
+import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * @author xing
@@ -11,4 +17,15 @@ import com.github.axinger.sys.domain.DepartmentEntity;
 public interface DepartmentService extends IService<DepartmentEntity> {
 
 
+    /**
+     * 开启链式查询模式
+     */
+    DepartmentServiceChainWrapper chainQuery();
+
+    // 原有的自定义查询方法
+    List<DepartmentEntity> listLeftSon(Wrapper<DepartmentEntity> wrapper);
+
+
+    // 新增：接受 Consumer 的方法
+    List<DepartmentEntity> listLeftSon(Consumer<LambdaQueryWrapper<DepartmentEntity>> consumer);
 }

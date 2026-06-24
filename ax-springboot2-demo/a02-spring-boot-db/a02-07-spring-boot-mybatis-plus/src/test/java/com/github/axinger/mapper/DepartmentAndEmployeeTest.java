@@ -8,6 +8,7 @@ import com.github.axinger.sys.domain.DepartmentEntity;
 import com.github.axinger.sys.domain.EmployeeEntity;
 import com.github.axinger.sys.mapper.DepartmentMapper;
 import com.github.axinger.sys.mapper.EmployeeMapper;
+import com.github.axinger.sys.service.DepartmentService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,6 +20,9 @@ public class DepartmentAndEmployeeTest {
 
     @Autowired
     DepartmentMapper departmentMapper;
+
+    @Autowired
+    DepartmentService departmentService;
 
 
     @Autowired
@@ -119,6 +123,10 @@ public class DepartmentAndEmployeeTest {
         );
         System.out.println("list2 = " + list2);
 
+        List<DepartmentEntity> list3 = departmentService.chainQuery()
+                .eq(DepartmentEntity::getId, 1)
+                .listLeftSon();
+        System.out.println("list3 = " + list3);
     }
 
     @Test
