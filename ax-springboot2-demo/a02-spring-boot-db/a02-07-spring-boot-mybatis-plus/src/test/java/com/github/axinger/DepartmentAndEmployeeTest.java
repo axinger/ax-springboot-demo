@@ -1,4 +1,4 @@
-package com.github.axinger.mapper;
+package com.github.axinger;
 
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;

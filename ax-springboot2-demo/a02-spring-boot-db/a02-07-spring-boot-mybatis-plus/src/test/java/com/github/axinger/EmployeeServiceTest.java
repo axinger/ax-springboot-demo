@@ -1,4 +1,4 @@
-package com.github.axinger.mapper;
+package com.github.axinger;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.github.axinger.sys.domain.EmployeeEntity;

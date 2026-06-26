@@ -1,4 +1,4 @@
-package com.github.axinger.mapper;
+package com.github.axinger;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
