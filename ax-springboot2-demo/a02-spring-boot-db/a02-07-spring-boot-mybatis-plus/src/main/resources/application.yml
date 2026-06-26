@@ -2,6 +2,8 @@ server:
   port: 12007
 
 spring:
+  application:
+    name: a02-07-spring-boot-mybatis-plus
   profiles:
     active: mysql
 #    active: pgsql

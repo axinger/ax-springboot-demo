@@ -7,7 +7,7 @@
 
     <!-- ==================== 属性配置 ==================== -->
     <springProperty scope="context" name="app.name" source="spring.application.name" defaultValue="dir_IS_UNDEFINED"/>
-    <springProperty scope="context" name="log.dir" source="logging.file.path" defaultValue="./logs/${app.name}"/>
+    <springProperty scope="context" name="log.dir" source="logging.file.path" defaultValue="opt/logs/${app.name}"/>
     <springProperty scope="context" name="log.maxHistory" source="logging.file.maxHistory" defaultValue="60"/>
     <springProperty scope="context" name="log.maxFileSize" source="logging.file.maxFileSize" defaultValue="10MB"/>
     <springProperty scope="context" name="log.totalSizeCap" source="logging.file.totalSizeCap" defaultValue="100GB"/>
